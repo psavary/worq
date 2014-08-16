@@ -1,0 +1,41 @@
+.fuck 
+{
+	background-image: -webkit-gradient
+	(
+		linear,
+		left top,
+		right top,
+		color-stop(0, #FF0000),
+		color-stop(1, #2FFF00)
+	);
+
+	background-image: -o-linear-gradient(right, #FF0000 0%, #2FFF00 100%);
+	background-image: -moz-linear-gradient(right, #FF0000 0%, #2FFF00 100%);
+	background-image: -webkit-linear-gradient(right, #FF0000 0%, #2FFF00 100%);
+	background-image: -ms-linear-gradient(right, #FF0000 0%, #2FFF00 100%);
+	background-image: linear-gradient(to right, #FF0000 0%, #2FFF00 100%);
+	 
+	width:300px;
+	 
+	position:relative;
+	top:40px; 
+
+	 
+}
+
+#arrow1
+{
+	position:relative;
+	
+	top:80px;
+	left:-12px;
+	
+}
+#arrow2
+{
+	position:relative;
+	
+	top:60px;
+	left:-12px;
+	
+}

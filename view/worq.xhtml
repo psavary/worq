@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<html>
+<span metal:use-macro="header.xhtml/header"/>
+
+<body>
+
+<script>
+    <!--
+
+    -->
+</script>
+<!-- insert header macro with phptal -->
+<span metal:use-macro="navigation.xhtml/main_menu"/>
+
+<div id="sign_up" style="display: ;">
+
+    <!--
+    <h3 id="see_id" class="sprited" >Can I see some ID?</h3>
+    <span>Please sign in using the form below</span>
+    <div id="sign_up_form">
+        <label><strong>Username:</strong> <input class="sprited"/></label>
+        <label><strong>Password:</strong> <input class="sprited"/></label>
+        <div id="actions">
+            <a class="close form_button sprited" id="cancel" href="#">Cancel</a>
+            <a class="form_button sprited" id="log_in" href="#">Sign in</a>
+        </div>
+    </div>
+    <h3 id="left_out" class="sprited">Feeling left out?</h3>
+    <span>Don't be sad, just <a href="#">click here</a> to sign up!</span>
+    <a id="close_x" class="close sprited" href="#">close</a>
+    -->
+        <form id='register' action='' method='post' accept-charset='UTF-8'>
+
+           <div id="box">
+           <div id="ueberschrift"><img src="../img/student.png" class="icons" align="baseline" width="12%" alt="student"/>
+                <span class="text_header">Student</span>
+            </div>
+            <fieldset>
+                <input type='text' name='name' id='name' placeholder="Ihr Name" value='' maxlength="50"/><br/>
+                <input type='text' name='email' id='email' placeholder="Email Adresse" value='' maxlength="50"/><br/>
+                <input type='text' name='username' id='username' placeholder="Username" value='' maxlength="50"/><br/>
+                <input type='text' name='password' placeholder="Passwort" id='password' maxlength="50"/>
+                <input type='text' name='strasse' id='strasse' placeholder="Strasse" value='' maxlength="50"/><br/>
+                <select name="geschlecht" id="geschlecht">
+                    <option selected="selected"> Ihr Geschlecht</option>
+                    <option value="w">weiblich</option>
+                    <option value="m">männlich</option>
+                </select>
+                <input type='submit' name='Submit' value='Absenden' class="button"/>
+            </fieldset>
+            </div>
+        </form>
+
+</div>
+
+
+
+</body>
+</html>
