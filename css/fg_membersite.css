@@ -21,22 +21,23 @@ You can customize all the aspects of the form in this style sheet
 
 */
 @font-face {
+
 	font-family: 'openSans';
 	src: url('../fonts/OPENSANS-REGULAR.TTF');
-	src: 
+	src:
 		local('Open Sans'),
 		local('Open-Sans'),
-		url('../fonts/OPENSANS-REGULAR.TTF') 
+		url('../fonts/OPENSANS-REGULAR.TTF')
 		format('truetype');
 }
 
 @font-face {
 	font-family: 'openSans-semi';
-	src: url('../fonts/OPENSANS-SEMIBOLD.TTF'); 
-	src: 
+	src: url('../fonts/OPENSANS-SEMIBOLD.TTF');
+	src:
 		local('Open Sans semi'),
 		local('Open-Sans-semi'),
-		url('../fonts/OPENSANS-SEMIBOLD.TTF') 
+		url('../fonts/OPENSANS-SEMIBOLD.TTF')
 		format('truetype');
 }
 
@@ -51,73 +52,44 @@ body {
   padding: 0px;
 }
 
-#kopf {
-  height: 100px;
-  margin-bottom:5px;
-  border: 2;
-}
-#fuss {
-  position:absolute; bottom:0px; left:0px;
-  margin-left:0px;
-  height: 50px;
-  width:100%;
-  margin: 10px;
-  background: rgba(45, 166, 247, .5);
-}
-#mittelteil {
-	margin: 0px;
-	width: 100%;
-	height:80%;
-	min-width:800px;
-		 
-	/*min-width: 1600px;*/
-    min-height: 550px;
-	
-}
+
 
 #box {
-    width: 300px;
-    float: right;
+    margin-top: 20px;
+    color: white;
+    width: 350px;
     background-color: rgba(45, 166, 247, .5);
+
 }
+
+.boxcontent {
+
+    padding: 5px;
+}
+
+.boxcontent h3{
+    font-size: 35px;
+    text-align: center
+}
+
+
+
+.boxcontent ul {
+    list-style-image: url('sqpurple.gif');
+
+}
+
+#box img {
+    vertical-align: top;
+}
+
 #box input{
     margin: 5px;
-
     position: relative;
-
-
 }
 
-#links {
-  float: left;
-  width: 30%;
-  max-width:450px;
-  background: rgba(45, 166, 247, .5);
 
- /* min-height: 350px;*/
 
-}
-#mitte {
-  float: left;
-  width: 40%;
-  min-width: 100px;
-     padding:20px;
-   margin-top:0px;
-   margin-left:20px;
-
-/*  min-height: 350px;*/
-
-  }
-#rechts {
-  float: left;
-  width: 30%;
-  min-width: 200px;
-   background: rgba(45, 166, 247, .5);
-  max-width:450px;
- 
-  /*min-height: 350px;*/
- 
-}
 
 
 p.back {
@@ -132,12 +104,11 @@ p.back {
 }
 .text_header {
  color:white;
- font-size:3.0vw;
+ font-size:30px;
  text-align:center;
  margin-left:15px;
  margin-top:-35px;
  min-width:200px;
- margin-right:20px;
 }
 /*
 Registration/Login Form by html-form-guide.com
@@ -145,12 +116,11 @@ You can customize all the aspects of the form in this style sheet
 */
 #ueberschrift
 {
-	background: rgba(108, 24, 161, .5);	
-	height:10%;
-	max-height:70px;
-	margin-bottom:0px;
+	background: rgba(108, 24, 161, .5);
+    max-height:70px;
 	font-family:openSans-semi;
-	}
+
+}
 
 
 .button {
@@ -158,13 +128,59 @@ You can customize all the aspects of the form in this style sheet
  color:white;
  font-size: 1.0vw;
  border:0px;
-   }
+}
 .button:hover {
    border-top-color:#09F;
    background: #09F;
    color: #ccc;
-   }
+}
 .button:active {
    border-top-color: #09F;
    background: #09F;
-   }
+}
+
+.contentcontainer {
+    width: 100%;
+    background-color: yellow;
+}
+
+.leftcol {
+    float: left;
+    width: 400px;
+    background-color: red;
+    min-height: 100px;
+}
+
+
+.rightcol {
+    position: top;
+    display: block;
+    width: 400px;
+    background-color: green;
+    min-height: 100px;
+}
+
+
+@media all and (min-width: 950px) {
+    .leftcol {
+
+    }
+    .rightcol {
+        float: right;
+        margin-left: 100px;
+    }
+}
+
+@media all and (max-width: 950px) {
+    .leftcol {
+        float: left;
+        margin-right: 100px;
+    }
+    .rightcol {
+        float: left;
+        margin-top: 20px;
+
+    }
+}
+
+
