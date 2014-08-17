@@ -94,12 +94,21 @@ body {
 
 .aviability span
 {
-    width: 12px;
+    margin-right:1px;
+    color: red;
+    border-color: black;
 }
 
 .aviability input
 {
-    width: 12px;
+    width: 15px;
+    color: white;
+    border: none;
+
+}
+.aviability label
+{
+    width: 100px !important;
 }
 
 .boxcontent select{
