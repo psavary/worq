@@ -20,6 +20,7 @@
                 $('#studentset').toggle(true);
             }
         });
+
     });
 
     /*
@@ -43,6 +44,58 @@
             e.preventDefault();
         });
     });
+
+
+    $(function () {
+        $('#addmobility').click(function (e) {
+    /* test adding dropdown to form */
+    var data = {'Country': 'India','Country1': 'USA', 'Country2': 'Australia', 'Country3': 'Srilanka'}  ;
+
+    var s = $('<select />');
+
+    for(var val in data)
+    {
+        $('<option />', {value: val, text: data[val]}).appendTo(s);
+    }
+
+    s.appendTo('#mobility');
+        });
+    });
+    /* end test adding dropdown to form */
+
+    /* test adding languages to form */
+    $(function () {
+        $('#addlanguage').click(function (e) {
+            /* test adding dropdown to form */
+            /* @psa todo add correct variables to js */
+            var langdat = {'none': 'Sprache','deutsch': 'Deutsch', 'france': 'Franzoesisch', 'italian': 'Italienisch'}  ;
+            var writtendat = {'none': 'schriftlich','diploma1': 'Diplom1', 'diploma2': 'Diplom2', 'diploma3': 'Diplom3'}  ;
+            var oraldat = {'none': 'm&uuml;ndlich','fair': 'ok', 'good': 'gut', 'mothertongue': 'Muttersprache'}  ;
+
+            var lang = $('<select />');
+            var written = $('<select />');
+            var oral = $('<select />');
+
+            for(var val in langdat)
+            {
+                $('<option />', {value: val, text: langdat[val]}).appendTo(lang);
+            }
+            for(var val in writtendat)
+            {
+                $('<option />', {value: val, text: writtendat[val]}).appendTo(written);
+            }
+            for(var val in oraldat)
+            {
+                $('<option />', {value: val, text: oraldat[val]}).appendTo(oral);
+            }
+
+            lang.appendTo('#languages');
+            written.appendTo('#languages');
+            oral.appendTo('#languages');
+
+        });
+    });
+    /* end test adding languages to form */
     -->
 </script>
 
@@ -58,33 +111,127 @@
                 <div class="boxcontent">
                     <fieldset>
                     <select>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                        <option value="none">Studiengang</option>
+                        <option value="it">Informatik</option>
+                        <option value="mercedes">Psychologie</option>
+                        <option value="audi">Wirtschaft</option>
                     </select>
                     <select>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                        <option value="none">Region</option>
+                        <option value="Ostschweiz">Ostschweiz</option>
+                        <option value="Zentralschweiz">Zentralschweiz</option>
+                        <option value="Westschweiz">Westschweiz</option>
                     </select>
                     <select>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                        <option value="none">Branche</option>
+                        <option value="Gastgewerbe">Gastgewerbe</option>
+                        <option value="Telekommunikation">Telekommunikation</option>
+                        <option value="Banken">Banken</option>
                     </select>
                     <label>Erfahrung</label><input type="checkbox"></input><br />
+                    <select>
+                        <option value="none">Subbranche</option>
+                        <option value="Gastgewerbe">Gastgewerbe</option>
+                        <option value="Telekommunikation">Telekommunikation</option>
+                        <option value="Banken">Banken</option>
+                    </select>
+                    <div id="mobility" class="rightsubbox">
                         <select>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
+                            <option value="volvo">Auto</option>
+                            <option value="saab">Zug</option>
+                            <option value="mercedes">Velo</option>
+                            <option value="audi">Keine</option>
                         </select>
-                        <span class="add branche">+</span>
-                        <input type='text' name='branche'  maxlength="50"/><br/><input type='text' name='branche'  maxlength="50"/><br/>
-                        <input type='text' name='region' maxlength="50"/><br/>
+                        <span class="add branche" id="addmobility">+</span>
+                    </div>
+                    <fieldset id="languages" class="threeinarow">
+                        <select>
+                            <option value="none">Sprache</option>
+                            <option value="Deutsch">Deutsch</option>
+                            <option value="Französisch">Französisch</option>
+                            <option value="Italienisch">Italienisch</option>
+                        </select>
+                        <select>
+                            <option value="Deutsch">schriftlich</option>
+                            <option value="diplom1">Diplom 1</option>
+                            <option value="diplom2">Diplom 2</option>
+                        </select>
+                        <select>
+                            <option value="Deutsch">muendlich</option>
+                            <option value="gut">gut</option>
+                            <option value="sgut">sehr gut</option>
+                            <option value="msprache">muttersprache</option>
+                        </select>
+                        <span class="add branche" id="addlanguage">+</span>
+                    </fieldset>
+                    <fieldset id="worktime" class="threeinarow">
+                        <select>
+                            <option value="none">Anstellungsart</option>
+                            <option value="part">Teilzeit</option>
+                            <option value="full">Vollzeit</option>
+                        </select>
+                        <select>
+                            <option value="none">Pensum von</option>
+                            <option value="50">50 %</option>
+                            <option value="100">100 %</option>
+                        </select>
+                        <select>
+                            <option value="none">Pensum bix</option>
+                            <option value="50">50 %</option>
+                            <option value="100">100 %</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="aviability">
+                        <label>wochentag</label>
+                        <span>mo</span>
+                        <span>di</span>
+                        <span>mi</span>
+                        <span>do</span>
+                        <span>fr</span>
+                        <br />
+                        <label>morgen</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>nachmittag</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>abend</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>nacht</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                    </fieldset>
+                        <!--<select multiple="multiple">
+                            <option>test</option>
+                            <option>test2</option>
+                            <option>test3</option>
+                        </select>-->
+
                     </fieldset>
                 </div>
             </div>
