@@ -92,6 +92,23 @@ body {
  }
 
 
+.aviability span
+{
+    width: 12px;
+}
+
+.aviability input
+{
+    width: 12px;
+}
+
+.boxcontent select{
+    margin: 5px;
+    position: relative;
+    color: grey;
+}
+
+
 .boxcontent label{
     text-align: right;
     width: 120px;
@@ -256,3 +273,20 @@ You can customize all the aspects of the form in this style sheet
 
 }
 
+.add:hover {
+    background: #09F;
+}
+
+.rightsubbox
+{
+    width: 50%;
+    float: right;
+}
+
+.threeinarow {
+    width: 100%;
+}
+
+.threeinarow select{
+    width: 138px;
+}
