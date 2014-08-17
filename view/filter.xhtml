@@ -8,18 +8,7 @@
     <!--
 
     $(document).ready(function() {
-        $('input[type=radio][name=registerchoosing]').change(function() {
-            if (this.value == 'company') {
-              //  alert("company");
-                $('#companyset').toggle(true); // Show/hide other fieldsets based on its value
-                $('#studentset').toggle(false);
-            }
-            else if (this.value == 'student') {
-              //  alert("student");
-                $('#companyset').toggle(false); // Show/hide other fieldsets based on its value
-                $('#studentset').toggle(true);
-            }
-        });
+
 
     });
 
@@ -94,8 +83,22 @@
             oral.appendTo('#languages');
 
         });
+        /* end test adding languages to form */
+
+
+        /* listen to all selectboxes*/
+        $('select').on('change', function() {
+            //$('filterfields').each(console.log($(this).val()));
+            $( "#filterfields" ).each(function( index ) {
+                console.log( index + ": " + $( this ).text() );
+            });
+
+        }); // take care of select tags
+
+        $('input').on('change keypress', function() {
+            form_modified = true;
+        });
     });
-    /* end test adding languages to form */
     -->
 </script>
 
@@ -109,7 +112,7 @@
                     <span class="text_header">Filter</span>
                 </div>
                 <div class="boxcontent">
-                    <fieldset>
+                    <fieldset id="filterfields">
                     <select>
                         <option value="none">Studiengang</option>
                         <option value="it">Informatik</option>
@@ -181,13 +184,15 @@
                             <option value="100">100 %</option>
                         </select>
                     </fieldset>
-                    <fieldset class="aviability">
+                    <fieldset class="aviability rightsubbox">
                         <label>wochentag</label>
                         <span>mo</span>
                         <span>di</span>
                         <span>mi</span>
                         <span>do</span>
                         <span>fr</span>
+                        <span>sa</span>
+                        <span>so</span>
                         <br />
                         <label>morgen</label>
                         <input type="checkbox"></input>
