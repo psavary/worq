@@ -13,7 +13,7 @@ $requestString = $_SERVER['REQUEST_URI'];
 
 $urlParams = explode('/', $requestString);
 
-$uriPartIgnore = array( '', 'index.php', null,'something');
+$uriPartIgnore = array( '', 'index.php', null);
 
 foreach($urlParams as $key => $value)
 {
