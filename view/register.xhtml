@@ -82,7 +82,6 @@
                     <input class="three3rd" type='text' name='emailconfirm'  placeholder="E-Mail best&auml;tigen" maxlength="100"/><br/>
                     <input class="three3rd" type='password' name='password'  placeholder="Passwort" maxlength="100"/><br/>
                     <input class="three3rd" type='password' name='passwordconfirm'  placeholder="Passwort best&auml;tigen" maxlength="100"/><br/>
-                    <input type='submit' name='' value='Filtern' class="button"/>
                 </fieldset>
             </div>
         </div>
@@ -93,8 +92,8 @@
                 <span class="text_header">Profil anlegen</span>
             </div>
             <div class="boxcontent">
-                <input type='radio' name='registerchoosing'  checked="checked" id='company' placeholder="" value='company' maxlength="50"/><label>Arbeitgeber</label>
-                <input type='radio' name='registerchoosing' id='student' placeholder="tttt" value='student' maxlength="50"/><label>Studierende</label><br/>
+                <input type='radio' name='registerchoosing'  checked="checked" id='company'  value='bachelor' /><label>Bachelor</label>
+                <input type='radio' name='registerchoosing' id='student' value='master' /><label>Master</label><br/>
                 <fieldset id ="studentset" style="display: none;">
                     <input type='text' name='name'  placeholder="Vorname"  maxlength="50"/>
                     <input type='text' name='lastname'   placeholder="Name"  maxlength="50"/>
@@ -106,29 +105,47 @@
 
                 <fieldset id ="companyset">
                     <input type='text' name='study'  placeholder="Abgeschlossener Studiengang in"  maxlength="50"/><br />
-                    <input type='text' name='schoolname'  placeholder="Hochschule"  maxlength="50"/>
-                    <input type='text' name='minor'   placeholder="Nebenfach"  maxlength="50"/>
-                    <input type='text' name='email'   placeholder="E-Mail"  maxlength="50"/>
-                    <input type='text' name='emailrepeat'   placeholder="E-Mail (wiederholen)"  maxlength="50"/>
-                    <input type='password' name='password'   placeholder="Passwort"  maxlength="50"/>
-                    <input type='password' name='passwordrepeat'   placeholder="Passwort (wiederholen)"  maxlength="50"/>
+                    <input type='text' name='schoolname'  placeholder="Hochschule"  maxlength="50"/><br />
+                    <input type='text' name='minor'   placeholder="Nebenfach"  maxlength="50"/><br />
+                    <fieldset id="languages" class="threeinarow">
+                        <select>
+                            <option value="none">Sprache</option>
+                            <option value="Deutsch">Deutsch</option>
+                            <option value="Französisch">Französisch</option>
+                            <option value="Italienisch">Italienisch</option>
+                        </select>
+                        <select>
+                            <option value="Deutsch">schriftlich</option>
+                            <option value="diplom1">Diplom 1</option>
+                            <option value="diplom2">Diplom 2</option>
+                        </select>
+                        <select>
+                            <option value="Deutsch">muendlich</option>
+                            <option value="gut">gut</option>
+                            <option value="sgut">sehr gut</option>
+                            <option value="msprache">muttersprache</option>
+                        </select>
+                        <span class="add branche" id="addlanguage">+</span>
+                    </fieldset>
+
                 </fieldset>
             </div>
         </div>
     </div>
-    <div class="rightcol">
+    <div class="rightcolsmall">
         <div id="box">
-            <div id="ueberschrift"><img src="../img/student.png" class="icons" align="baseline" width="12%" alt="student"/>
-                <span class="text_header">Studierende</span>
+            <div id="ueberschrift">
+                <span class="text_header">So geht es weiter</span>
             </div>
             <div class="boxcontent">
-                <h3>Dein Job <br />findet Dich</h3>
-                <ul>
-                    <li>Jobprofil anlegen</li>
-                    <li>Jobangebot annehmen</li>
-                    <li>Vorstellungsgespr&auml;ch</li>
-                </ul>
-                <div class="button" id="registernow">Registrieren</div>
+                <br />
+                <p><img src="../img/callcenter.jpg" class="icons" align="bottom" width="90%" alt="student"/></p>
+                Schliesse die Registrierung nun ab und bestätige Deine Anmeldung mit dem Link, den wir Dir zuschicken.
+                <br />
+                <br />
+                Damit dich Arbeitgeber finden, brauchst Du nur noch ein Jobprofil zu erfassen.
+
+                <input type='submit' name='' value='Abschliessen' class="button"/>
                 <br />
                 <br />
                 <br />
@@ -136,7 +153,6 @@
         </div>
     </div>
 
-    <input type='submit' name='Submit' value='Filtern' class="button"/>
 </form>
 
 </body>
