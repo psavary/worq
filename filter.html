@@ -9,10 +9,12 @@
             <div class="boxcontent">
                 <span class="nullable">
                     <!-- Angular Select -->
-                    <select data-ng-model="mymodel" ng-options="study.name for study in studys">
-                        <option value="">-- choose color --</option>
-                    </select>
+                    <select data-ng-model="mymodel" ng-options="study.name for study in studys"></select>
                     The value selected is {{mymodel.name}}.
+                </span>
+                <span class="nullable">
+                    <!-- Angular Select -->
+                    <select data-ng-model="othermodel" ng-options="region.name for region in regions"></select>
                 </span>
             </div>
         </div>

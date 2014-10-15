@@ -9,18 +9,27 @@ $app = new \Slim\Slim(array(
 
 $app->get('/hello/:name', function ($name) {
     
-   // $app->response->headers->set('Content-type' ,'application/json');
-    //echo json_encode($ret);
     echo '[
       {"id": "1", "studentname": "'.$name.'", "study": "Informatik", "region": "Ostschweiz"},
       {"id": "2", "studentname": "Max Muster",    "study": "Psychologie", "region": "Ostschweiz"},
       {"id": "3", "studentname": "Maya Muster", "study": "Informatik", "region": "Zentralschweiz"},
-      {"id": "4", "studentname": "Melanie Müller", "study": "Wirtschaft", "region": "Westschweiz"}
+      {"id": "4", "studentname": "Melanie Mï¿½ller", "study": "Wirtschaft", "region": "Westschweiz"}
+    ]';
+});
+
+$app->get('/regions/', function () {
+
+    echo
+    '[
+      {"id": "1", "name": "Ostschweiz"},
+      {"id": "2", "name": "Zentralschweiz"},
+      {"id": "3", "name": "Westschweiz"}
     ]';
 });
 
 
-$app->get('/study/', function () {
+$app->get('/study/', function ()
+{
     
     echo '[
       {"id": "1", "name": "Studiengang"},
