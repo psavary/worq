@@ -39,6 +39,18 @@ $app->get('/study/', function ()
     ]';
 });
 
+
+$app->get('/industries/', function ()
+{
+
+    echo '[
+      {"id": "1", "name": "Banken"},
+      {"id": "2", "name": "Baubranche"},
+      {"id": "3", "name": "Gastgewerbe"},
+      {"id": "4", "name": "Medizin"}
+    ]';
+});
+
 $app->run();
 
 ?>
