@@ -9,16 +9,20 @@
             <div class="boxcontent">
                 <span class="nullable">
                     <!-- Angular Select -->
-                    <select data-ng-model="mymodel" ng-options="study.name for study in studys"></select>
+                    <select data-ng-model="mymodel" ng-options="study.name for study in studys" ng-change="change()"></select>
                     The value selected is {{mymodel.name}}.
                 </span>
                 <span class="nullable">
                     <!-- Angular Select -->
-                    <select data-ng-model="othermodel" ng-options="region.name for region in regions"></select>
+                    <select data-ng-model="othermodel" ng-options="region.name for region in regions" ng-change="change()"></select>
                 </span>
                 <span class="nullable">
                     <!-- Angular Select -->
-                    <select data-ng-model="hierkannirgendwasstehen" ng-options="industry.name for industry in industries"></select>
+                    <select data-ng-model="industries" ng-options="industry.name for industry in industries"></select>
+                </span>
+                <span class="nullable">
+                    <!-- Angular Select -->
+                    <select data-ng-model="industries2" ng-options="industry.name for industry in industries"></select>
                 </span>
             </div>
         </div>
@@ -36,8 +40,8 @@
                 </form>
                 <table class="table" ng-controller="ArticlesCtrl">
                 <!-- filter:{study : mymodel.name} filters is applied in just the study column!!! Cool.... -->
-                <tr class="animateme" ng-repeat="article in articles| filter:{study : mymodel.name} | filter:search">
-                <td>{{article.id}}</td>
+                <tr class="animateme" ng-repeat="article in articles| filter:{study : mymodel.name} | filter:{region : othermodel.name}| filter:search">
+                <td>{{article.id }}</td>
                 <td>{{article.studentname}}</td>
                 <td>{{article.study}}</td>
                 <td>{{article.region}}</td>

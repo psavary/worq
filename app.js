@@ -106,6 +106,18 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
                 }
             );
 
+            //experimental code to trigger mysql select onChange of any dropbox field
+            $scope.change = function(variable)
+            {
+                if (!angular.isUndefined($scope.mymodel)) //only do somethin as long it is not undefined
+                {
+                    console.log($scope.mymodel.name);
+                }
+                console.log($scope.othermodel.name);
+
+                $scope.counter++;
+                $scope.variable = variable;
+            };
 
 
             //array of students
@@ -114,6 +126,7 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
                     $scope.articles = payload.data;
                 }
             );
+            //end do this in the onchangefunction
 
 
             //models needed for input and selectfields!?
