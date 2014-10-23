@@ -68,9 +68,11 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
     });
 
 
-    app.controller('StudyCtrl',
+    //Controller for whole filtermanagement
+    app.controller('FilterCtrl',
         function($scope, $http, regions, students, industries)
         {
+
 
 
             $http.get('api.php/study/').then

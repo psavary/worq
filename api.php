@@ -2,18 +2,34 @@
 require './lib/slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
+//add meedoo
+require  './lib/medoo.php';
+
+
+function getData()
+{
+    $database = new medoo;
+    $data = $database->select("students", "*");
+    //@psa todo
+    die (var_dump(getData()));
+    return $data;
+}
+
+
 
 $app = new \Slim\Slim(array(
     'debug' => true
 ));
 
 $app->get('/hello/:name', function ($name) {
-    
+    //@psa todo
+    die (var_dump(getData()));
+
     echo '[
       {"id": "1", "studentname": "'.$name.'", "study": "Informatik", "region": "Ostschweiz"},
       {"id": "2", "studentname": "Max Muster",    "study": "Psychologie", "region": "Ostschweiz"},
       {"id": "3", "studentname": "Maya Muster", "study": "Informatik", "region": "Zentralschweiz"},
-      {"id": "4", "studentname": "Melanie M�ller", "study": "Wirtschaft", "region": "Westschweiz"}
+      {"id": "4", "studentname": "Melanie Müller", "study": "Wirtschaft", "region": "Westschweiz"}
     ]';
 });
 
