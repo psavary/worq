@@ -18,7 +18,7 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
 
             //var fuck = 'bullshit';
 
-            return $http.get('api.php/hello/me');
+            return $http.get('api.php/hello/');
             // console.log(response);
             //return response   ;
         };
@@ -28,7 +28,7 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
 
                 //var fuck = 'bullshit';
 
-                return $http.get('api.php/hello/mu');
+                return $http.get('api.php/hello/');
                 // console.log(response);
                 //return response   ;
             };
