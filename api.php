@@ -3,28 +3,26 @@ require './lib/slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 //add meedoo
-include_once  'database.php'; //@psa todo refactor with autoloader;
+include_once 'db.php'; //@psa todo refactor with autoloader;
 
 
 $app = new \Slim\Slim(array(
     'debug' => true
 ));
 
+
 $app->get('/hello/', function () {
-    //@psa todo
 
-    $data = database::get()->select("students", "*");
 
-    //@psa todo
-    die (var_dump(json_encode($data)));
+    $select = "Select students.id, students.firstname, students.lastname, study.study as study, region.region as region from students left join study on students.study=study.id left join region on students.region = region.id";
 
-   /* echo '[
-      {"id": "1", "studentname": "dddd", "study": "Informatik", "region": "Ostschweiz"},
-      {"id": "2", "studentname": "Max Muster",    "study": "Psychologie", "region": "Ostschweiz"},
-      {"id": "3", "studentname": "Maya Muster", "study": "Informatik", "region": "Zentralschweiz"},
-      {"id": "4", "studentname": "Melanie Müller", "study": "Wirtschaft", "region": "Westschweiz"}
-    ]';*/
+    $data = db::query($select);
+
+    echo ($data);
+
+
 });
+
 
 $app->get('/regions/', function () {
 
@@ -59,6 +57,7 @@ $app->get('/industries/', function ()
       {"id": "4", "name": "Medizin"}
     ]';
 });
+
 
 $app->run();
 

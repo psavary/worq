@@ -40,13 +40,15 @@
                 </form>
                 <table class="table" ng-controller="ArticlesCtrl">
                 <!-- filter:{study : mymodel.name} filters is applied in just the study column!!! Cool.... -->
-                <tr class="animateme" ng-repeat="article in articles| filter:{study : mymodel.name} | filter:{region : othermodel.name}| filter:search">
-                <td>{{article.id }}</td>
-                <td>{{article.studentname}}</td>
+                <tr class="animateme" ng-repeat="article in articles| filter:{study : mymodel.name} | filter:{region : othermodel.name}">
+                <td>{{article.id}}</td>
+                <td>{{article.firstname}}</td>
+                <td>{{article.lastname}}</td>
                 <td>{{article.study}}</td>
                 <td>{{article.region}}</td>
                 </tr>
                 </table>
+
                 <!-- end Angularcontent -->
             </div>
         </div>
