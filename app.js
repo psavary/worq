@@ -3,9 +3,11 @@
 var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
     app.config(function($routeProvider) {
         $routeProvider
-        .when('/', { templateUrl: 'filter.html' })
+        .when('/', { templateUrl: 'register.html' })
+        .when('/filter', { templateUrl: 'filter.html' })
+        .when('/register', { templateUrl: 'register.html' })
         .when('/about', { template: '�ber unsere Pizzeria' })
-        .otherwise({ redirectTo: '/'});
+        .otherwise({ redirectTo: 'register.html'});
     });
 
 

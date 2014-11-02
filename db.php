@@ -6,8 +6,6 @@
  * Time: 23:03
  */
 
-//add meedoo
-include_once  './lib/medoo.php';
 
 
 class db
