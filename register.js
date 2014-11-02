@@ -10,19 +10,18 @@
 app.controller('RegisterCtrl',
     function($scope, $http, regions, students, industries, universities, languages, languageDiploma)
     {
-        $scope.languageDiploma = {};
+        $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
+
         $scope.changeLang = function(langNo,id) {
 
             $scope.currentLangNo = langNo;
-            console.log($scope.currentLangNo);
+
             languageDiploma.languageDiploma(id).then
             (
-                function(payload, langNo)
+                function(payload)
                 {
-                    $scope.languageDiploma.push({"id": $scope.currentLangNo, "name": payload.data}); //@psa todo figure this out!
-                    console.log($scope.languageDiploma);
-
-                    //console.log($scope.regions)
+                    $scope.languageDiploma[$scope.currentLangNo]= payload.data; //now, we fill the array.
+                    //console.dir($scope.languageDiploma);
                 }
             )
             console.log($scope.languageDiploma);
@@ -47,7 +46,7 @@ app.controller('RegisterCtrl',
                 $scope.universities = payload.data;
                 //console.log($scope.regions)
             }
-        )
+        );
 
 
         languages.getLanguages().then
@@ -58,7 +57,7 @@ app.controller('RegisterCtrl',
                 $scope.languages = payload.data;
                 //console.log($scope.regions)
             }
-        )
+        );
 
         //get Regions
         regions.getRegions().then
@@ -88,6 +87,7 @@ app.controller('RegisterCtrl',
         $scope.update = function(user) {
             $scope.master = angular.copy(user);
         };
+
 
         $scope.reset = function() {
             $scope.user = angular.copy($scope.master);
