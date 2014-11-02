@@ -37,15 +37,44 @@ $app->get('/regions/', function () {
 
 $app->get('/study/', function ()
 {
-    
-    echo '[
-      {"id": "1", "name": "Studiengang"},
-      {"id": "Informatik", "name": "Informatik"},
-      {"id": "Psychologie", "name": "Psychologie"},
-      {"id": "Wirtschaft", "name": "Wirtschaft"}
-    ]';
+
+    $select = "Select * from study";
+
+    $data = db::query($select);
+
+    echo ($data);
 });
 
+$app->get('/university/', function ()
+{
+    $select = "Select * from universities";
+
+    $data = db::query($select);
+
+    echo ($data);
+
+});
+
+$app->get('/languageDiploma/:id', function ($id)
+{
+    $select = "Select * from languageDiploma where languageId=".$id;
+
+    $data = db::query($select);
+
+    echo ($data);
+
+});
+
+
+$app->get('/languages/', function ()
+{
+    $select = "Select * from languages";
+
+    $data = db::query($select);
+
+    echo ($data);
+
+});
 
 $app->get('/industries/', function ()
 {

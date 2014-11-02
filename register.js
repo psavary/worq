@@ -8,8 +8,26 @@
 
 
 app.controller('RegisterCtrl',
-    function($scope, $http, regions, students, industries)
+    function($scope, $http, regions, students, industries, universities, languages, languageDiploma)
     {
+        $scope.languageDiploma = {};
+        $scope.changeLang = function(langNo,id) {
+
+            $scope.currentLangNo = langNo;
+            console.log($scope.currentLangNo);
+            languageDiploma.languageDiploma(id).then
+            (
+                function(payload, langNo)
+                {
+                    $scope.languageDiploma.push({"id": $scope.currentLangNo, "name": payload.data}); //@psa todo figure this out!
+                    console.log($scope.languageDiploma);
+
+                    //console.log($scope.regions)
+                }
+            )
+            console.log($scope.languageDiploma);
+
+        };
 
         $http.get('api.php/study/').then
         (
@@ -19,6 +37,28 @@ app.controller('RegisterCtrl',
             }
         );
 
+
+
+        universities.getUniversities().then
+        (
+            function(payload)
+            {
+
+                $scope.universities = payload.data;
+                //console.log($scope.regions)
+            }
+        )
+
+
+        languages.getLanguages().then
+        (
+            function(payload)
+            {
+
+                $scope.languages = payload.data;
+                //console.log($scope.regions)
+            }
+        )
 
         //get Regions
         regions.getRegions().then

@@ -50,6 +50,35 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
     }]);
 
 
+    app.service('universities', ['$http',function($http)
+    {
+        this.getUniversities =
+            function()
+            {
+                return $http.get('api.php/university/');
+            };
+    }]);
+
+
+    app.service('languages', ['$http',function($http)
+    {
+        this.getLanguages =
+            function()
+            {
+                return $http.get('api.php/languages/');
+            };
+    }]);
+
+    app.service('languageDiploma', ['$http',function($http)
+    {
+        this.languageDiploma =
+            function(id)
+            {
+                return $http.get('api.php/languageDiploma/'+id);
+            };
+    }]);
+
+
     app.service('industries', ['$http',function($http)
     {
         this.getIndustries =
