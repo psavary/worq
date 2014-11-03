@@ -1,4 +1,3 @@
-
 <!-- this controller is available over all elements in the span below -->
 <span ng-controller="RegisterCtrl">
     <div class="leftcolwide">
@@ -9,22 +8,24 @@
             <form novalidate class="simple-form">
 
             <div class="boxcontent">
-                    Firstname: <input type="text" ng-model="user.firstname" /><br />
-                    Lastname: <input type="text" ng-model="user.lastname" /><br />
+                    Firstname: <input type="text" ng-model="user.student.firstname" /><br />
+                    Lastname: <input type="text" ng-model="user.student.lastname" /><br />
                     <fieldset>
-                        Street: <input type="text" ng-model="user.street" /><br />
-                        No: <input type="text" ng-model="user.streetno" /><br />
+                        Street: <input type="text" ng-model="user.address.street" /><br />
+                        No: <input type="text" ng-model="user.address.streetno" /><br />
                     </fieldset>
+                    Zip: <input type="text" ng-model="user.address.zip" /><br />
+                    City: <input type="text" ng-model="user.address.city" /><br />
 
-                    Telephone: <input type="text" ng-model="user.telephone" /><br />
-                    Gender: <input type="radio" ng-model="user.gender" value="male" />male
-                    <input type="radio" ng-model="user.gender" value="female" />female<br />
-                    <input type="date" id="exampleInput" name="input" ng-model="value"
+                    Telephone: <input type="text" ng-model="user.student.telephone" /><br />
+                    Gender: <input type="radio" ng-model="user.student.gender" value="male" />male
+                    <input type="radio" ng-model="user.student.gender" value="female" />female<br />
+                    <input type="date" ng-model="user.student.birthdate" id="exampleInput" name="input" ng-model="value"
                            placeholder="yyyy-MM-dd" min="1940-01-01" max="2013-12-31" required /><br />
-                    E-mail: <input type="email" ng-model="user.email" /><br />
-                    E-mail Validate: <input type="email" ng-model="user.emailvalidate" /><br />
-                    Password: <input type="password" ng-model="user.password" /><br />
-                    Password Validate: <input type="password" ng-model="user.passwordvalidate" /><br />
+                    E-mail: <input type="email" ng-model="user.student.email" /><br />
+                    E-mail Validate: <input type="email"  /><br />
+                    Password: <input type="password" ng-model="user.student.password" /><br />
+                    Password Validate: <input type="password"  /><br />
             </div>
 
             <div class="centercol">
@@ -33,7 +34,6 @@
                         <span class="text_header">Profil anlegen</span>
                     </div>
                     <div class="boxcontent">
-
                             <!-- Angular Select -->
                         University:
                         <select data-ng-model="user.university" ng-options="university.name for university in universities" ></select><br />
@@ -43,31 +43,27 @@
                         Minor field of study:
                         <select data-ng-model="user.minor" ng-options="study.name for study in studys" ></select><br />
 
-                        <input type='text' name='minor' placeholder="Nebenfach" maxlength="50"/><br />
-
                         <fieldset id="languages" class="threeinarow">
                             Language:
                             <select ng-change="changeLang(1,user.language1.language.id)" data-ng-model="user.language1.language" ng-options="language.name for language in languages" ></select><br />
                             Language Diploma:
                             <select  data-ng-model="user.language1.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[1]" ></select><br />
-
-                            <select data-ng-model="user.language.languageOral">
+                            Language Oral1:
+                            <select data-ng-model="user.language1.languageOral">
                                 <option value="1">grundlagen</option>
                                 <option value="2">gut</option>
                                 <option value="3">sehr gut</option>
                                 <option value="4">fliessend</option>
                                 <option value="5">muttersprache</option>
                             </select>
-
                         </fieldset>
 
                         <fieldset id="languages" class="threeinarow">
-
                             Language2:
                             <select ng-change="changeLang(2,user.language2.language.id)" data-ng-model="user.language2.language" ng-options="language.name for language in languages" ></select><br />
                             Language Diploma2:
                             <select  data-ng-model="user.language2.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[2]" ></select><br />
-
+                            Language Oral2:
                             <select data-ng-model="user.language2.languageOral">
                                 <option value="1">grundlagen</option>
                                 <option value="2">gut</option>
@@ -75,15 +71,13 @@
                                 <option value="4">fliessend</option>
                                 <option value="5">muttersprache</option>
                             </select>
-
                         </fieldset>
-
-
-                        Language:
+                        <fieldset id="languages" class="threeinarow">
+                        Language3:
                         <select ng-change="changeLang(3, user.language3.language.id)" data-ng-model="user.language3.language" ng-options="language.name for language in languages" ></select><br />
-                        Language Diploma:
+                        Language Diploma3:
                         <select  data-ng-model="user.language3.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[3]" ></select><br />
-
+                        Language Oral3:
                         <select data-ng-model="user.language3.languageOral">
                             <option value="1">grundlagen</option>
                             <option value="2">gut</option>
@@ -91,14 +85,11 @@
                             <option value="4">fliessend</option>
                             <option value="5">muttersprache</option>
                         </select>
-
                         </fieldset>
-
-
-
                     </div>
                 </div>
             </div>
+
             <div class="rightcolsmall">
                 <div id="box">
                     <div id="ueberschrift">
@@ -120,13 +111,9 @@
                     </div>
                 </div>
             </div>
-
-
             </form>
             <pre>form = {{user | json}}</pre>
             <pre>master = {{master | json}}</pre>
-
-
         </div>
     </div>
 </span>

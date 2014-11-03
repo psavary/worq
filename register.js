@@ -85,12 +85,16 @@ app.controller('RegisterCtrl',
 
 
         $scope.update = function(user) {
-            $scope.master = angular.copy(user);
+           // $scope.master = angular.copy(user);
+
+            students.postStudent(user);
+            console.dir(user);
+
         };
 
 
         $scope.reset = function() {
-            $scope.user = angular.copy($scope.master);
+          //  $scope.user = angular.copy($scope.master);
         };
 
     }

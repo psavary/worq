@@ -52,7 +52,6 @@ $app->get('/university/', function ()
     $data = db::query($select);
 
     echo ($data);
-
 });
 
 $app->get('/languageDiploma/:id', function ($id)
@@ -62,7 +61,6 @@ $app->get('/languageDiploma/:id', function ($id)
     $data = db::query($select);
 
     echo ($data);
-
 });
 
 
@@ -73,7 +71,6 @@ $app->get('/languages/', function ()
     $data = db::query($select);
 
     echo ($data);
-
 });
 
 $app->get('/industries/', function ()
@@ -87,6 +84,45 @@ $app->get('/industries/', function ()
     ]';
 });
 
+$app->post('/postStudent/', function () {
+    //Create book
+    $app = \Slim\Slim::getInstance();
+    //$app = new \Slim\Slim();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = json_decode($body);
+   // $allPostVars = $app->request->post();
+    $response = "irgendwas";
+    //echo "hallo";
+    addStudent($post->student);
+    //$result = array("status"=>"success","response"=>$response);
+  //  die(var_dump($post));
+
+    //echo json_encode($result);
+});
+
+function addStudent($student)
+{
+
+    $sql = "
+    insert into students (firstname, lastname, gender,  email, password, telephone)
+    VALUES (:firstname, :lastname, :gender, :email, :password, :telephone)
+    ";
+
+    $studentArray = (array) $student;
+   var_dump($studentArray);
+
+    try
+    {
+        $prepared = db::get()->prepare($sql);
+        $prepared->execute($studentArray);
+    }
+    catch (Exception $e)
+    {
+        echo $e->getMessage();
+    }
+
+}
 
 $app->run();
 
