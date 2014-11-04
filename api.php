@@ -94,12 +94,34 @@ $app->post('/postStudent/', function () {
    // $allPostVars = $app->request->post();
     $response = "irgendwas";
     //echo "hallo";
-    addStudent($post->student);
+    //addStudent($post->student);
+    $studentId = getStudentIdByEmail($post->student->email);
+    addAddress($studentId, $post->address);
+    addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
+
     //$result = array("status"=>"success","response"=>$response);
-  //  die(var_dump($post));
+   //die(var_dump($post));
 
     //echo json_encode($result);
 });
+
+function addUniversityAndStudy ($studentId, $university, $study, $minor)
+{
+    try
+    {
+        $sql = "
+        update students set university=$university, study=$study, minor=$minor
+        WHERE id = $studentId
+        ";
+        $response = db::query($sql);
+        var_dump($sql);
+    }
+    catch (Exception $e)
+    {
+        echo $e->getTraceAsString();
+    }
+
+}
 
 function addStudent($student)
 {
@@ -110,17 +132,54 @@ function addStudent($student)
     ";
 
     $studentArray = (array) $student;
-   var_dump($studentArray);
 
     try
     {
         $prepared = db::get()->prepare($sql);
-        $prepared->execute($studentArray);
+        $response = $prepared->execute($studentArray);
+        $response = db::query($sql, $studentArray);
+        //var_dump($response);
     }
     catch (Exception $e)
     {
         echo $e->getMessage();
     }
+
+}
+
+function addAddress($studentId, $address)
+{   $address = (array)$address;
+    $address['studentId'] = $studentId;
+    $sql = "
+    insert into studentAddress (studentId, street, streetno, zip, city)
+    VALUES (:studentId, :street, :streetno, :zip, :city)";
+    try
+    {
+        $response = db::query($sql, $address);
+        //var_dump(($response)); //@psa todo make sure only one email is assigned. Maybe throw error or something
+    }
+    catch (Exception $e)
+    {
+        echo $e->getMessage();
+    }
+
+}
+
+function getStudentIdbyEmail($email)
+{
+    $sql = "
+    select id from students where email='$email'";
+    try
+    {
+        $response = db::query($sql);
+       // var_dump(($response[0]['id'])); //@psa todo make sure only one email is assigned. Maybe throw error or something
+        return $response[0]['id'];
+    }
+    catch (Exception $e)
+    {
+        echo $e->getMessage();
+    }
+
 
 }
 

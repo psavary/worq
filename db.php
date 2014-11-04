@@ -34,18 +34,19 @@ class db
         return $database;
     }
 
-    public static function query($sql)
+    public static function query($sql, Array $dataArray= null, $asJson = false)
     {
         $db = self::get();
         $statement=$db->prepare($sql);
-        $statement->execute();
+        $statement->execute($dataArray);
         $results=$statement->fetchAll(PDO::FETCH_ASSOC);
-        $json=json_encode($results);
+        if($asJson)
+        {
+            $results=json_encode($results);
+        }
 
-        return $json;
+        return $results;
     }
-
-
 
     private function __construct()
     {
