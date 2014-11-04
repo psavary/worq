@@ -11,12 +11,13 @@ $app = new \Slim\Slim(array(
 ));
 
 
-$app->get('/hello/', function () {
+$app->get('/hello/', function ()
+{
 
 
     $select = "Select students.id, students.firstname, students.lastname, study.study as study, region.region as region from students left join study on students.study=study.id left join region on students.region = region.id";
 
-    $data = db::query($select);
+    $data = db::query($select,null,true);
 
     echo ($data);
 
@@ -24,8 +25,8 @@ $app->get('/hello/', function () {
 });
 
 
-$app->get('/regions/', function () {
-
+$app->get('/regions/', function ()
+{
     echo
     '[
       {"id": "1", "name": "Ostschweiz"},
@@ -37,10 +38,9 @@ $app->get('/regions/', function () {
 
 $app->get('/study/', function ()
 {
-
     $select = "Select * from study";
 
-    $data = db::query($select);
+    $data = db::query($select,null,true);
 
     echo ($data);
 });
@@ -49,7 +49,7 @@ $app->get('/university/', function ()
 {
     $select = "Select * from universities";
 
-    $data = db::query($select);
+    $data = db::query($select,null,true);
 
     echo ($data);
 });
@@ -58,7 +58,7 @@ $app->get('/languageDiploma/:id', function ($id)
 {
     $select = "Select * from languageDiploma where languageId=".$id;
 
-    $data = db::query($select);
+    $data = db::query($select,null,true);
 
     echo ($data);
 });
@@ -68,7 +68,7 @@ $app->get('/languages/', function ()
 {
     $select = "Select * from languages";
 
-    $data = db::query($select);
+    $data = db::query($select,null,true);
 
     echo ($data);
 });
@@ -85,24 +85,23 @@ $app->get('/industries/', function ()
 });
 
 $app->post('/postStudent/', function () {
-    //Create book
+
     $app = \Slim\Slim::getInstance();
     //$app = new \Slim\Slim();
     $request = $app->request();
     $body = $request->getBody();
     $post = json_decode($body);
-   // $allPostVars = $app->request->post();
-    $response = "irgendwas";
-    //echo "hallo";
-    //addStudent($post->student);
+
+    addStudent($post->student);
+
     $studentId = getStudentIdByEmail($post->student->email);
+
     addAddress($studentId, $post->address);
+
     addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
 
     //$result = array("status"=>"success","response"=>$response);
-   //die(var_dump($post));
 
-    //echo json_encode($result);
 });
 
 function addUniversityAndStudy ($studentId, $university, $study, $minor)
@@ -125,7 +124,6 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
 
 function addStudent($student)
 {
-
     $sql = "
     insert into students (firstname, lastname, gender,  email, password, telephone)
     VALUES (:firstname, :lastname, :gender, :email, :password, :telephone)
@@ -144,7 +142,6 @@ function addStudent($student)
     {
         echo $e->getMessage();
     }
-
 }
 
 function addAddress($studentId, $address)
@@ -162,7 +159,6 @@ function addAddress($studentId, $address)
     {
         echo $e->getMessage();
     }
-
 }
 
 function getStudentIdbyEmail($email)
@@ -179,8 +175,6 @@ function getStudentIdbyEmail($email)
     {
         echo $e->getMessage();
     }
-
-
 }
 
 $app->run();

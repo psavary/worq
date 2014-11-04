@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 03. Nov 2014 um 08:39
+-- Erstellungszeit: 04. Nov 2014 um 23:40
 -- Server Version: 5.6.16
 -- PHP-Version: 5.5.9
 
@@ -19,21 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `worq`
 --
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `address`
---
-
-CREATE TABLE IF NOT EXISTS `address` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `street` varchar(100) DEFAULT NULL,
-  `streetno` varchar(10) DEFAULT NULL,
-  `zip` varchar(8) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -110,6 +95,37 @@ INSERT INTO `region` (`id`, `region`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `studentAddress`
+--
+
+CREATE TABLE IF NOT EXISTS `studentAddress` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `studentId` int(11) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `streetno` varchar(10) DEFAULT NULL,
+  `zip` varchar(8) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Daten für Tabelle `studentAddress`
+--
+
+INSERT INTO `studentAddress` (`id`, `studentId`, `street`, `streetno`, `zip`, `city`) VALUES
+(1, NULL, 's', 'n', 'z', 'c'),
+(2, NULL, 's', 'n', 'z', 'c'),
+(3, NULL, 's', 'n', 'z', 'c'),
+(4, NULL, 's', 'n', 'z', 'c'),
+(5, NULL, 's', 'n', 'z', 'c'),
+(6, NULL, 's', 'n', 'z', 'c'),
+(7, 26, 's', 'n', 'z', 'c'),
+(8, 26, 's', 'n', 'z', 'c'),
+(9, 26, 's', 'n', 'z', 'c');
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `students`
 --
 
@@ -119,28 +135,33 @@ CREATE TABLE IF NOT EXISTS `students` (
   `lastname` char(50) NOT NULL,
   `gender` int(11) DEFAULT NULL,
   `study` int(11) NOT NULL,
+  `minor` int(11) DEFAULT NULL,
   `region` int(11) NOT NULL,
   `university` int(11) DEFAULT NULL,
-  `email` int(11) DEFAULT NULL,
-  `password` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
   `address` int(11) DEFAULT NULL,
+  `telephone` varchar(25) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Daten für Tabelle `students`
 --
 
-INSERT INTO `students` (`id`, `firstname`, `lastname`, `gender`, `study`, `region`, `university`, `email`, `password`, `address`) VALUES
-(1, 'Lorena', 'Sutter', NULL, 1, 2, NULL, NULL, NULL, 0),
-(2, 'Margrith', 'Meier', NULL, 1, 1, NULL, NULL, NULL, 0),
-(3, 'Susanne', 'Lötscher', NULL, 2, 1, NULL, NULL, NULL, 0),
-(4, 'Fabienne', 'Kramer', NULL, 2, 2, NULL, NULL, NULL, 0),
-(5, 'Caroline', 'Fleischer', NULL, 2, 3, NULL, NULL, NULL, 0),
-(6, 'Corinne', 'Mettler', NULL, 3, 1, NULL, NULL, NULL, 0),
-(7, 'Corinne', 'Blocher', NULL, 3, 2, NULL, NULL, NULL, 0),
-(8, 'Martin', 'Fleischer', NULL, 3, 1, NULL, NULL, NULL, 0),
-(9, 'Claudio', 'Kramer', NULL, 1, 2, NULL, NULL, NULL, 0);
+INSERT INTO `students` (`id`, `firstname`, `lastname`, `gender`, `study`, `minor`, `region`, `university`, `email`, `password`, `address`, `telephone`) VALUES
+(1, 'Lorena', 'Sutter', NULL, 1, NULL, 2, NULL, NULL, NULL, 0, ''),
+(2, 'Margrith', 'Meier', NULL, 1, NULL, 1, NULL, NULL, NULL, 0, ''),
+(3, 'Susanne', 'Lötscher', NULL, 2, NULL, 1, NULL, NULL, NULL, 0, ''),
+(4, 'Fabienne', 'Kramer', NULL, 2, NULL, 2, NULL, NULL, NULL, 0, ''),
+(5, 'Caroline', 'Fleischer', NULL, 2, NULL, 3, NULL, NULL, NULL, 0, ''),
+(6, 'Corinne', 'Mettler', NULL, 3, NULL, 1, NULL, NULL, NULL, 0, ''),
+(7, 'Corinne', 'Blocher', NULL, 3, NULL, 2, NULL, NULL, NULL, 0, ''),
+(8, 'Martin', 'Fleischer', NULL, 3, NULL, 1, NULL, NULL, NULL, 0, ''),
+(9, 'Claudio', 'Kramer', NULL, 1, NULL, 2, NULL, NULL, NULL, 0, ''),
+(10, 'first', 'last', 0, 0, NULL, 0, NULL, '0', '0', NULL, 'tel'),
+(26, 'a', 'b', 0, 1, 1, 0, 1, 'a@b.ch', 'pass', NULL, 't'),
+(27, 'a', 'b', 0, 0, NULL, 0, NULL, 'a@b.ch', 'pass', NULL, 't');
 
 -- --------------------------------------------------------
 
