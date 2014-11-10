@@ -8,8 +8,40 @@
 
 
 app.controller('RegisterCtrl',
-    function($scope, $http, regions, students, industries, universities, languages, languageDiploma)
+    function($scope, $modal, $http, $alert, regions, students, industries, universities, languages, languageDiploma)
     {
+        //angularstrap example start
+        $scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+
+        $scope.dropdown = [
+            {
+                "text": "<i class=\"fa fa-download\"></i>&nbsp;Another action",
+                "href": "#anotherAction"
+            },
+            {
+                "text": "<i class=\"fa fa-globe\"></i>&nbsp;Display an alert",
+                "click": "$alert(\"Something else!\")"
+            },
+            {
+                "text": "<i class=\"fa fa-external-link\"></i>&nbsp;External link",
+                "href": "/auth/facebook",
+                "target": "_self"
+            },
+            {
+                "divider": true
+            },
+            {
+                "text": "Separated link",
+                "href": "#separatedLink"
+            }
+        ];
+        $scope.tooltip = {title: 'Hello Tooltip<br />This is a multiline message!', checked: false};
+
+        $scope.alert = {title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', type: 'info'};
+        //angularstrap example end
+
+
+
         $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
 
         $scope.changeLang = function(langNo,id) {

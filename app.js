@@ -1,6 +1,7 @@
 'use strict';
 
-var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
+
+var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mgcrea.ngStrap'])
     app.config(function($routeProvider) {
         $routeProvider
         .when('/', { templateUrl: 'register.html' })
@@ -10,6 +11,26 @@ var app = angular.module('tutorialApp', ['ngAnimate', 'ngRoute'])
         .otherwise({ redirectTo: 'register.html'});
     });
 
+    //angularstrap example
+    app.config(function($modalProvider) {
+        angular.extend($modalProvider.defaults, {
+            html: true
+        });
+    });
+
+    app.config(function($dropdownProvider) {
+        angular.extend($dropdownProvider.defaults, {
+            html: true
+        });
+    });
+
+
+    app.config(function($tooltipProvider) {
+        angular.extend($tooltipProvider.defaults, {
+            html: true
+        });
+    });
+    //end angularstrapexample
 
     app.service('students', ['$http',function($http)
     {
