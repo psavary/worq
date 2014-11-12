@@ -11,27 +11,28 @@
 
 
 
-            <form novalidate class="simple-form">
+            <form novalidate class="simple-form" name="registerForm" ng-submit="update(user)">
 
             <div class="boxcontent">
-                    Firstname: <input type="text" ng-model="user.student.firstname" /><br />
-                    Lastname: <input type="text" ng-model="user.student.lastname" /><br />
+                    Firstname: <input type="text" ng-model="user.student.firstname" required/><br />
+                    Lastname: <input type="text" ng-model="user.student.lastname" required/><br />
                     <fieldset>
-                        Street: <input type="text" ng-model="user.address.street" /><br />
-                        No: <input type="text" ng-model="user.address.streetno" /><br />
+                        Street: <input type="text" ng-model="user.address.street" required/><br />
+                        No: <input type="text" ng-model="user.address.streetno" required/><br />
                     </fieldset>
-                    Zip: <input type="text" ng-model="user.address.zip" /><br />
-                    City: <input type="text" ng-model="user.address.city" /><br />
+                    Zip: <input type="text" ng-model="user.address.zip" required/><br />
+                    City: <input type="text" ng-model="user.address.city" required/><br />
 
                     Telephone: <input type="text" ng-model="user.student.telephone" /><br />
                     Gender: <input type="radio" ng-model="user.student.gender" value="male" />male
                     <input type="radio" ng-model="user.student.gender" value="female" />female<br />
                     <input type="date" ng-model="user.student.birthdate" id="exampleInput" name="input" ng-model="value"
                            placeholder="yyyy-MM-dd" min="1940-01-01" max="2013-12-31" required /><br />
-                    E-mail: <input type="email" ng-model="user.student.email" /><br />
-                    E-mail Validate: <input type="email"  /><br />
-                    Password: <input type="password" ng-model="user.student.password" /><br />
-                    Password Validate: <input type="password"  /><br />
+
+                    E-mail: <input  ng-class="{ 'has-error' : isNotUniqueEmail && registerForm.email.$dirty }" type="email" name="email" ng-change="checkUnique()" ng-model="user.student.email" required/><br />
+                    <div class="alert alert-danger" ng-show="isNotUniqueEmail">This email is not unique!</div>
+                    Password: <input type="password" ng-model="user.student.password" required/><br />
+                    Password Validate: <input type="password"  required/><br />
             </div>
 
             <div class="centercol">
@@ -42,9 +43,9 @@
                     <div class="boxcontent">
                             <!-- Angular Select -->
                         University:
-                        <select data-ng-model="user.university" ng-options="university.name for university in universities" ></select><br />
+                        <select data-ng-model="user.university" ng-options="university.name for university in universities" required></select><br />
                         Study:
-                        <select data-ng-model="user.study" ng-options="study.name for study in studys" ></select><br />
+                        <select data-ng-model="user.study" ng-options="study.name for study in studys" required></select><br />
                             The value selected is {{user.study.name}}.<br />
                         Minor field of study:
                         <select data-ng-model="user.minor" ng-options="study.name for study in studys" ></select><br />
@@ -108,9 +109,8 @@
                         <br />
                         <br />
                         Damit dich Arbeitgeber finden, brauchst Du nur noch ein Jobprofil zu erfassen.
-                        <input type='submit' name='' value='Abschliessen' class="button"/>
                         <button class="button" ng-click="reset()">RESET</button>
-                        <button class="button" ng-click="update(user)">SAVE</button>
+                        <button type="submit" ng-disabled="registerForm.$invalid || isNotUniqueEmail" class="button radius">Submit</button>
                         <br />
                         <br />
                         <br />

@@ -30,3 +30,19 @@
     height: 30px;
     opacity: 1;
 } /* terminal animations for leave */
+
+    input.ng-invalid {
+        border: 1px solid red;
+    }
+    input.ng-invalid-required {
+        border: 1px solid red;
+    }
+
+    input.ng-valid {
+        border: 1px solid green;
+    }
+    input.has-error
+    {
+        border: 1px solid red;
+
+    }

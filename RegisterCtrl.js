@@ -116,6 +116,31 @@ app.controller('RegisterCtrl',
             }
         );
 
+        $scope.checkUnique = function(user)
+        {
+
+            $scope.isNotUniqueEmail = false;
+            var email = $scope.user.student.email;
+            $http.get('api.php/getStudentEmailUnique/'+email).then
+            (
+                function(responeData)
+                {
+                    var emailExists = responeData.data;
+                    $scope.isNotUniqueEmail = !emailExists.response;
+
+                    console.log($scope.isNotUniqueEmail);
+
+                    //if ($scope.isNotUniqueEmail)
+                    //{
+                     //   $scope.registerForm.email.$setValidity('validEmail', false);
+                    //};
+                    return  $scope.isNotUniqueEmail;
+                }
+            );
+
+
+        }
+
 
         $scope.update = function(user) {
            // $scope.master = angular.copy(user);

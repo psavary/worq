@@ -41,6 +41,23 @@ $app->post('/postLogin/', function ()
 
 });
 
+//check if entered Emailaddress is unique in DB
+$app->get('/getStudentEmailUnique/:email', function ($email)
+{
+    $select = "Select email from students where email = '$email'";
+    $data = db::query($select,null);
+
+    if (count($data) == 0)
+    {
+        $trueresponse = array("response" => true);
+        echo json_encode($trueresponse);
+    }
+    else
+    {
+        $falseresponse = array("response" => false);
+        echo json_encode($falseresponse);
+    }
+});
 
 $app->get('/hello/', function ()
 {
