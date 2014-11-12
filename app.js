@@ -11,26 +11,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
         .otherwise({ redirectTo: 'register.html'});
     });
 
-    //angularstrap example
-    app.config(function($modalProvider) {
-        angular.extend($modalProvider.defaults, {
-            html: true
-        });
-    });
 
-    app.config(function($dropdownProvider) {
-        angular.extend($dropdownProvider.defaults, {
-            html: true
-        });
-    });
-
-
-    app.config(function($tooltipProvider) {
-        angular.extend($tooltipProvider.defaults, {
-            html: true
-        });
-    });
-    //end angularstrapexample
 
     app.service('students', ['$http',function($http)
     {
@@ -116,6 +97,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
     }]);
 
 
+
     app.service('industries', ['$http',function($http)
     {
         this.getIndustries =
@@ -136,79 +118,4 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
     });
 
 
-    //Controller for whole filtermanagement
-    app.controller('FilterCtrl',
-        function($scope, $http, regions, students, industries)
-        {
 
-
-
-            $http.get('api.php/study/').then
-            (
-                function(studyResponse)
-                {
-                    $scope.studys = studyResponse.data;
-                }
-            );
-
-
-            //get Regions
-            regions.getRegions().then
-            (
-                function(payload)
-                {
-
-                    $scope.regions = payload.data;
-                    //console.log($scope.regions)
-                }
-            );
-
-
-            //get industries
-            industries.getIndustries().then
-            (
-                function(payload)
-                {
-
-                    $scope.industries = payload.data;
-                    //console.log($scope.industriesData)
-
-                }
-            );
-
-            //experimental code to trigger mysql select onChange of any dropbox field
-            $scope.change = function(variable)
-            {
-                if (!angular.isUndefined($scope.mymodel)) //only do somethin as long it is not undefined
-                {
-                    console.log($scope.mymodel.name);
-                }
-                console.log($scope.othermodel.name);
-
-                $scope.counter++;
-                $scope.variable = variable;
-            };
-
-
-            //array of students
-            students.myservice().then(
-                function(payload){
-                    $scope.articles = payload.data;
-                }
-            );
-            //end do this in the onchangefunction
-
-
-            //models needed for input and selectfields!?
-
-            //console.dir($scope.industriesData);
-
-            //console.log($scope.industries);
-
-
-
-
-
-
-        }
-    );

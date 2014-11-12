@@ -1,4 +1,4 @@
-
+<span ng-controller="NavigationCtrl">
   <!-- Static navbar -->
   <div class="navbar" role="navigation">
 	<div class="container-fluid">
@@ -16,43 +16,12 @@
 		<ul class="nav navbar-nav navbar-right">
 
 		  <li><a href="#" id="lognav" >register</a></li>
-            <li><a href="#" id="lognav" >login</a></li>
+            <li class="btn btn-primary" data-animation="am-fade-and-slide-top" data-template="./templates/login.html" bs-modal="loginModal">login</a></li>
 		</ul>
 	  </div><!--/.nav-collapse -->
 	</div><!--/.container-fluid -->
   </div>
 
 
-<script>
-
-$(function () {
-
-    $('#lognav').click(function (e) {
-        $("#login").lightbox_me({centered: true, preventScroll: true, onLoad: function () {
-            $("#login").find("input:first").focus();
-        }});
-
-        e.preventDefault();
-    });
 
 
-});
-
-</script>
-
-<form id='login' action='' method='post' accept-charset='UTF-8'  style="display: none;">
-    <div id="box">
-
-        <div id="ueberschrift">
-            <span class="text_header">Login</span>
-        </div>
-        <fieldset>
-                <input type='text' name='username' id='username' placeholder="Username" value='' maxlength="50"/><br/>
-                <span id='register_username_errorloc' class='error'></span>
-                <input type='text' name='password' placeholder="Passwort" id='password' maxlength="50"/>
-
-                <input type='submit' name='Submit' value='Absenden' class="button"/>
-        </fieldset>
-    </div>
-
-</form>

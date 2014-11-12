@@ -3,12 +3,43 @@ require './lib/slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 //add meedoo
-include_once 'db.php'; //@psa todo refactor with autoloader;
+require_once 'db.php'; //@psa todo refactor with autoloader;
 
 
 $app = new \Slim\Slim(array(
     'debug' => true
 ));
+
+
+
+
+$app->post('/postLogin/', function ()
+{
+
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = (array)json_decode($body);
+    //var_dump($post);
+
+    //session_start();
+    $_SESSION['time'] = 'hello';
+    $select = "Select * from students where email = :email and password = :password";
+    $qresult = db::query($select, $post);
+    //var_dump($qresult);
+    if (count($qresult ) > 1)
+    {
+        $result = array("status"=>"success","response"=>$_SESSION['time'] );
+
+    }
+    else
+    {
+        $result = array("status"=>"error","response"=>$_SESSION['time'] );
+
+    }
+    echo(json_encode($result));
+
+});
 
 
 $app->get('/hello/', function ()
@@ -104,6 +135,8 @@ $app->post('/postStudent/', function () {
 
 });
 
+
+//@psa refactor this into separate class
 function addUniversityAndStudy ($studentId, $university, $study, $minor)
 {
     try

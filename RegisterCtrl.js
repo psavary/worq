@@ -8,10 +8,9 @@
 
 
 app.controller('RegisterCtrl',
-    function($scope, $modal, $http, $alert, regions, students, industries, universities, languages, languageDiploma)
+    function($scope, $http, $alert, regions, students, industries, universities, languages, languageDiploma)
     {
-        //angularstrap example start
-        $scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+
 
         $scope.dropdown = [
             {
@@ -59,6 +58,8 @@ app.controller('RegisterCtrl',
             console.log($scope.languageDiploma);
 
         };
+
+
 
         $http.get('api.php/study/').then
         (
