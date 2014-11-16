@@ -201,15 +201,30 @@ You can customize all the aspects of the form in this style sheet
     width: 350px;
     /*background-color: red;*/
     min-height: 100px;
+    margin-right: 50px;
+
+}
+
+.centercol {
+    float: left;
+    width: 350px;
+    /*background-color: red;*/
+    min-height: 100px;
+    margin-right: 50px;
+
 }
 
 
-.rightcol {
+.rightcolsmall {
+    float: left;
+
     position: top;
-    display: block;
-    width: 350px;
+    float: left;
+   /* display: block;*/
+    width: 300px;
    /* background-color: green;*/
     min-height: 100px;
+
 }
 
 

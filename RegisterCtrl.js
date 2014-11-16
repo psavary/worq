@@ -8,38 +8,8 @@
 
 
 app.controller('RegisterCtrl',
-    function($scope, $http, $alert, regions, students, industries, universities, languages, languageDiploma)
+    function($scope, $http, $modal, $alert, regions, students, industries, universities, languages, languageDiploma)
     {
-
-
-        $scope.dropdown = [
-            {
-                "text": "<i class=\"fa fa-download\"></i>&nbsp;Another action",
-                "href": "#anotherAction"
-            },
-            {
-                "text": "<i class=\"fa fa-globe\"></i>&nbsp;Display an alert",
-                "click": "$alert(\"Something else!\")"
-            },
-            {
-                "text": "<i class=\"fa fa-external-link\"></i>&nbsp;External link",
-                "href": "/auth/facebook",
-                "target": "_self"
-            },
-            {
-                "divider": true
-            },
-            {
-                "text": "Separated link",
-                "href": "#separatedLink"
-            }
-        ];
-        $scope.tooltip = {title: 'Hello Tooltip<br />This is a multiline message!', checked: false};
-
-        $scope.alert = {title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', type: 'info'};
-        //angularstrap example end
-
-
 
         $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
 
@@ -77,7 +47,7 @@ app.controller('RegisterCtrl',
             {
 
                 $scope.universities = payload.data;
-                //console.log($scope.regions)
+                console.log($scope.universities)
             }
         );
 
@@ -140,19 +110,42 @@ app.controller('RegisterCtrl',
 
 
         }
-
+        console.log($scope.isNotUniqueEmail);
+        console.log(registerForm.$invalid);
 
         $scope.update = function(user) {
            // $scope.master = angular.copy(user);
 
-            students.postStudent(user);
+
+            // Simple POST request example (passing data) :
+            $http.post('/api.php/postStudent/', user).
+                success(function(data, status, headers, config) {
+
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                });
             console.dir(user);
+            console.log('i did it!');
+            var alert = $alert({
+                "title": "Holy guacamole!",
+                "content": "Student Saved.",
+                "type": "success",
+                "duration":"5"
+            });
+
 
         };
 
 
         $scope.reset = function() {
-          //  $scope.user = angular.copy($scope.master);
+            console.log('reset');
+            // this callback will be called asynchronously
+            // when the response is available
+
+
+            //  $scope.user = angular.copy($scope.master);
         };
 
     }

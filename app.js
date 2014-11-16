@@ -40,17 +40,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
         this.postStudent =
             function (postData)
             {
-                // Simple POST request example (passing data) :
-                $http.post('/api.php/postStudent/', postData).
-                    success(function(data, status, headers, config) {
-                        console.log('i did it!');
-                        // this callback will be called asynchronously
-                        // when the response is available
-                    }).
-                    error(function(data, status, headers, config) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                    });
+
             }
 
         //return (myservice);

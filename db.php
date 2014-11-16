@@ -36,6 +36,8 @@ class db
 
     public static function query($sql, Array $dataArray= null, $asJson = false)
     {
+        try
+        {
         $db = self::get();
         $statement=$db->prepare($sql);
         $statement->execute($dataArray);
@@ -46,6 +48,11 @@ class db
         }
 
         return $results;
+        }
+        catch (Exception $e)
+        {
+            echo $e->getMessage(). " ".$sql;
+        }
     }
 
     private function __construct()

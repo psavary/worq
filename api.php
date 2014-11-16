@@ -141,12 +141,13 @@ $app->post('/postStudent/', function () {
     $post = json_decode($body);
 
     addStudent($post->student);
-
+    //var_dump($post->student);
     $studentId = getStudentIdByEmail($post->student->email);
 
     addAddress($studentId, $post->address);
 
     addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
+    var_dump($post->student);
 
     //$result = array("status"=>"success","response"=>$response);
 
@@ -180,13 +181,13 @@ function addStudent($student)
     ";
 
     $studentArray = (array) $student;
+    //var_dump($studentArray);
 
     try
     {
-        $prepared = db::get()->prepare($sql);
-        $response = $prepared->execute($studentArray);
         $response = db::query($sql, $studentArray);
-        //var_dump($response);
+
+        var_dump($response);
     }
     catch (Exception $e)
     {

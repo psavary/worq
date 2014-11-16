@@ -32,10 +32,10 @@
 } /* terminal animations for leave */
 
     input.ng-invalid {
-        border: 1px solid red;
+        border: 2px solid red;
     }
     input.ng-invalid-required {
-        border: 1px solid red;
+        border: 2px solid red;
     }
 
     input.ng-valid {
@@ -43,6 +43,12 @@
     }
     input.has-error
     {
-        border: 1px solid red;
+        border: 2px solid red;
+
+    }
+    button.disabled
+    {
+        background-color: grey;
+        color: red;
 
     }
