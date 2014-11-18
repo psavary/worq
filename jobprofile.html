@@ -1,0 +1,106 @@
+<span ng-controller="JobprofileCtrl">
+hallo
+
+
+    <div class="leftcol">
+        <div id="box">
+            <div id="ueberschrift">
+                <span class="text_header">Job-Profil</span>
+            </div>
+            <div class="boxcontent">
+                <form novalidate class="simple-form" name="jobprofileForm" ng-submit="">
+                    <label>Region</label>
+                    <select name="region" data-ng-model="user.region" ng-options="region.name for region in regions"
+                            required>
+                        <option value="">-- please choose --</option>
+                    </select><br/>
+                    <label>Employment Type</label>
+                    <select name="employmentType" data-ng-model="user.employmentType"
+                            ng-options="employmenttype.name for employmenttype in employmenttypes"
+                            required>
+                        <option value="">-- please choose --</option>
+                    </select><br/>
+                    <label>Workload From</label>
+                    <select name="workloadFrom" data-ng-model="user.workloadFrom"
+                            ng-options="workload.name for workload in workloads" required>
+                        <option value="">-- please choose --</option>
+                    </select>
+                    <label>Workload To</label>
+                    <select name="workloadFrom" data-ng-model="user.workloadTo"
+                            ng-options="workload.name for workload in workloads" required>
+                        <option value="">-- please choose --</option>
+                    </select>
+                    <input placeholder="availability from" type="date" name="dateFrom" ng-model="user.availabilityFrom">
+                    <input placeholder="availability to" type="date" name="dateTobday" ng-model="user.availabilityTo">
+                    <br />
+                    <fieldset class="availability rightsubbox">
+                        <label>wochentag</label>
+                        <span>mo</span>
+                        <span>di</span>
+                        <span>mi</span>
+                        <span>do</span>
+                        <span>fr</span>
+                        <span>sa</span>
+                        <span>so</span>
+                        <br />
+                        <label>morgen</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>nachmittag</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>abend</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <br />
+                        <label>nacht</label>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+                        <input type="checkbox"></input>
+
+
+                    </fieldset>
+                    <br />
+                    <br />
+
+                    <br />
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+
+
+                    dfsdf
+            </div>
+        </div>
+
+
+        </form>
+
+</span>

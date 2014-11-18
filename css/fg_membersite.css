@@ -92,23 +92,24 @@ body {
  }
 
 
-.aviability span
+.availability
 {
     margin-right:1px;
-    color: red;
+    color: black;
     border-color: black;
+    align-self: center;
 }
 
-.aviability input
+.availability input, span
 {
     width: 15px;
-    color: white;
-    border: none;
+    color: black;
+    border: 1px;
 
 }
-.aviability label
+.availability label
 {
-    width: 100px !important;
+    width: 120px !important;
 }
 
 .boxcontent select{
@@ -303,7 +304,7 @@ You can customize all the aspects of the form in this style sheet
 
 .rightsubbox
 {
-    width: 50%;
+    width: 90%;
     float: right;
 }
 

@@ -111,6 +111,24 @@ $app->get('/languageDiploma/:id', function ($id)
     echo ($data);
 });
 
+$app->get('/employmenttypes/', function ()
+{
+    $select = "Select * from employmenttypes";
+
+    $data = db::query($select,null,true);
+
+    echo ($data);
+});
+
+
+$app->get('/workloads/', function ()
+{
+    $select = "Select * from workloads";
+
+    $data = db::query($select,null,true);
+
+    echo ($data);
+});
 
 $app->get('/languages/', function ()
 {

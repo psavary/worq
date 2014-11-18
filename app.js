@@ -7,8 +7,9 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
         .when('/', { templateUrl: 'register.html' })
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
+        .when('/jobprofile', { templateUrl: 'jobprofile.html' })
         .when('/about', { template: '�ber unsere Pizzeria' })
-        .otherwise({ redirectTo: 'register.html'});
+        .otherwise({ redirectTo: '/register'});
     });
 
 
@@ -48,6 +49,20 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
 
     }]);
 
+    app.service('job', ['$http',function($http)
+    {
+        this.getEmploymenttypes =
+            function()
+            {
+                return $http.get('api.php/employmenttypes/');
+            };
+
+        this.getWorkloads =
+            function()
+            {
+                return $http.get('api.php/workloads/');
+            };
+    }]);
 
     app.service('regions', ['$http',function($http)
     {
@@ -106,7 +121,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
 
 */
 
-    });
+    }   );
 
 
 
