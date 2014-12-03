@@ -14,6 +14,7 @@
 	  <div class="navbar-collapse collapse">
 
 		<ul class="nav navbar-nav navbar-right">
+            <li ng-if="isAuthorized">You're admin.</li>
 
 		  <li><a href="#" id="lognav" >register</a></li>
             <li data-animation="am-fade-and-slide-top" data-template="./templates/login.html" bs-modal="loginModal"><a>login</a></li>

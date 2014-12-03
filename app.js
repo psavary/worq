@@ -1,7 +1,9 @@
 'use strict';
 
 
-var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mgcrea.ngStrap'])
+var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mgcrea.ngStrap', 'ngCookies'])
+
+
     app.config(function($routeProvider) {
         $routeProvider
         .when('/', { templateUrl: 'register.html' })
@@ -113,13 +115,26 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
             };
     }]);
 
+/*
+    app.service('phpCookie',['$cookieStore', function($cookieStore)
+    {
+        this.getCookie =
+            function()
+            {
+                var myCookie = $cookieStore.remove('PHPSESSID');
+                console.log(myCookie);
+                return myCookie;
+            };
+    }])
+    */
 
-    app.controller('ArticlesCtrl',
-    function($scope, $http, students) {
-       // console.log(students.myservice());
-/* move the whole thing to studyctrl
-
-*/
+    app.controller('RootCtrl',
+    function($scope, $http) {
+        //placeHolderParentScope
+        //$http.get('/api.php/getCookie/');
+        //var myCookie = phpCookie.getCookie();
+        //console.log(myCookie);
+        $scope.isAuthorized = true;
 
     }   );
 

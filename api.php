@@ -11,7 +11,12 @@ $app = new \Slim\Slim(array(
 ));
 
 
+$app->get('/getCookie/', function () {
 
+    session_start();
+    $lifetime=600;
+    setcookie(session_name(),'getCookieTest',time()+$lifetime);
+});
 
 $app->post('/postLogin/', function ()
 {
@@ -22,10 +27,12 @@ $app->post('/postLogin/', function ()
     $post = (array)json_decode($body);
     //var_dump($post);
 
-    //session_start();
-    $_SESSION['time'] = 'hello';
-    $select = "Select * from students where email = :email and password = :password";
-    $qresult = db::query($select, $post);
+   // session_start();
+    //$lifetime=600;
+    //setcookie(session_name(),'angtest',time()+$lifetime);
+
+   // $select = "Select * from students where email = :email and password = :password";
+    //$qresult = db::query($select, $post);
     //var_dump($qresult);
     if (count($qresult ) > 1)
     {
