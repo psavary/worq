@@ -1,9 +1,10 @@
 <?php
+require_once 'bootstrap.php';
 require './lib/slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 //add meedoo
-require_once 'db.php'; //@psa todo refactor with autoloader;
+require_once './lib/db.php'; //@psa todo refactor with autoloader;
 
 
 $app = new \Slim\Slim(array(
