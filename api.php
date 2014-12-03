@@ -17,10 +17,13 @@ $app->get('/getCookie/', function () {
     $lifetime=600;
     setcookie(session_name(),'getCookieTest',time()+$lifetime);
 });
-
+/*
+ * check if usercredentials exist, if so, create session and save it to db
+ */
 $app->post('/postLogin/', function ()
 {
-
+    session_start();
+    $lifetime=600;
     $app = \Slim\Slim::getInstance();
     $request = $app->request();
     $body = $request->getBody();
@@ -31,17 +34,20 @@ $app->post('/postLogin/', function ()
     //$lifetime=600;
     //setcookie(session_name(),'angtest',time()+$lifetime);
 
-   // $select = "Select * from students where email = :email and password = :password";
-    //$qresult = db::query($select, $post);
+    $select = "Select * from students where email = :email and password = :password";
+    $qresult = db::query($select, $post);
     //var_dump($qresult);
-    if (count($qresult ) > 1)
+    if (count($qresult ) >= 1)
     {
-        $result = array("status"=>"success","response"=>$_SESSION['time'] );
+        //die($qresult);
+        $insert = "insert into session (sessionId, userId) VALUES ('".session_id()."',".$qresult[0]['id'].")";
+        db::query($insert);
+        $result = array("status"=>"success","response"=>"Login Success" );
 
     }
     else
     {
-        $result = array("status"=>"error","response"=>$_SESSION['time'] );
+        $result = array("status"=>"error","response"=>"Login Failed" );
 
     }
     echo(json_encode($result));
