@@ -11,7 +11,7 @@
 class db
 {
 
-    public static function get()
+    private static function get()
     {
         static $database = null;
 
@@ -34,20 +34,43 @@ class db
         return $database;
     }
 
-    public static function query($sql, Array $dataArray= null, $asJson = false)
+    public static function query($sql, Array $dataArray= null, $asJson = false, $needsValidSession = true)
     {
         try
         {
-        $db = self::get();
-        $statement=$db->prepare($sql);
-        $statement->execute($dataArray);
-        $results=$statement->fetchAll(PDO::FETCH_ASSOC);
-        if($asJson)
-        {
-            $results=json_encode($results);
-        }
+            if($needsValidSession)
+            {
+                $session = new Session;
+                $queryAllowed = $session->checkSession();
 
-        return $results;
+            }
+            else if (!$needsValidSession)
+            {
+                $queryAllowed = false;
+            }
+            else
+            {
+                $queryAllowed = false;
+            }
+
+            if($queryAllowed)
+            {
+                $db = self::get();
+                $statement=$db->prepare($sql);
+                $statement->execute($dataArray);
+                $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+                if($asJson)
+                {
+                    $results=json_encode($results);
+                }
+
+                return $results;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         catch (Exception $e)
         {

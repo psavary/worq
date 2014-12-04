@@ -6,6 +6,11 @@ require './lib/slim/Slim/Slim.php';
 //add meedoo
 require_once './lib/db.php'; //@psa todo refactor with autoloader;
 
+//initalize Session
+$session = new Session;
+
+//initialize Timezone
+date_default_timezone_set('Europe/Paris');
 
 $app = new \Slim\Slim(array(
     'debug' => true
@@ -14,43 +19,50 @@ $app = new \Slim\Slim(array(
 
 $app->get('/getCookie/', function () {
 
-    session_start();
-    $lifetime=600;
-    setcookie(session_name(),'getCookieTest',time()+$lifetime);
+  //maybe not needed anymore
+
 });
+
+
 /*
  * check if usercredentials exist, if so, create session and save it to db
  */
 $app->post('/postLogin/', function ()
 {
-    session_start();
-    $lifetime=600;
+
     $app = \Slim\Slim::getInstance();
     $request = $app->request();
     $body = $request->getBody();
     $post = (array)json_decode($body);
-    //var_dump($post);
-
-   // session_start();
-    //$lifetime=600;
-    //setcookie(session_name(),'angtest',time()+$lifetime);
 
     $select = "Select * from students where email = :email and password = :password";
-    $qresult = db::query($select, $post);
-    //var_dump($qresult);
-    if (count($qresult ) >= 1)
-    {
-        //die($qresult);
-        $insert = "insert into session (sessionId, userId) VALUES ('".session_id()."',".$qresult[0]['id'].")";
-        db::query($insert);
-        $result = array("status"=>"success","response"=>"Login Success" );
+    $qresult = db::query($select, $post, false, false);
 
+    if (count($qresult) >= 1)
+    {
+        $expiretime = (date('Y-m-d G:i:s', time()+1200));
+        $select = "Select * from session where sessionId = '" . session_id() . "'";
+        $hasSession = db::query($select, null, false, false);
+        if (!$hasSession)
+        {
+            $insert = "insert into session (sessionId, userId, sessionExpire) VALUES ('" . session_id() . "'," . $qresult[0]['id'] . ",'" . $expiretime . "')";
+            $qResult = db::query($insert, null, false, false);
+            die(var_dump($insert)); //@psa todo here is something wrong....continue work here!!
+
+            $result = array("status"=>"success","response"=>"Login Success, new Session" );
+        }
+        else if ($hasSession)
+        {
+            $update = "update session set sessionExpire = $expiretime where sessionId = ''" . session_id() . "'";
+            db::query($update, null, false, false);
+            $result = array("status"=>"success","response"=>"Login Success, renew Session" );
+        }
     }
     else
     {
         $result = array("status"=>"error","response"=>"Login Failed" );
-
     }
+
     echo(json_encode($result));
 
 });

@@ -42,7 +42,7 @@ You can customize all the aspects of the form in this style sheet
 }
 
 body {
-    background-image:  url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/bg.jpg);
+    background-image:  url(../img/bg.jpg);
     background-size:   cover;                      /* <------ */
     background-repeat: no-repeat;
 }
