@@ -46,7 +46,7 @@ class db
             }
             else if (!$needsValidSession)
             {
-                $queryAllowed = false;
+                $queryAllowed = true;
             }
             else
             {

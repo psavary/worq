@@ -46,15 +46,16 @@ $app->post('/postLogin/', function ()
         if (!$hasSession)
         {
             $insert = "insert into session (sessionId, userId, sessionExpire) VALUES ('" . session_id() . "'," . $qresult[0]['id'] . ",'" . $expiretime . "')";
-            $qResult = db::query($insert, null, false, false);
-            die(var_dump($insert)); //@psa todo here is something wrong....continue work here!!
+            $result = db::query($insert, null, false, false);
 
             $result = array("status"=>"success","response"=>"Login Success, new Session" );
         }
         else if ($hasSession)
         {
-            $update = "update session set sessionExpire = $expiretime where sessionId = ''" . session_id() . "'";
+            $update = "update session set sessionExpire = '$expiretime' where sessionId = '" . session_id() . "'";
             db::query($update, null, false, false);
+           // die(var_dump($update)); //@psa todo here is something wrong....continue work here!!
+
             $result = array("status"=>"success","response"=>"Login Success, renew Session" );
         }
     }
