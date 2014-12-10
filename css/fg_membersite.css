@@ -92,23 +92,24 @@ body {
  }
 
 
-.aviability span
+.availability
 {
     margin-right:1px;
-    color: red;
+    color: black;
     border-color: black;
+    align-self: center;
 }
 
-.aviability input
+.availability input, span
 {
     width: 15px;
-    color: white;
-    border: none;
+    color: black;
+    border: 1px;
 
 }
-.aviability label
+.availability label
 {
-    width: 100px !important;
+    width: 120px !important;
 }
 
 .boxcontent select{
@@ -201,15 +202,30 @@ You can customize all the aspects of the form in this style sheet
     width: 350px;
     /*background-color: red;*/
     min-height: 100px;
+    margin-right: 50px;
+
+}
+
+.centercol {
+    float: left;
+    width: 350px;
+    /*background-color: red;*/
+    min-height: 100px;
+    margin-right: 50px;
+
 }
 
 
-.rightcol {
+.rightcolsmall {
+    float: left;
+
     position: top;
-    display: block;
-    width: 350px;
+    float: left;
+   /* display: block;*/
+    width: 300px;
    /* background-color: green;*/
     min-height: 100px;
+
 }
 
 
@@ -288,7 +304,7 @@ You can customize all the aspects of the form in this style sheet
 
 .rightsubbox
 {
-    width: 50%;
+    width: 90%;
     float: right;
 }
 

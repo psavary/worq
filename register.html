@@ -1,0 +1,139 @@
+<!-- this controller is available over all elements in the span below -->
+
+
+<span ng-controller="RegisterCtrl">
+
+    <div class="leftcol">
+        <div id="box">
+            <div id="ueberschrift"><img src="../img/trichter.png" class="icons" align="baseline" width="22%" alt="Register"/>
+                <span class="text_header">Register</span>
+            </div>
+
+
+
+            <form novalidate class="simple-form" name="registerForm" ng-submit="update(user)">
+
+            <div class="boxcontent">
+                    <label>Firstname: </label><input type="text" ng-model="user.student.firstname" required/><br />
+                <label>Lastname: </label><input type="text" ng-model="user.student.lastname" required/><br />
+                    <fieldset>
+                    <label>Street: </label><input type="text" ng-model="user.address.street" required/><br />
+                    <label> No: </label><input type="text" ng-model="user.address.streetno" required/><br />
+                    </fieldset>
+                    <label>Zip: </label><input type="text" ng-model="user.address.zip" required/><br />
+                    <label>City: </label><input type="text" ng-model="user.address.city" required/><br />
+
+                    <label>Telephone: </label><input type="text" ng-model="user.student.telephone" /><br />
+                    <label>Gender: </label><input type="radio" ng-model="user.student.gender" value="male" />male
+                    <input type="radio" ng-model="user.student.gender" value="female" />female<br />
+                    <!--<input type="date" ng-model="user.student.birthdate" id="exampleInput" name="input" ng-model="value"
+                           placeholder="yyyy-MM-dd" min="1940-01-01" max="2013-12-31" required /><br />-->
+
+                    <label>E-mail: </label><input  ng-class="{ 'has-error' : isNotUniqueEmail && registerForm.email.$dirty }" type="email" name="email" ng-change="checkUnique()" ng-model="user.student.email" required/><br />
+                    <div class="alert alert-danger" ng-show="isNotUniqueEmail">This email is not unique!</div>
+                    <label>Password: </label><input type="password" ng-model="user.student.password" required/><br />
+                    <label>Password Validate: </label><input type="password"  required/><br />
+            </div>
+        </div>
+    </div>
+
+            <div class="centercol">
+                <div id="box">
+                    <div id="ueberschrift">
+                        <span class="text_header">Profil anlegen</span>
+                    </div>
+                    <div class="boxcontent">
+                            <!-- Angular Select -->
+                        <label>University: </label>
+                        <select name="university" data-ng-model="user.university" ng-options="university.name for university in universities" required><option value="">-- please choose --</option></select><br />
+                        <span ng-show="registerForm.university.$error.required">Select uni</span>
+                        <label>Study: </label>
+                        <select data-ng-model="user.study" ng-options="study.name for study in studys" required><option value="">-- please choose --</option></select><br />
+                            The value selected is {{user.study.name}}.<br />
+                        <label>Minor field of study: </label>
+                        <select data-ng-model="user.minor" ng-options="study.name for study in studys" ><option value="">-- please choose --</option></select><br />
+
+                        <fieldset id="languages" class="threeinarow">
+                            <label>Language: </label>
+                            <select ng-change="changeLang(1,user.language1.language.id)" data-ng-model="user.language1.language" ng-options="language.name for language in languages" required><option value="">-- please choose --</option></select><br />
+                            <label>Language Diploma: </label>
+                            <select  data-ng-model="user.language1.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[1]" required><option value="">-- please choose --</option></select><br />
+                            <label>Language Oral1: </label>
+                            <select data-ng-model="user.language1.languageOral" required>
+                                <option value="">-- please choose --</option>
+                                <option value="1">grundlagen</option>
+                                <option value="2">gut</option>
+                                <option value="3">sehr gut</option>
+                                <option value="4">fliessend</option>
+                                <option value="5">muttersprache</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset id="languages" class="threeinarow">
+                            <label>Language2: </label>
+                            <select ng-change="changeLang(2,user.language2.language.id)" data-ng-model="user.language2.language" ng-options="language.name for language in languages" ><option value="">-- please choose --</option></select><br />
+                            <label>Language Diploma2: </label>
+                            <select  data-ng-model="user.language2.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[2]" ><option value="">-- please choose --</option></select><br />
+                            <label>Language Oral2: </label>
+                            <select data-ng-model="user.language2.languageOral">
+                                <option value="">-- please choose --</option>
+                                <option value="1">grundlagen</option>
+                                <option value="2">gut</option>
+                                <option value="3">sehr gut</option>
+                                <option value="4">fliessend</option>
+                                <option value="5">muttersprache</option>
+                            </select>
+                        </fieldset>
+                        <fieldset id="languages" class="threeinarow">
+                        <label>Language3: </label>
+                        <select ng-change="changeLang(3, user.language3.language.id)" data-ng-model="user.language3.language" ng-options="language.name for language in languages" ><option value="">-- please choose --</option></select><br />
+                        <label>Language Diploma3: </label>
+                        <select  data-ng-model="user.language3.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[3]" ><option value="">-- please choose --</option></select><br />
+                        <label>Language Oral3: </label>
+                        <select data-ng-model="user.language3.languageOral">
+                            <option value="">-- please choose --</option>
+                            <option value="1">grundlagen</option>
+                            <option value="2">gut</option>
+                            <option value="3">sehr gut</option>
+                            <option value="4">fliessend</option>
+                            <option value="5">muttersprache</option>
+                        </select>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightcolsmall">
+                <div id="box">
+                    <div id="ueberschrift">
+                        <span class="text_header">So geht es weiter</span>
+                    </div>
+                    <div class="boxcontent">
+                        <br />
+                        <p><img src="../img/callcenter.jpg" class="icons" align="bottom" width="90%" alt="student"/></p>
+                        Schliesse die Registrierung nun ab und bestätige Deine Anmeldung mit dem Link, den wir Dir zuschicken.
+                        <br />
+                        <br />
+                        Damit dich Arbeitgeber finden, brauchst Du nur noch ein Jobprofil zu erfassen.
+                        <button class="button" ng-click="reset()">RESET</button>
+                        <button ng-disabled="registerForm.$invalid || isNotUniqueEmail" ng-click="update(user)" class="button">Submit</button>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+            </form>
+
+        </div>
+    <div style="width:100%; float:left;">
+            <pre>form = {{user | json}}</pre>
+            <pre>master = {{master | json}}</pre>
+            <pre>isnotUniqueEmail = {{isNotUniqueEmail}}</pre>
+        <pre>registerForm.$invalid  = {{registerForm.$invalid }}</pre>
+
+    </div>
+</span>

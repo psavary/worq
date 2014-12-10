@@ -31,7 +31,7 @@ h1 {
     font-weight:200;
     color: #888888;
     font-size:16pt;
-    background: transparent url(../img/h1.png) no-repeat center left;
+    background: transparent url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/h1.png) no-repeat center left;
     padding-left:33px;
     margin:7px 5px 8px 8px;
 }
@@ -106,7 +106,7 @@ form.register .infobox{
     width:380px;
     height:98px;
     font-size:9px;
-    background: #FDFEFA url(../img/bg_infobox.gif) repeat-x top left;
+    background: #FDFEFA url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/bg_infobox.gif) repeat-x top left;
 }
 form.register legend
 {
@@ -176,7 +176,7 @@ form.register input[type=password]
 }
 .button
 {
-    background: #abda0f url(../img/overlay.png) repeat-x;
+    background: #abda0f url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/overlay.png) repeat-x;
     padding: 8px 10px 8px;
     color: #fff;
     text-decoration: none;
@@ -232,14 +232,14 @@ p.agreement label{
 	width:16px;
 	height:11px;
 	float:right;
-	background:transparent url(../img/de.png) no-repeat top left;
+	background:transparent url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/de.png) no-repeat top left;
 	margin:3px;
 }
 .flag_english{
 	width:16px;
 	height:11px;
 	float:right;
-	background:transparent url(../img/us.png) no-repeat top left;
+	background:transparent url(../../../../../Dropbox/worQ/source_worq/angularslimv2/angularslim/img/us.png) no-repeat top left;
 	margin:3px;
 }
 
