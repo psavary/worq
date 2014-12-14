@@ -1,5 +1,5 @@
 <span ng-controller="JobprofilesCtrl">
-hallo
+
 
 
     <div class="leftcol">
@@ -84,6 +84,12 @@ hallo
 
 
                     </fieldset>
+                    <label>Mobility</label>
+
+                    <select name="workloadFrom" data-ng-model="user.mobility"
+                            ng-options="transport.name for transport in mobility" required>
+                        <option value="">-- please choose --</option>
+                    </select>
                     <br />
                     <br />
 

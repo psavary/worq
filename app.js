@@ -64,6 +64,12 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','mg
             {
                 return $http.get('api.php/workloads/');
             };
+
+        this.getMobility =
+            function()
+            {
+                return $http.get('api.php/mobility/');
+            };
     }]);
 
     app.service('regions', ['$http',function($http)

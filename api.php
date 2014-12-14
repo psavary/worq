@@ -157,6 +157,17 @@ $app->get('/workloads/', function ()
     echo ($data);
 });
 
+
+
+$app->get('/mobility/', function ()
+{
+    $select = "Select * from mobility";
+
+    $data = db::query($select,null,true);
+
+    echo ($data);
+});
+
 $app->get('/languages/', function ()
 {
     $select = "Select * from languages";

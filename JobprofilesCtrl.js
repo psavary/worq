@@ -41,6 +41,15 @@ app.controller('JobprofilesCtrl',
             }
         );
 
+        job.getMobility().then
+        (
+            function(payload)
+            {
+                $scope.mobility = payload.data;
+                //console.log($scope.regions)
+            }
+        );
+
 
     }
 );
