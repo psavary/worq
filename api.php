@@ -89,13 +89,11 @@ $app->get('/getStudentEmailUnique/:email', function ($email)
 $app->get('/hello/', function ()
 {
 
-
     $select = "Select students.id, students.firstname, students.lastname, study.study as study, region.region as region from students left join study on students.study=study.id left join region on students.region = region.id";
 
     $data = db::query($select,null,true);
 
     echo ($data);
-
 
 });
 
@@ -156,8 +154,6 @@ $app->get('/workloads/', function ()
 
     echo ($data);
 });
-
-
 
 $app->get('/mobility/', function ()
 {
@@ -283,6 +279,25 @@ function getStudentIdbyEmail($email)
         echo $e->getMessage();
     }
 }
+
+
+$app->post('/postJobprofile/', function () {
+
+    $app = \Slim\Slim::getInstance();
+    //$app = new \Slim\Slim();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = json_decode($body);
+
+
+    //var_dump($post);
+
+    $result = array("status"=>"error","response"=>$post);
+
+    echo json_encode($result);
+
+});
+
 
 $app->run();
 

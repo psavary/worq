@@ -118,14 +118,14 @@ app.controller('RegisterCtrl',
 
 
             // Simple POST request example (passing data) :
-            $http.post('/api.php/postStudent/', user).
-                success(function(data, status, headers, config) {
+        $http.post('/api.php/postStudent/', user).
+            success(function(data, status, headers, config) {
 
-                }).
-                error(function(data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
             console.dir(user);
             console.log('i did it!');
             var alert = $alert({
@@ -134,8 +134,6 @@ app.controller('RegisterCtrl',
                 "type": "success",
                 "duration":"5"
             });
-
-
         };
 
 

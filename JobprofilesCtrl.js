@@ -55,6 +55,37 @@ app.controller('JobprofilesCtrl',
             }
         );
 
+        $scope.update = function(user) {
+            // $scope.master = angular.copy(user);
+
+
+            // Simple POST request example (passing data) :
+            $http.post('/api.php/postJobprofile/', user).
+                success(function(data, status, headers, config) {
+                    var alert = $alert({
+                        "title": "Täschbäng!",
+                        "content": "lslsl",
+                        "type": "success",
+                        "duration":"15"
+                    });
+                    console.log(headers);
+
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+
+                    var alert = $alert({
+                        "title": "Damn it!!! Shit's fucked up!",
+                        "content": data,
+                        "type": "error",
+                        "duration":"30"
+                    });
+                });
+           // console.dir(user);
+            console.log('i did it!');
+
+        };
 
 
 

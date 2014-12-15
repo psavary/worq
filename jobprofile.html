@@ -134,7 +134,7 @@
                 Je detailierter deine Angaben, umso höher ist auch die Wahrscheinlichkeit auf Jobangebote.
                 <br />
                 <button class="button" ng-click="reset()">RESET</button>
-                <button ng-disabled="jobprofileForm.$invalid" ng-click="update(user)" class="button">Freischalten</button>
+                <button ng-disabled="" ng-click="update(user)" class="button">Freischalten</button>
 
                 <br />
                 <br />
@@ -148,6 +148,7 @@
 </form>
 
     <div style="width:100%; float:left;">
+        <pre>invalid = {{jobprofileForm.$invalid}}</pre>
         <pre>form = {{user | json}}</pre>
 
 
