@@ -1,7 +1,5 @@
 <span ng-controller="JobprofilesCtrl">
 
-
-
     <div class="leftcol">
         <div id="box">
             <div id="ueberschrift">
@@ -81,35 +79,79 @@
                         <br />
                         <label>Commission: </label><input type="radio" ng-model="user.commission" value="yes" />yes
                         <input type="radio" ng-model="user.commission" value="no" />no<br />
-
-
                     </fieldset>
                     <label>Mobility</label>
 
-                    <select name="workloadFrom" data-ng-model="user.mobility"
+                    <select name="mobility" data-ng-model="user.mobility"
                             ng-options="transport.name for transport in mobility" required>
                         <option value="">-- please choose --</option>
                     </select>
                     <br />
                     <br />
+            </div>
+        </div>
+    </div>
 
-                    <br />
-
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
+    <div class="centercol">
+        <div id="box">
+            <div id="ueberschrift">
+                <span class="text_header">Gewünschte Tätigkeit</span>
+            </div>
+            <div class="boxcontent">
 
 
-
-                    dfsdf
+                <select name="industry" data-ng-model="user.industry"
+                        ng-options="industry.name for industry in industries" required>
+                    <option value="">Branche</option>
+                </select>
             </div>
         </div>
 
 
-        </form>
+        <div id="box">
+            <div id="ueberschrift">
+                <span class="text_header">Über mich</span>
+            </div>
+            <div class="boxcontent">
+
+                <textarea rows="6" cols="50" name="promotion" ng-model="user.promotion" placeholder="Besonders, Stärken, Hobbies"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="rightcolsmall">
+        <div id="box">
+            <div id="ueberschrift">
+                <span class="text_header">Viel Erfolg!</span>
+            </div>
+            <div class="boxcontent">
+                <br />
+                <p><img src="../img/callcenter.jpg" class="icons" align="bottom" width="90%" alt="student"/></p>
+
+                Ein zukünftiger Arbeitgeber hat genaue Vorstellungen davon, welche Kenntnisse seine neue Arbeitskraft
+                haben sollte.
+                Je detailierter deine Angaben, umso höher ist auch die Wahrscheinlichkeit auf Jobangebote.
+                <br />
+                <button class="button" ng-click="reset()">RESET</button>
+                <button ng-disabled="jobprofileForm.$invalid" ng-click="update(user)" class="button">Freischalten</button>
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
+</form>
+
+    <div style="width:100%; float:left;">
+        <pre>form = {{user | json}}</pre>
+
+
+
+    </div>
 
 </span>

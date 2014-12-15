@@ -172,7 +172,7 @@ $app->get('/languages/', function ()
 {
     $select = "Select * from languages";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -180,12 +180,12 @@ $app->get('/languages/', function ()
 $app->get('/industries/', function ()
 {
 
-    echo '[
-      {"id": "1", "name": "Banken"},
-      {"id": "2", "name": "Baubranche"},
-      {"id": "3", "name": "Gastgewerbe"},
-      {"id": "4", "name": "Medizin"}
-    ]';
+    $select = "Select * from industry";
+
+    $data = db::query($select,null,true);
+
+    echo ($data);
+
 });
 
 $app->post('/postStudent/', function () {

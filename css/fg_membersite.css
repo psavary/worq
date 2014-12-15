@@ -66,6 +66,9 @@ body {
     padding: 5px;
 }
 
+.boxcontent textarea {
+   color: black;
+}
 .boxcontent h3{
     font-size: 35px;
     text-align: center
