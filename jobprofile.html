@@ -8,24 +8,24 @@
             <div class="boxcontent">
                 <form novalidate class="simple-form" name="jobprofileForm" ng-submit="">
                     <label>Region</label>
-                    <select name="region" data-ng-model="user.region" ng-options="region.name for region in regions"
+                    <select name="region" data-ng-model="user.region" ng-options="region.id as region.name for region in regions"
                             required>
                         <option value="">-- please choose --</option>
                     </select><br/>
                     <label>Employment Type</label>
                     <select name="employmentType" data-ng-model="user.employmentType"
-                            ng-options="employmenttype.name for employmenttype in employmenttypes"
+                            ng-options="employmenttype.id as employmenttype.name for employmenttype in employmenttypes"
                             required>
                         <option value="">-- please choose --</option>
                     </select><br/>
                     <label>Workload From</label>
                     <select name="workloadFrom" data-ng-model="user.workloadFrom"
-                            ng-options="workload.name for workload in workloads" required>
+                            ng-options="workload.id as workload.name for workload in workloads" required>
                         <option value="">-- please choose --</option>
                     </select>
                     <label>Workload To</label>
                     <select name="workloadFrom" data-ng-model="user.workloadTo"
-                            ng-options="workload.name for workload in workloads" required>
+                            ng-options="workload.id as workload.name for workload in workloads" required>
                         <option value="">-- please choose --</option>
                     </select>
                     <input placeholder="availability from" type="date" name="dateFrom" ng-model="user.availabilityFrom">
@@ -77,13 +77,13 @@
                         <input ng-model="user.availability.sat.night" type="checkbox"></input>
                         <input ng-model="user.availability.sun.night" type="checkbox"></input>
                         <br />
-                        <label>Commission: </label><input type="radio" ng-model="user.commission" value="yes" />yes
-                        <input type="radio" ng-model="user.commission" value="no" />no<br />
+                        <label>Commission: </label><input type="radio" ng-model="user.commission" value="1" />yes
+                        <input type="radio" ng-model="user.commission" value="0" />no<br />
                     </fieldset>
                     <label>Mobility</label>
 
                     <select name="mobility" data-ng-model="user.mobility"
-                            ng-options="transport.name for transport in mobility" required>
+                            ng-options="transport.id as transport.name for transport in mobility" required>
                         <option value="">-- please choose --</option>
                     </select>
                     <br />
@@ -101,7 +101,7 @@
 
 
                 <select name="industry" data-ng-model="user.industry"
-                        ng-options="industry.name for industry in industries" required>
+                        ng-options="industry.id as industry.name for industry in industries" required>
                     <option value="">Branche</option>
                 </select>
             </div>

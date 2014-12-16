@@ -287,16 +287,40 @@ $app->post('/postJobprofile/', function () {
     //$app = new \Slim\Slim();
     $request = $app->request();
     $body = $request->getBody();
-    $post = json_decode($body);
+    $post = (array)json_decode($body);
+    //$post = json_decode(json_encode($post));
+    $availability = (array)$post['availability'];
+    unset($post['availability']);
 
+    $sql = "
+    insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
+    VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
+    try
+    {
+        //die(var_dump($post));
 
-    //var_dump($post);
-
-    $result = array("status"=>"error","response"=>$post);
-
-    echo json_encode($result);
+        $response = db::query($sql, $post, false, true); //@psa todo somethings wrong here!!
+        //var_dump(($response)); //@psa todo make sure only one email is assigned. Maybe throw error or something
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+die(var_dump($response));
+    echo json_encode($response);
 
 });
+
+
+/*
+ * @param: contains the result of the request
+ */
+function validate($sqlResult, $errorMessage = null)
+{
+
+    $app->halt(400, "do tell the user why it is not working");
+
+}
 
 
 $app->run();

@@ -34,15 +34,15 @@ class db
         return $database;
     }
 
-    public static function query($sql, Array $dataArray= null, $asJson = false, $needsValidSession = true)
+    public static function query($sql, Array $dataArray = null, $asJson = false, $needsValidSession = true)
     {
         try
         {
+            $queryAllowed = true;
             if($needsValidSession)
             {
                 $session = new Session;
-                $queryAllowed = $session->checkSession();
-
+                //$queryAllowed = $session->checkSession(); //@psa todo refactor
             }
             else if (!$needsValidSession)
             {
@@ -55,9 +55,13 @@ class db
 
             if($queryAllowed)
             {
+                //die(var_dump($dataArray));
+
                 $db = self::get();
                 $statement=$db->prepare($sql);
                 $statement->execute($dataArray);
+               // die($statement->debugDumpParams());
+
                 $results=$statement->fetchAll(PDO::FETCH_ASSOC);
                 if($asJson)
                 {
@@ -68,13 +72,13 @@ class db
             }
             else
             {
-                return false;
+                throw new Exception('You are not allowed to execute this query!');
             }
 
         }
         catch (Exception $e)
         {
-            echo $e->getMessage(). " ".$sql;
+           throw new Exception($e->getMessage(). " ".$sql);
         }
     }
 

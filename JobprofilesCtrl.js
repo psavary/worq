@@ -78,7 +78,7 @@ app.controller('JobprofilesCtrl',
                     var alert = $alert({
                         "title": "Damn it!!! Shit's fucked up!",
                         "content": data,
-                        "type": "error",
+                        "type": "danger",
                         "duration":"30"
                     });
                 });
