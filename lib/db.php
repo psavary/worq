@@ -55,10 +55,11 @@ class db
 
             if($queryAllowed)
             {
-                //die(var_dump($dataArray));
 
                 $db = self::get();
                 $statement=$db->prepare($sql);
+               // die(var_dump($dataArray));
+
                 $statement->execute($dataArray);
                // die($statement->debugDumpParams());
 

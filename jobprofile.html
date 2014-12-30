@@ -8,29 +8,42 @@
             <div class="boxcontent">
                 <form novalidate class="simple-form" name="jobprofileForm" ng-submit="">
                     <label>Region</label>
-                    <select name="region" data-ng-model="user.region" ng-options="region.id as region.name for region in regions"
-                            required>
-                        <option value="">-- please choose --</option>
+                    <select name="region" data-ng-model="user.region" ng-options="region.id as region.name for region in regions" required>
+                        <option value="">-- Bitte wählen --</option>
                     </select><br/>
                     <label>Employment Type</label>
                     <select name="employmentType" data-ng-model="user.employmentType"
                             ng-options="employmenttype.id as employmenttype.name for employmenttype in employmenttypes"
                             required>
-                        <option value="">-- please choose --</option>
+                        <option value="">-- Bitte wählen --</option>
                     </select><br/>
                     <label>Workload From</label>
                     <select name="workloadFrom" data-ng-model="user.workloadFrom"
                             ng-options="workload.id as workload.name for workload in workloads" required>
-                        <option value="">-- please choose --</option>
+                        <option value="">-- Bitte wählen --</option>
                     </select>
                     <label>Workload To</label>
                     <select name="workloadFrom" data-ng-model="user.workloadTo"
                             ng-options="workload.id as workload.name for workload in workloads" required>
-                        <option value="">-- please choose --</option>
+                        <option value="">-- Bitte wählen --</option>
                     </select>
-                    <input placeholder="availability from" type="date" name="dateFrom" ng-model="user.availabilityFrom">
-                    <input placeholder="availability to" type="date" name="dateTobday" ng-model="user.availabilityTo">
-                    <br />
+
+
+                            <p class="input-group">
+                                <input placeholder="verfügbar ab" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.from" is-open="opened" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                <input placeholder="verfügbar bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.to" is-open="opened2" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                            </p>
+
+
+
+
+
                     <fieldset class="availability rightsubbox">
                         <label>wochentag</label>
                         <span>mo</span>

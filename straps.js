@@ -1,6 +1,8 @@
 /**
  * Created by philou on 11.11.14.
  */
+
+//@psa todo remove
     //angularstrap example
 app.config(function($modalProvider) {
     angular.extend($modalProvider.defaults, {

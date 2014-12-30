@@ -290,6 +290,8 @@ $app->post('/postJobprofile/', function () {
     $post = (array)json_decode($body);
     //$post = json_decode(json_encode($post));
     $availability = (array)$post['availability'];
+    die(var_dump($availability));
+
     unset($post['availability']);
 
     $sql = "
@@ -297,10 +299,8 @@ $app->post('/postJobprofile/', function () {
     VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
     try
     {
-        //die(var_dump($post));
 
-        $response = db::query($sql, $post, false, true); //@psa todo somethings wrong here!!
-        //var_dump(($response)); //@psa todo make sure only one email is assigned. Maybe throw error or something
+        $response = db::query($sql, $post, false, true); //@psa TODO somethings wrong here!!!!! continue work here!!!
     }
     catch (Exception $e)
     {
@@ -310,6 +310,11 @@ die(var_dump($response));
     echo json_encode($response);
 
 });
+
+function addAvailability ($availability)
+{
+
+}
 
 
 /*
