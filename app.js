@@ -135,12 +135,33 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
     */
 
     app.controller('RootCtrl',
-    function($scope, $http) {
+    function($scope, $http, $cookies) {
         //placeHolderParentScope
         //$http.get('/api.php/getCookie/');
         //var myCookie = phpCookie.getCookie();
         //console.log(myCookie);
-        $scope.isAuthorized = true;
+        //$cookies.PHPSESSID;
+        console.log($cookies.PHPSESSID);
+        var sessionId = $cookies.PHPSESSID;
+        $http.get('/api.php/getSession/'+sessionId).then
+        (
+            function(payload)
+            {
+                var response = payload.data;
+                if (response == 1)
+                {
+                    $scope.isAuthorized = true;
+                }
+                else
+                {
+                    $scope.isAuthorized = false;
+                }
+            }
+        );
+
+
+
+        //$scope.isAuthorized = true;
 
     }   );
 

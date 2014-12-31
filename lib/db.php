@@ -42,7 +42,7 @@ class db
             if($needsValidSession)
             {
                 $session = new Session;
-                //$queryAllowed = $session->checkSession(); //@psa todo refactor
+                $queryAllowed = $session->checkSession(); //@psa todo refactor
             }
             else if (!$needsValidSession)
             {
@@ -73,7 +73,7 @@ class db
             }
             else
             {
-                throw new Exception('You are not allowed to execute this query!');
+                throw new Exception('Session expired, please log in again');
             }
 
         }

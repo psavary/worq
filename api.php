@@ -3,22 +3,23 @@ require_once 'bootstrap.php';
 require './lib/slim/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
-//add meedoo
-require_once './lib/db.php'; //@psa todo refactor with autoloader;
+//add db
+require_once './lib/db.php'; //@psa todo refactor with autoloader and remove singleton pattern in favor of DI to make shit testable
 
 //initalize Session
 $session = new Session;
-
 //initialize Timezone
 date_default_timezone_set('Europe/Paris');
 
 $app = new \Slim\Slim(array(
-    'debug' => true
+    'debug' => true //@psa todo production
 ));
 
 
-$app->get('/getCookie/', function () {
+$app->get('/getSession/:sessionId', function ($sessionId) {
 
+
+    echo 1;
   //maybe not needed anymore
 
 });
@@ -29,43 +30,40 @@ $app->get('/getCookie/', function () {
  */
 $app->post('/postLogin/', function ()
 {
+    try {
+        $session = new Session;
+        $app = \Slim\Slim::getInstance();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
 
-    $app = \Slim\Slim::getInstance();
-    $request = $app->request();
-    $body = $request->getBody();
-    $post = (array)json_decode($body);
+        $select = "Select * from students where email = :email and password = :password";
+        $qresult = db::query($select, $post, false, false);
 
-    $select = "Select * from students where email = :email and password = :password";
-    $qresult = db::query($select, $post, false, false);
 
-    if (count($qresult) >= 1)
-    {
-        $expiretime = (date('Y-m-d G:i:s', time()+1200));
-        $select = "Select * from session where sessionId = '" . session_id() . "'";
-        $hasSession = db::query($select, null, false, false);
-        if (!$hasSession)
-        {
-            $insert = "insert into session (sessionId, userId, sessionExpire) VALUES ('" . session_id() . "'," . $qresult[0]['id'] . ",'" . $expiretime . "')";
-            $result = db::query($insert, null, false, false);
+        if (count($qresult) >= 1) {
+            $hasSession = $session->checkSession();
+            if (!$hasSession) {
+                $userId = $qresult[0]['id'];
+                $session->createSession($userId);
+                $result = array("status" => "success", "response" => "Login Success, new Session");
+            } else if ($hasSession) {
+                $session->renewSession();
+                // die(var_dump($update)); //@psa todo here is something wrong....continue work here!!
 
-            $result = array("status"=>"success","response"=>"Login Success, new Session" );
+                $result = array("status" => "success", "response" => "Login Success, renew Session");
+            }
+        } else {
+            $result = array("status" => "error", "response" => "Login Failed");
         }
-        else if ($hasSession)
-        {
-            $update = "update session set sessionExpire = '$expiretime' where sessionId = '" . session_id() . "'";
-            db::query($update, null, false, false);
-           // die(var_dump($update)); //@psa todo here is something wrong....continue work here!!
 
-            $result = array("status"=>"success","response"=>"Login Success, renew Session" );
-        }
+        echo(json_encode($result));
     }
-    else
+    catch (Exception $e)
     {
-        $result = array("status"=>"error","response"=>"Login Failed" );
+        $app->halt(400, $e);
+
     }
-
-    echo(json_encode($result));
-
 });
 
 //check if entered Emailaddress is unique in DB
@@ -118,6 +116,7 @@ $app->get('/study/', function ()
     echo ($data);
 });
 
+
 $app->get('/university/', function ()
 {
     $select = "Select * from universities";
@@ -127,6 +126,7 @@ $app->get('/university/', function ()
     echo ($data);
 });
 
+
 $app->get('/languageDiploma/:id', function ($id)
 {
     $select = "Select * from languageDiploma where languageId=".$id;
@@ -135,6 +135,7 @@ $app->get('/languageDiploma/:id', function ($id)
 
     echo ($data);
 });
+
 
 $app->get('/employmenttypes/', function ()
 {
@@ -290,7 +291,8 @@ $app->post('/postJobprofile/', function () {
     $post = (array)json_decode($body);
     //$post = json_decode(json_encode($post));
     $availability = (array)$post['availability'];
-    die(var_dump($availability));
+    addAvailability($availability);
+    die();
 
     unset($post['availability']);
 
@@ -313,6 +315,11 @@ die(var_dump($response));
 
 function addAvailability ($availability)
 {
+    foreach ($availability as $day => $daytime)
+    {
+        var_dump($day);
+        var_dump((array)$daytime);
+    }
 
 }
 
