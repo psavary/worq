@@ -41,19 +41,25 @@ $app->post('/postLogin/', function ()
         $qresult = db::query($select, $post, false, false);
 
 
-        if (count($qresult) >= 1) {
+        if (count($qresult) >= 1)
+        {
             $hasSession = $session->checkSession();
-            if (!$hasSession) {
+            if (!$hasSession)
+            {
                 $userId = $qresult[0]['id'];
                 $session->createSession($userId);
                 $result = array("status" => "success", "response" => "Login Success, new Session");
-            } else if ($hasSession) {
+            }
+            else if ($hasSession)
+            {
                 $session->renewSession();
                 // die(var_dump($update)); //@psa todo here is something wrong....continue work here!!
 
                 $result = array("status" => "success", "response" => "Login Success, renew Session");
             }
-        } else {
+        }
+        else
+        {
             $result = array("status" => "error", "response" => "Login Failed");
         }
 
@@ -70,7 +76,7 @@ $app->post('/postLogin/', function ()
 $app->get('/getStudentEmailUnique/:email', function ($email)
 {
     $select = "Select email from students where email = '$email'";
-    $data = db::query($select,null);
+    $data = db::query($select,null, false, false);
 
     if (count($data) == 0)
     {
@@ -111,7 +117,7 @@ $app->get('/study/', function ()
 {
     $select = "Select * from study";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -121,7 +127,7 @@ $app->get('/university/', function ()
 {
     $select = "Select * from universities";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -141,7 +147,7 @@ $app->get('/employmenttypes/', function ()
 {
     $select = "Select * from employmenttypes";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -151,7 +157,7 @@ $app->get('/workloads/', function ()
 {
     $select = "Select * from workloads";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -160,7 +166,7 @@ $app->get('/mobility/', function ()
 {
     $select = "Select * from mobility";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -179,7 +185,7 @@ $app->get('/industries/', function ()
 
     $select = "Select * from industry";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 
@@ -216,7 +222,7 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
         update students set university=$university, study=$study, minor=$minor
         WHERE id = $studentId
         ";
-        $response = db::query($sql);
+        $response = db::query($sql, null, false, false);
         var_dump($sql);
     }
     catch (Exception $e)
@@ -238,7 +244,7 @@ function addStudent($student)
 
     try
     {
-        $response = db::query($sql, $studentArray);
+        $response = db::query($sql, $studentArray, false, false);
 
         var_dump($response);
     }
@@ -271,7 +277,7 @@ function getStudentIdbyEmail($email)
     select id from students where email='$email'";
     try
     {
-        $response = db::query($sql);
+        $response = db::query($sql, null, false, false);
        // var_dump(($response[0]['id'])); //@psa todo make sure only one email is assigned. Maybe throw error or something
         return $response[0]['id'];
     }

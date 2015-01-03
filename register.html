@@ -33,6 +33,27 @@
                     <div class="alert alert-danger" ng-show="isNotUniqueEmail">This email is not unique!</div>
                     <label>Password: </label><input type="password" ng-model="user.student.password" required/><br />
                     <label>Password Validate: </label><input type="password"  required/><br />
+
+                <div flow-init="{singleFile:true}" flow-name="user.image" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
+                    ... Flow is set to obj.flow  ...
+                    I have uploaded files: #{{user.image.files.length}}
+
+                    <div class="thumbnail" ng-show="!$flow.files.length">
+                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+                    </div>
+                    <div class="thumbnail" ng-show="$flow.files.length">
+                        <img flow-img="$flow.files[0]" />
+                    </div>
+                    <div>
+                        <span class="btn btn-primary" ng-show="!$flow.files.length" flow-btn>Select image</span>
+                        <span class="btn btn-info" ng-show="$flow.files.length" flow-btn>Change</span>
+                        <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Remove</span>
+                    </div>
+                    <p>
+                        Only PNG,GIF,JPG,JEPG files allowed.
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>

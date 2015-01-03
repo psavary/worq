@@ -13,8 +13,7 @@
                     </select><br/>
                     <label>Employment Type</label>
                     <select name="employmentType" data-ng-model="user.employmentType"
-                            ng-options="employmenttype.id as employmenttype.name for employmenttype in employmenttypes"
-                            required>
+                            ng-options="employmenttype.id as employmenttype.name for employmenttype in employmenttypes" required>
                         <option value="">-- Bitte wählen --</option>
                     </select><br/>
                     <label>Workload From</label>
@@ -147,7 +146,7 @@
                 Je detailierter deine Angaben, umso höher ist auch die Wahrscheinlichkeit auf Jobangebote.
                 <br />
                 <button class="button" ng-click="reset()">RESET</button>
-                <button ng-disabled="" ng-click="update(user)" class="button">Freischalten</button>
+                <button ng-disabled="jobprofileForm.$invalid" ng-click="update(user)" class="button">Freischalten</button>
 
                 <br />
                 <br />

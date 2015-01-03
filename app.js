@@ -1,7 +1,7 @@
 'use strict';
 
 
-var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui.bootstrap', 'mgcrea.ngStrap', 'ngCookies' ])
+var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui.bootstrap', 'mgcrea.ngStrap', 'ngCookies', 'flow' ])
 
 
     app.config(function($routeProvider) {

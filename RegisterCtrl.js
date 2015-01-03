@@ -5,6 +5,20 @@
  * Created by philou on 02.11.14.
  */
 
+app.config(['flowFactoryProvider', function (flowFactoryProvider) {
+    flowFactoryProvider.defaults = {
+        target: '',
+        permanentErrors: [500, 501],
+        maxChunkRetries: 1,
+        chunkRetryInterval: 5000,
+        simultaneousUploads: 1
+    };
+    flowFactoryProvider.on('catchAll', function (event) {
+        console.log('catchAll', arguments);
+    });
+    // Can be used with different implementations of Flow.js
+    //flowFactoryProvider.factory = fustyFlowFactory;
+}]);
 
 
 app.controller('RegisterCtrl',
@@ -137,14 +151,12 @@ app.controller('RegisterCtrl',
         };
 
 
-        $scope.reset = function() {
-            console.log('reset');
-            // this callback will be called asynchronously
-            // when the response is available
+        $scope.reset = function()
+        {
+            console.dir($scope.$flow.files[0]);
 
-
-            //  $scope.user = angular.copy($scope.master);
         };
+
 
     }
 );
