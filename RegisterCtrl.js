@@ -22,7 +22,7 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
 
 
 app.controller('RegisterCtrl',
-    function($scope, $http, $modal, $alert, regions, students, industries, universities, languages, languageDiploma)
+    function($scope, $http, $modal, $alert, $location, regions, students, industries, universities, languages, languageDiploma)
     {
         $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
 
@@ -38,10 +38,7 @@ app.controller('RegisterCtrl',
                     //console.dir($scope.languageDiploma);
                 }
             )
-            console.log($scope.languageDiploma);
-
         };
-
 
 
         $http.get('api.php/study/').then
@@ -53,25 +50,19 @@ app.controller('RegisterCtrl',
         );
 
 
-
         universities.getUniversities().then
         (
             function(payload)
             {
-
                 $scope.universities = payload.data;
-                console.log($scope.universities)
             }
         );
-
 
         languages.getLanguages().then
         (
             function(payload)
             {
-
                 $scope.languages = payload.data;
-                //console.log($scope.regions)
             }
         );
 
@@ -80,28 +71,21 @@ app.controller('RegisterCtrl',
         (
             function(payload)
             {
-
                 $scope.regions = payload.data;
-                //console.log($scope.regions)
             }
         );
-
 
         //get industries
         industries.getIndustries().then
         (
             function(payload)
             {
-
                 $scope.industries = payload.data;
-                //console.log($scope.industriesData)
-
             }
         );
 
         $scope.checkUnique = function(user)
         {
-
             $scope.isNotUniqueEmail = false;
             var email = $scope.user.student.email;
             $http.get('api.php/getStudentEmailUnique/'+email).then
@@ -111,76 +95,42 @@ app.controller('RegisterCtrl',
                     var emailExists = responeData.data;
                     $scope.isNotUniqueEmail = !emailExists.response;
 
-                    console.log($scope.isNotUniqueEmail);
-
-                    //if ($scope.isNotUniqueEmail)
-                    //{
-                     //   $scope.registerForm.email.$setValidity('validEmail', false);
-                    //};
                     return  $scope.isNotUniqueEmail;
                 }
             );
-
-
         }
-        console.log($scope.isNotUniqueEmail);
-        console.log(registerForm.$invalid);
+        //console.log($scope.isNotUniqueEmail);
+        //console.log(registerForm.$invalid);
 
         $scope.update = function(user)
         {
-           // $scope.master = angular.copy(user);
-
-
-                // Simple POST request example (passing data) :
             $http.post('/api.php/postStudent/', user).
                 success(function(data, status, headers, config) {
-                    console.log(data);
-                    var alert = $alert({
+
+                    //post image
+                    $scope.image = $scope.$flow.files[0].file;
+                    $http.post('/api.php/postImage/'+$scope.user.student.email+'/'+$scope.image.type, $scope.image);
+
+                   /*
+                    $alert({
                         "title": "Holy guacamole!",
                         "content": "Student Saved.",
                         "type": "success",
                         "duration": "5"
-                    })
+                    });
+                    */
+                    $location.path('/confirmation');
                 }).
                 error(function(data, status, headers, config)
                 {
-                    var alert = $alert({
+                    $alert({
                         "title": "Holy guacamole!",
                         "content": "Something went wrong",
                         "type": "danger",
                         "duration":"5"
                     });
                 });
-
-            //post image
-            $scope.image = $scope.$flow.files[0].file;
-
-            $http.post('/api.php/postImage/'+$scope.user.student.email+'/'+$scope.image.type, $scope.image).
-                success(function(data, status, headers, config) {
-
-                    var alert = $alert({
-                        "title": "Image processed!",
-                        "content": "Student Saved.",
-                        "type": "success",
-                        "duration": "5"
-                    })
-                }).
-                error(function(data, status, headers, config)
-                {
-                    var alert = $alert({
-                        "title": "Image not processed!",
-                        "content": "Something went wrong",
-                        "type": "danger",
-                        "duration":"5"
-                    });
-                });
-            $scope.user.image = $scope.$flow.files[0].file;
-
-            console.dir(user);
-
-
             };
-
 
         $scope.reset = function()
         {
@@ -188,33 +138,8 @@ app.controller('RegisterCtrl',
             console.dir($scope.image.type);
 
             //post image
-            $http.post('/api.php/postImage/', $scope.image).
-                success(function(data, status, headers, config) {
-
-                    var alert = $alert({
-                        "title": "Image processed!",
-                        "content": "Student Saved.",
-                        "type": "success",
-                        "duration": "5"
-                    })
-                }).
-                error(function(data, status, headers, config)
-                {
-                    var alert = $alert({
-                        "title": "Image not processed!",
-                        "content": "Something went wrong",
-                        "type": "danger",
-                        "duration":"5"
-                    });
-                });
-
-
-
+            $http.post('/api.php/postImage/', $scope.image);
         };
-        //console.dir($scope.obj.flow);
-
-
-
     }
 );
 

@@ -72,8 +72,10 @@ $app->post('/postLogin/', function ()
     }
 });
 
+
 $app->post('/postImage/:email/:file/:type', function ($email, $image, $type)
 {
+    //@psa todo: make sure, the image only gets uploaded if no image exists already (security!)
     $session = new Session;
     $app = \Slim\Slim::getInstance();
     $request = $app->request();
@@ -104,6 +106,7 @@ $app->get('/getStudentEmailUnique/:email', function ($email)
         echo json_encode($falseresponse);
     }
 });
+
 
 $app->get('/hello/', function ()
 {
@@ -214,17 +217,93 @@ $app->post('/postStudent/', function () {
     $body = $request->getBody();
     $post = json_decode($body);
 
-    addStudent($post->student);
+    try {
+
+        addStudent($post->student);
+        //var_dump($post->student);
+        $studentId = getStudentIdByEmail($post->student->email);
+
+        addAddress($studentId, $post->address);
+
+        addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
+
+        sendConfirmationMail($post->student->email, $studentId);
+
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+
     //var_dump($post->student);
-    $studentId = getStudentIdByEmail($post->student->email);
-
-    addAddress($studentId, $post->address);
-
-    addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
-    var_dump($post->student);
 
     //$result = array("status"=>"success","response"=>$response);
 
+});
+
+/*
+ * creates hash value for confirmation by user
+ */
+function sendConfirmationMail($email, $studentId)
+{
+    $hash = md5($email.$studentId);
+
+    $array = array('email' => $email, 'studentId' => $studentId, 'hash' => $hash);
+    var_dump($array);
+    $sql = "
+    insert into studentConfirmation (email, studentId, hashValue)
+    VALUES (:email, :studentId, :hash)
+    ";
+
+    try
+    {
+        $response = db::query($sql, $array, false, false);
+
+        $confirmationUrl = $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"]."/api.php/confirmRegistration/$hash";
+        $text = "Hallo, bitte bestätige Deine Registrierung bei worq, indem Du folgendem Link folgst: <a href=\"$confirmationUrl\">$confirmationUrl</a>";
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <webmaster@worq.com>' . "\r\n";
+        mail('philou.savary@gmail.com', 'Bitte Registrierung bei Worq bestätigen', $text, $headers);
+
+       // $redirectUrl = $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"]."/#/confirmation";
+       // header("Location: $redirectUrl");
+       // die();
+
+    }
+    catch (Exception $e)
+    {
+        throw new Exception ($e);
+    }
+
+}
+
+/*
+ * Link the User follows to complete Registration
+ *
+ */
+$app->get('/confirmRegistration/:hash', function ($hash)
+{
+    try
+    {
+        $select = "Select * from studentConfirmation where hashValue = '$hash'";
+
+        $data = db::query($select,null,false, false);
+
+        if (count($data) > 0)
+        {
+            $array = array('studentId' => (int)$data[0]['studentId']);
+
+            $update = "Update students set isConfirmed = 1, isActive = 1 where Id = :studentId";
+            $data = db::query($update,$array,false, false);
+
+        }
+    }
+    catch (Exception $e)
+    {
+        throw new Exception ($e);
+    }
 });
 
 
@@ -238,14 +317,14 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
         WHERE id = $studentId
         ";
         $response = db::query($sql, null, false, false);
-        var_dump($sql);
     }
     catch (Exception $e)
     {
-        echo $e->getTraceAsString();
+        throw new Exception ($e);
     }
 
 }
+
 
 function addStudent($student)
 {
@@ -255,19 +334,17 @@ function addStudent($student)
     ";
 
     $studentArray = (array) $student;
-    //var_dump($studentArray);
 
     try
     {
         $response = db::query($sql, $studentArray, false, false);
-
-        var_dump($response);
     }
     catch (Exception $e)
     {
-        echo $e->getMessage();
+        throw new Exception ($e);
     }
 }
+
 
 function addAddress($studentId, $address)
 {   $address = (array)$address;
@@ -282,9 +359,10 @@ function addAddress($studentId, $address)
     }
     catch (Exception $e)
     {
-        echo $e->getMessage();
+        throw new Exception ($e);
     }
 }
+
 
 function getStudentIdbyEmail($email)
 {
@@ -298,7 +376,7 @@ function getStudentIdbyEmail($email)
     }
     catch (Exception $e)
     {
-        echo $e->getMessage();
+        throw new Exception ($e);
     }
 }
 
@@ -322,17 +400,16 @@ $app->post('/postJobprofile/', function () {
     VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
     try
     {
-
         $response = db::query($sql, $post, false, true); //@psa TODO somethings wrong here!!!!! continue work here!!!
     }
     catch (Exception $e)
     {
         $app->halt(400, $e->getMessage());
     }
-die(var_dump($response));
     echo json_encode($response);
 
 });
+
 
 function addAvailability ($availability)
 {
@@ -344,17 +421,13 @@ function addAvailability ($availability)
 
 }
 
-
 /*
  * @param: contains the result of the request
  */
 function validate($sqlResult, $errorMessage = null)
 {
-
     $app->halt(400, "do tell the user why it is not working");
-
 }
-
 
 $app->run();
 

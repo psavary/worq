@@ -61,7 +61,7 @@ class db
                // die(var_dump($dataArray));
 
                 $statement->execute($dataArray);
-               // die($statement->debugDumpParams());
+               //var_dump($statement->debugDumpParams());
 
                 $results=$statement->fetchAll(PDO::FETCH_ASSOC);
                 if($asJson)

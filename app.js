@@ -7,6 +7,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
     app.config(function($routeProvider) {
         $routeProvider
         .when('/', { templateUrl: 'register.html' })
+        .when('/confirmation',{templateUrl: 'confirmation.html'})
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
         .when('/jobprofile', { templateUrl: 'jobprofile.html' })
