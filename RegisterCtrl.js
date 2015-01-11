@@ -24,7 +24,6 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
 app.controller('RegisterCtrl',
     function($scope, $http, $modal, $alert, regions, students, industries, universities, languages, languageDiploma)
     {
-
         $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
 
         $scope.changeLang = function(langNo,id) {
@@ -127,35 +126,93 @@ app.controller('RegisterCtrl',
         console.log($scope.isNotUniqueEmail);
         console.log(registerForm.$invalid);
 
-        $scope.update = function(user) {
+        $scope.update = function(user)
+        {
            // $scope.master = angular.copy(user);
 
 
-            // Simple POST request example (passing data) :
-        $http.post('/api.php/postStudent/', user).
-            success(function(data, status, headers, config) {
+                // Simple POST request example (passing data) :
+            $http.post('/api.php/postStudent/', user).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+                    var alert = $alert({
+                        "title": "Holy guacamole!",
+                        "content": "Student Saved.",
+                        "type": "success",
+                        "duration": "5"
+                    })
+                }).
+                error(function(data, status, headers, config)
+                {
+                    var alert = $alert({
+                        "title": "Holy guacamole!",
+                        "content": "Something went wrong",
+                        "type": "danger",
+                        "duration":"5"
+                    });
+                });
 
-            }).
-            error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+            //post image
+            $scope.image = $scope.$flow.files[0].file;
+
+            $http.post('/api.php/postImage/'+$scope.user.student.email+'/'+$scope.image.type, $scope.image).
+                success(function(data, status, headers, config) {
+
+                    var alert = $alert({
+                        "title": "Image processed!",
+                        "content": "Student Saved.",
+                        "type": "success",
+                        "duration": "5"
+                    })
+                }).
+                error(function(data, status, headers, config)
+                {
+                    var alert = $alert({
+                        "title": "Image not processed!",
+                        "content": "Something went wrong",
+                        "type": "danger",
+                        "duration":"5"
+                    });
+                });
+            $scope.user.image = $scope.$flow.files[0].file;
+
             console.dir(user);
-            console.log('i did it!');
-            var alert = $alert({
-                "title": "Holy guacamole!",
-                "content": "Student Saved.",
-                "type": "success",
-                "duration":"5"
-            });
-        };
+
+
+            };
 
 
         $scope.reset = function()
         {
-            console.dir($scope.$flow.files[0]);
+            $scope.image = $scope.$flow.files[0].file;
+            console.dir($scope.image.type);
+
+            //post image
+            $http.post('/api.php/postImage/', $scope.image).
+                success(function(data, status, headers, config) {
+
+                    var alert = $alert({
+                        "title": "Image processed!",
+                        "content": "Student Saved.",
+                        "type": "success",
+                        "duration": "5"
+                    })
+                }).
+                error(function(data, status, headers, config)
+                {
+                    var alert = $alert({
+                        "title": "Image not processed!",
+                        "content": "Something went wrong",
+                        "type": "danger",
+                        "duration":"5"
+                    });
+                });
+
+
 
         };
+        //console.dir($scope.obj.flow);
+
 
 
     }

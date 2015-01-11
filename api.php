@@ -72,6 +72,21 @@ $app->post('/postLogin/', function ()
     }
 });
 
+$app->post('/postImage/:email/:file/:type', function ($email, $image, $type)
+{
+    $session = new Session;
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = (array)json_decode($body);
+    $imageType = $image.'/'.$type;
+    $array = array('imageType' => $imageType, 'imageData' => $body, 'email' => $email);
+    //$sql = "insert into students (imageType, imageData) VALUES (:imageType, :imageData) where emai = :email";
+    $sql = "update students set imageType = :imageType, imageData = :imageData where email = :email";
+    $data = db::query($sql,$array, false, false);
+});
+
+
 //check if entered Emailaddress is unique in DB
 $app->get('/getStudentEmailUnique/:email', function ($email)
 {
@@ -137,7 +152,7 @@ $app->get('/languageDiploma/:id', function ($id)
 {
     $select = "Select * from languageDiploma where languageId=".$id;
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,true, false);
 
     echo ($data);
 });
@@ -262,7 +277,7 @@ function addAddress($studentId, $address)
     VALUES (:studentId, :street, :streetno, :zip, :city)";
     try
     {
-        $response = db::query($sql, $address);
+        $response = db::query($sql, $address, false, false);
         //var_dump(($response)); //@psa todo make sure only one email is assigned. Maybe throw error or something
     }
     catch (Exception $e)

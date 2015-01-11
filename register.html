@@ -34,9 +34,11 @@
                     <label>Password: </label><input type="password" ng-model="user.student.password" required/><br />
                     <label>Password Validate: </label><input type="password"  required/><br />
 
-                <div flow-init="{singleFile:true}" flow-name="user.image" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
-                    ... Flow is set to obj.flow  ...
-                    I have uploaded files: #{{user.image.files.length}}
+                <div flow-init="{singleFile:true, target: '/upload'}"   flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+                     flow-files-submitted="$flow.upload()"
+                     flow-file-success="uploader.controllerFn($flow, $file, $message)"
+                        ng-model="image">
+
 
                     <div class="thumbnail" ng-show="!$flow.files.length">
                         <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
