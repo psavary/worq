@@ -40,8 +40,8 @@
                 <!--<table class="table" ng-controller="ArticlesCtrl">-->
                 <table class="table">
                 <!-- filter:{study : mymodel.name} filters is applied in just the study column!!! Cool.... -->
-                <tr class="animate-repeat clearfix"  ng-repeat="student in students| filter:{study : study.name} | filter:{region : region.name}">
-                <td>{{student.id}}</td>
+                <tr  class="animate-repeat clearfix"  ng-repeat="student in students| filter:{study : study.name} | filter:{region : region.name}" ng-click="showDetails(student)" data-animation="am-fade-and-scale"  bs-modal="studentDetailmodal" data-placement="center">
+
                 <td><img src="data:image/jpeg;base64, {{student.image}}" width="42"/></td>
                 <td>{{student.firstname}}</td>
                 <td>{{student.lastname}}</td>

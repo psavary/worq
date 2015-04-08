@@ -3,7 +3,7 @@
  */
     //Controller for whole filtermanagement
 app.controller('FilterCtrl',
-    function($scope, $http, $animate, regions, students, industries)
+    function($scope, $http, $animate, $modal, regions, students, industries)
     {
 
 
@@ -69,6 +69,34 @@ app.controller('FilterCtrl',
         //console.dir($scope.industriesData);
 
         //console.log($scope.industries);
+
+        $scope.showDetails = function(student)
+        {
+            /* $scope.image = $scope.$flow.files[0].file;
+             console.dir($scope.image.type);
+
+             //post image
+             $http.post('/api.php/postImage/', $scope.image);
+             */
+            $scope.studentDetailmodal = {
+                                            title: 'Studentendetails', content:
+           '<table class="table"></table> <tr> <td><img src="data:image/jpeg;base64, ' + student.image + '" width="42"/></td> <td>' + student.firstname + '</td> <td>' + student.lastname + '</td> <td>' + student.study + '</td> <td>' + student.region + '</td> </tr> </table>'
+
+
+
+                                        };
+
+            console.dir(student)
+/*
+            $http.get('api.php/redirect/').then
+            (
+                function(responeData)
+                {
+                }
+            );;
+            */
+
+        };
 
 
 

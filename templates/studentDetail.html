@@ -1,0 +1,19 @@
+
+<div role="dialog" tabindex="-1" class="modal ng-scope top am-fade-and-scale" style="display: block;">
+    <iframe src="dummypage.html" name="dummy" style="display:none; width:0px; height: 0px;" ></iframe>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div ng-show="content"  class="modal-header">
+                <button ng-click="$hide()" action="post" class="close" type="button">×</button>
+                <h4 ng-bind-html="title" class="modal-title ng-binding">Login</h4></div>
+            <div class="modal-body" ng-bind="content"></div>
+            <form target="dummy"  action="dummypage.html" ng-submit="verifyLogin()">
+                    <span>{{$parent.student.name | json}}</span>
+                    <button ng-click="$hide()" class="btn btn-default" type="button">Close</button>
+                        <button  class="btn btn-primary" type="submit">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
