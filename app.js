@@ -149,9 +149,12 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
             function(payload)
             {
                 var response = payload.data;
-                if (response == 1)
+                console.log(response);
+                if (response !== 0)
                 {
                     $scope.isAuthorized = true;
+
+                    $scope.userdata = response;
                 }
                 else
                 {

@@ -37,12 +37,19 @@ class Session {
     public function checkSession()
     {
         $time = (date('Y-m-d G:i:s', time()));
-        $select = "Select * from session where sessionId = '" . session_id() . "' and sessionExpire > '" . $time . "'";
+        $select = "Select userId from session where sessionId = '" . session_id() . "' and sessionExpire > '" . $time . "'";
         $result = db::query($select, null, false, false);
         if (count($result) > 0)
         {
             $this->renewSession();
-            return true;
+            $userId = $result[0]['userId'];
+
+
+            $select = "select students.firstname, students.lastname from session left join students on students.id = session.userId where session.userId = " . $userId . " and  session.sessionId = '" . session_id() . "' and session.sessionExpire > '" . $time . "'";
+            $result = db::query($select, null, false, false);
+            //die(var_dump($result));
+            $userData = $result[0];
+            return $userData;
         }
         else
         {
@@ -50,18 +57,26 @@ class Session {
             //throw new Exception ('Session Expired! Please login again');
 
         }
-        //die(var_dump($select));
-        /*
-        $query = "Select * from session where sessionId = ".session_id();
-        $result = db::query($query, null, false, false);
-        if (!$result)
-        {
-            $query = "Insert into session (sessionId)";
-        }
-        return true;
-        */
 
     }
+/*
+    public function getSessionData()
+    {
+        $time = (date('Y-m-d G:i:s', time()));
+        $select = "Select userId from session where sessionId = '" . session_id() . "' and sessionExpire > '" . $time . "'";
+        $result = db::query($select, null, false, false);
+        $userId = $result[0];
+
+        $select = "select student.name from session left join students on students.id = session.userId where session.userId = " . $userId . " sessionId = '" . session_id() . "' and sessionExpire > '" . $time . "'";
+        $result = db::query($select, null, false, false);
+        $userName = $result[0];
+
+        return $userName;
+
+
+        // 'select * from session left join students on students.id = session.userId where session.userId = 28';
+    }
+*/
 
 }
 ?>

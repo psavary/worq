@@ -23,9 +23,9 @@
                     <label>Zip: </label><input type="text" ng-model="user.address.zip" required/><br />
                     <label>City: </label><input type="text" ng-model="user.address.city" required/><br />
 
-                    <label>Telephone: </label><input type="text" ng-model="user.student.telephone" /><br />
+                    <label>Telephone: </label><input type="text" ng-model="user.student.telephone" required/><br />
                     <label>Gender: </label><input type="radio" ng-model="user.student.gender" value="male" />male
-                    <input type="radio" ng-model="user.student.gender" value="female" />female<br />
+                    <input type="radio" ng-model="user.student.gender" ng-value="female" ng-checked="true"/>female<br />
                     <!--<input type="date" ng-model="user.student.birthdate" id="exampleInput" name="input" ng-model="value"
                            placeholder="yyyy-MM-dd" min="1940-01-01" max="2013-12-31" required /><br />-->
 

@@ -14,9 +14,10 @@
 	  <div class="navbar-collapse collapse">
 
 		<ul class="nav navbar-nav navbar-right">
-            <li ng-if="isAuthorized">You're admin.</li>
-
-		  <li><a href="#" id="lognav" >register</a></li>
+            <li ng-if="isAuthorized">Willkommen {{userdata.firstname}} {{userdata.lastname}}</li>
+            <li><a ng-if="isAuthorized" ref="#" id="lognav" >mein Nachrichten</a></li>
+            <li><a ng-if="isAuthorized" ref="#" id="lognav" >mein Konto</a></li>
+		    <li><a href="#" id="lognav" >register</a></li>
             <li data-animation="am-fade-and-slide-top" data-template="./templates/login.html" bs-modal="loginModal"><a>login</a></li>
 		</ul>
 	  </div><!--/.nav-collapse -->

@@ -15,12 +15,21 @@ $app = new \Slim\Slim(array(
     'debug' => true //@psa todo production
 ));
 
+//@psa todo figure this login stuff out
+$app->get('/getSession/:sessionId', function () {
 
-$app->get('/getSession/:sessionId', function ($sessionId) {
+    $session = new Session;
 
+    $userData = $session->checkSession();
 
-    echo 1;
-  //maybe not needed anymore
+    if($userData)
+    {
+        echo json_encode($userData);
+    }
+    else
+    {
+        echo 0;
+    }
 
 });
 
@@ -229,6 +238,9 @@ $app->post('/postStudent/', function () {
 
         sendConfirmationMail($post->student->email, $studentId);
 
+        $app->redirect('/#/confirmation');
+
+
     }
     catch (Exception $e)
     {
@@ -240,6 +252,8 @@ $app->post('/postStudent/', function () {
     //$result = array("status"=>"success","response"=>$response);
 
 });
+
+
 
 /*
  * creates hash value for confirmation by user
@@ -267,9 +281,8 @@ function sendConfirmationMail($email, $studentId)
         $headers .= 'From: <webmaster@worq.com>' . "\r\n";
         mail('philou.savary@gmail.com', 'Bitte Registrierung bei Worq bestätigen', $text, $headers);
 
-       // $redirectUrl = $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"]."/#/confirmation";
-       // header("Location: $redirectUrl");
-       // die();
+
+
 
     }
     catch (Exception $e)

@@ -24,6 +24,11 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
 app.controller('RegisterCtrl',
     function($scope, $http, $modal, $alert, $location, regions, students, industries, universities, languages, languageDiploma)
     {
+        //initialize models so a value can be set in controller without error
+        $scope.user = {};
+        $scope.user.student = {} ;
+        $scope.user.student.gender = {};
+        $scope.user.student.gender = 'female';
         $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
 
         $scope.changeLang = function(langNo,id) {
@@ -102,6 +107,8 @@ app.controller('RegisterCtrl',
         //console.log($scope.isNotUniqueEmail);
         //console.log(registerForm.$invalid);
 
+
+
         $scope.update = function(user)
         {
             $http.post('/api.php/postStudent/', user).
@@ -134,11 +141,20 @@ app.controller('RegisterCtrl',
 
         $scope.reset = function()
         {
-            $scope.image = $scope.$flow.files[0].file;
+           /* $scope.image = $scope.$flow.files[0].file;
             console.dir($scope.image.type);
 
             //post image
             $http.post('/api.php/postImage/', $scope.image);
+            */
+            $http.get('api.php/redirect/').then
+            (
+                function(responeData)
+                {
+                 console.log(responeData.data())
+                }
+            );;
+
         };
     }
 );

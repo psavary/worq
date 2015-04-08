@@ -64,6 +64,7 @@ class db
                //var_dump($statement->debugDumpParams());
 
                 $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+
                 if($asJson)
                 {
                     $results=json_encode($results);
