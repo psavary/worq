@@ -7,7 +7,6 @@ app.controller('FilterCtrl',
     {
 
 
-
         $http.get('api.php/study/').then
         (
             function(studyResponse)
@@ -27,7 +26,6 @@ app.controller('FilterCtrl',
                 //console.log($scope.regions)
             }
         );
-
 
         //get industries
         industries.getIndustries().then
@@ -61,40 +59,23 @@ app.controller('FilterCtrl',
                 $scope.students = payload.data;
             }
         );
-        //end do this in the onchangefunction
-
-
-        //models needed for input and selectfields!?
-
-        //console.dir($scope.industriesData);
-
-        //console.log($scope.industries);
 
         $scope.showDetails = function(student)
         {
-            /* $scope.image = $scope.$flow.files[0].file;
-             console.dir($scope.image.type);
+            $scope.studentDetailmodal = {title: 'Studentendetails'};
 
-             //post image
-             $http.post('/api.php/postImage/', $scope.image);
-             */
-            $scope.studentDetailmodal = {
-                                            title: 'Studentendetails', content:
-           '<table class="table"></table> <tr> <td><img src="data:image/jpeg;base64, ' + student.image + '" width="42"/></td> <td>' + student.firstname + '</td> <td>' + student.lastname + '</td> <td>' + student.study + '</td> <td>' + student.region + '</td> </tr> </table>'
+            $scope.contactFormVisible = false;
+            $scope.showContactButton = true;
 
+        };
 
+        $scope.showContactForm = function(student)
+        {
 
-                                        };
+            $scope.contactFormVisible = true;
+            $scope.showContactButton = false;
 
-            console.dir(student)
-/*
-            $http.get('api.php/redirect/').then
-            (
-                function(responeData)
-                {
-                }
-            );;
-            */
+            //console.dir(student)
 
         };
 
