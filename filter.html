@@ -7,25 +7,24 @@
                 <span class="text_header">Filter</span>
             </div>
             <div class="boxcontent">
-                <span class="nullable">
-                    <!-- Angular Select -->
-                    <select data-ng-model="mymodel" ng-options="study.name for study in studys" ng-change="change()"></select>
-                    The value selected is {{mymodel.name}}.
-                </span>
-                <span class="nullable">
-                    <!-- Angular Select -->
-                    <select data-ng-model="othermodel" ng-options="region.name for region in regions" ng-change="change()"></select>
-                </span>
-                <span class="nullable">
-                    <!-- Angular Select -->
-                    <select data-ng-model="industries" ng-options="industry.name for industry in industries"></select>
-                </span>
-                <span class="nullable">
-                    <!-- Angular Select -->
-                    <select data-ng-model="industries2" ng-options="industry.name for industry in industries"></select>
-                </span>
+
+
+                <select name="region" data-ng-model="study"
+                        ng-options="study.name for study in studys" required>
+                    <option value="">-- Bitte wählen --</option>
+                </select>
+                <select name="region" data-ng-model="region"
+                        ng-options="region.name for region in regions" required>
+                    <option value="">-- Bitte wählen --</option>
+                </select>
+                <select name="industries" data-ng-model="industries"
+                        ng-options="industry.name for industry in industries" required>
+                    <option value="">-- Bitte wählen --</option>
+                </select>
             </div>
         </div>
+
+
     </div>
   
     <div class="rightcolwide">
@@ -36,22 +35,29 @@
             <div class="boxcontent">
                 <!-- Angularcontent -->
                 <input type="text" ng-model="search">
-                <p ng-show="search">Du suchst gerade nach: {{search}}</p>
+                <p class="animateme" ng-show="search">Du suchst gerade nach: {{search}}</p>
                 </form>
-                <table class="table" ng-controller="ArticlesCtrl">
+                <!--<table class="table" ng-controller="ArticlesCtrl">-->
+                <table class="table">
                 <!-- filter:{study : mymodel.name} filters is applied in just the study column!!! Cool.... -->
-                <tr class="animateme" ng-repeat="article in articles| filter:{study : mymodel.name} | filter:{region : othermodel.name}">
-                <td>{{article.id}}</td>
-                <td>{{article.firstname}}</td>
-                <td>{{article.lastname}}</td>
-                <td>{{article.study}}</td>
-                <td>{{article.region}}</td>
+                <tr class="animate-repeat clearfix"  ng-repeat="student in students| filter:{study : study.name} | filter:{region : region.name}">
+                <td>{{student.id}}</td>
+                <td><img src="data:image/jpeg;base64, {{student.image}}" width="42"/></td>
+                <td>{{student.firstname}}</td>
+                <td>{{student.lastname}}</td>
+                <td>{{student.study}}</td>
+                <td>{{student.region}}</td>
+
                 </tr>
+
                 </table>
+
 
                 <!-- end Angularcontent -->
             </div>
         </div>
+
+
    
     </div>
 </span>

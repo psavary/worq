@@ -126,7 +126,7 @@ app.controller('RegisterCtrl',
                         "duration": "5"
                     });
                     */
-                    $location.path('/confirmation');
+                    //$location.path('/confirmation');
                 }).
                 error(function(data, status, headers, config)
                 {

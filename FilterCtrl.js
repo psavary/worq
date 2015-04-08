@@ -3,7 +3,7 @@
  */
     //Controller for whole filtermanagement
 app.controller('FilterCtrl',
-    function($scope, $http, regions, students, industries)
+    function($scope, $http, $animate, regions, students, industries)
     {
 
 
@@ -58,7 +58,7 @@ app.controller('FilterCtrl',
         //array of students
         students.myservice().then(
             function(payload){
-                $scope.articles = payload.data;
+                $scope.students = payload.data;
             }
         );
         //end do this in the onchangefunction

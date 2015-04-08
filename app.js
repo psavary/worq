@@ -6,7 +6,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
 
     app.config(function($routeProvider) {
         $routeProvider
-        .when('/', { templateUrl: 'register.html' })
+        .when('/', { templateUrl: 'filter.html' })
         .when('/confirmation',{templateUrl: 'confirmation.html'})
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
@@ -150,7 +150,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
             {
                 var response = payload.data;
                 console.log(response);
-                if (response !== 0)
+                if (response != 0)
                 {
                     $scope.isAuthorized = true;
 

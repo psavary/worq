@@ -120,11 +120,21 @@ $app->get('/getStudentEmailUnique/:email', function ($email)
 $app->get('/hello/', function ()
 {
 
-    $select = "Select students.id, students.firstname, students.lastname, study.study as study, region.region as region from students left join study on students.study=study.id left join region on students.region = region.id";
+    $select = "Select students.id, students.firstname, students.lastname, study.name as study, region.region as region, students.imageData as image from students left join study on students.study=study.id left join region on students.region = region.id";
 
-    $data = db::query($select,null,true);
+    $data = db::query($select,null,false);
 
-    echo ($data);
+    //psa todo experimental code to refactor at some point due to performance concerns
+    $count = 0;
+    foreach ($data as $entry)
+    {
+
+        $data[$count]['image'] = base64_encode($entry['image']);
+        $count++;
+    }
+    $data = json_encode($data);
+
+    echo $data;
 
 });
 

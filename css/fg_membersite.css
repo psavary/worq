@@ -43,7 +43,9 @@ You can customize all the aspects of the form in this style sheet
 
 body {
     background-image:  url(../img/bg.jpg);
-    background-size:   cover;                      /* <------ */
+    background-attachment: fixed;
+    background-position: top;
+    background-size: cover;                      /* <------ */
     background-repeat: no-repeat;
 }
 
