@@ -46,7 +46,7 @@ $app->post('/postLogin/', function ()
         $body = $request->getBody();
         $post = (array)json_decode($body);
 
-        $select = "Select * from students where email = :email and password = :password";
+        $select = "Select * from user where email = :email and password = :password";
         $qresult = db::query($select, $post, false, false);
 
 
@@ -428,26 +428,39 @@ function getStudentIdbyEmail($email)
 
 
 $app->post('/postJobprofile/', function () {
-
-    $app = \Slim\Slim::getInstance();
-    //$app = new \Slim\Slim();
-    $request = $app->request();
-    $body = $request->getBody();
-    $post = (array)json_decode($body);
-    //$post = json_decode(json_encode($post));
-    $availability = (array)$post['availability'];
-    addAvailability($availability);
-
-
-    unset($post['availability']);
-
-    //@psa todo check session and insert userId into studentJobprofile.....
-
-    $sql = "
-    insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
-    VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
     try
     {
+        $app = \Slim\Slim::getInstance();
+        $session = new Session;
+
+        //$app = new \Slim\Slim();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
+        //$post = json_decode(json_encode($post));
+        $availability = (array)$post['availability'];
+
+
+        //@psa todo check session and insert userId into studentJobprofile.....
+        $userData = $session->checkSession();
+
+        if (!$userData)
+        {
+            throw new Exception ('Bitte loggen Sie sich ein um Ihr Jobprofil speichern zu können!');
+        }
+            echo "hallo?";
+        var_dump($userData);
+        die();
+
+        addAvailability($availability);
+
+        unset($post['availability']);
+
+
+        $sql = "
+        insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
+        VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
+
         $response = db::query($sql, $post, false, true); //@psa TODO somethings wrong here!!!!! continue work here!!!
     }
     catch (Exception $e)
@@ -461,6 +474,7 @@ $app->post('/postJobprofile/', function () {
 
 function addAvailability ($availability)
 {
+    //@psa todo save that stuff
     foreach ($availability as $day => $daytime)
     {
         var_dump($day);
