@@ -119,22 +119,34 @@ $app->get('/getStudentEmailUnique/:email', function ($email)
 
 $app->get('/hello/', function ()
 {
-
-    $select = "Select students.id, students.firstname, students.lastname, study.name as study, region.region as region, students.imageData as image from students left join study on students.study=study.id left join region on students.region = region.id";
-
-    $data = db::query($select,null,false);
-
-    //psa todo experimental code to refactor at some point due to performance concerns
-    $count = 0;
-    foreach ($data as $entry)
+    try
     {
 
-        $data[$count]['image'] = base64_encode($entry['image']);
-        $count++;
-    }
-    $data = json_encode($data);
+        $select = "Select students.id, students.firstname, students.lastname, study.name as study, region.region as region, students.imageData as image from students left join study on students.study=study.id left join region on students.region = region.id";
 
-    echo $data;
+        $data = db::query($select,null,false);
+
+        //psa todo experimental code to refactor at some point due to performance concerns
+        $count = 0;
+        foreach ($data as $entry)
+        {
+
+            $data[$count]['image'] = base64_encode($entry['image']);
+            $count++;
+        }
+        $data = json_encode($data);
+
+        echo $data;
+
+    }
+    catch (Exception $e)
+    {
+        $app = \Slim\Slim::getInstance();
+
+        $app->halt(400, $e->getMessage());
+    }
+
+
 
 });
 
@@ -335,11 +347,21 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
 {
     try
     {
+        $array = array (studentId => $studentId, university => $university, study => $study, minor => $minor);
+
         $sql = "
+                insert into studentStudy (studentId, university, study,  minor)
+                VALUES (:studentId, :university, :study, :minor)
+        ";
+
+
+        /*
+         * refactored!
+         * $sql = "
         update students set university=$university, study=$study, minor=$minor
         WHERE id = $studentId
-        ";
-        $response = db::query($sql, null, false, false);
+        ";*/
+        $response = db::query($sql, $array, false, false);
     }
     catch (Exception $e)
     {
@@ -357,6 +379,7 @@ function addStudent($student)
     ";
 
     $studentArray = (array) $student;
+    $studentArray['type'] = 0;
 
     try
     {
@@ -373,7 +396,7 @@ function addAddress($studentId, $address)
 {   $address = (array)$address;
     $address['studentId'] = $studentId;
     $sql = "
-    insert into studentAddress (studentId, street, streetno, zip, city)
+    insert into address (userId, street, streetno, zip, city)
     VALUES (:studentId, :street, :streetno, :zip, :city)";
     try
     {
@@ -390,7 +413,7 @@ function addAddress($studentId, $address)
 function getStudentIdbyEmail($email)
 {
     $sql = "
-    select id from students where email='$email'";
+    select id from students where email='$email' and type = 0"; //@psa todo does this really work???
     try
     {
         $response = db::query($sql, null, false, false);
@@ -414,9 +437,11 @@ $app->post('/postJobprofile/', function () {
     //$post = json_decode(json_encode($post));
     $availability = (array)$post['availability'];
     addAvailability($availability);
-    die();
+
 
     unset($post['availability']);
+
+    //@psa todo check session and insert userId into studentJobprofile.....
 
     $sql = "
     insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)

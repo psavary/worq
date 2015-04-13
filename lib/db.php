@@ -80,7 +80,9 @@ class db
         }
         catch (Exception $e)
         {
-           throw new Exception($e->getMessage(). " ".$sql);
+           //throw new Exception($e->getMessage(). " ".$sql);
+            throw new Exception($e->getMessage());
+
         }
     }
 

@@ -3,7 +3,7 @@
  */
     //Controller for whole filtermanagement
 app.controller('FilterCtrl',
-    function($scope, $http, $animate, $modal, regions, students, industries)
+    function($scope, $http, $animate, $modal, $alert, regions, students, industries)
     {
 
 
@@ -54,11 +54,25 @@ app.controller('FilterCtrl',
 
 
         //array of students
-        students.myservice().then(
+        students.getStudentList().then(
             function(payload){
                 $scope.students = payload.data;
-            }
+            },
+            function(error)
+                {
+                    var message = error.data;
+                    console.log(message);
+
+                    $alert({
+                        "title": "Fehler: ",
+                        "content":  message,
+                        "type": "danger",
+                        "duration":"30"
+                    });
+                }
         );
+
+
 
         $scope.showDetails = function(student)
         {
