@@ -23,6 +23,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
         });
     });
 
+    //todo not really needed atm
     app.config(function($asideProvider) {
         angular.extend($asideProvider.defaults, {
             container: 'body',
@@ -31,14 +32,12 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
     });
 
 
-
     app.service('students', ['$http',function($http)
     {
 
         this.getStudentList =
         function()
         {
-
 
             return $http.get('api.php/hello/');
         };
@@ -134,26 +133,11 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
             };
     }]);
 
-/*
-    app.service('phpCookie',['$cookieStore', function($cookieStore)
-    {
-        this.getCookie =
-            function()
-            {
-                var myCookie = $cookieStore.remove('PHPSESSID');
-                console.log(myCookie);
-                return myCookie;
-            };
-    }])
-    */
+
 
     app.controller('RootCtrl',
     function($scope, $http, $cookies) {
-        //placeHolderParentScope
-        //$http.get('/api.php/getCookie/');
-        //var myCookie = phpCookie.getCookie();
-        //console.log(myCookie);
-        //$cookies.PHPSESSID;
+
         console.log($cookies.PHPSESSID);
         var sessionId = $cookies.PHPSESSID;
         $http.get('/api.php/getSession/'+sessionId).then

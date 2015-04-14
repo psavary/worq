@@ -60,10 +60,14 @@ class db
                 $statement=$db->prepare($sql);
                // die(var_dump($dataArray));
 
+
+
                 $statement->execute($dataArray);
                //var_dump($statement->debugDumpParams());
 
                 $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+
+
 
                 if($asJson)
                 {

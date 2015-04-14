@@ -14,17 +14,18 @@
             <form novalidate class="simple-form" name="registerForm" ng-submit="update(user)">
 
             <div class="boxcontent">
-                    <label>Firstname: </label><input type="text" ng-model="user.company.firstname" required/><br />
-                <label>Lastname: </label><input type="text" ng-model="user.company.lastname" required/><br />
+                <label>Firma: </label><input type="text" ng-model="user.company.company" required/><br />
+                <label>Vorname: </label><input type="text" ng-model="user.company.firstname" required/><br />
+                <label>Name: </label><input type="text" ng-model="user.company.lastname" required/><br />
                     <fieldset>
-                    <label>Street: </label><input type="text" ng-model="user.address.street" required/><br />
-                    <label> No: </label><input type="text" ng-model="user.address.streetno" required/><br />
+                    <label>Strasse: </label><input type="text" ng-model="user.address.street" required/><br />
+                    <label> Nr.: </label><input type="text" ng-model="user.address.streetno" required/><br />
                     </fieldset>
-                    <label>Zip: </label><input type="text" ng-model="user.address.zip" required/><br />
-                    <label>City: </label><input type="text" ng-model="user.address.city" required/><br />
+                    <label>PLZ: </label><input type="text" ng-model="user.address.zip" required/><br />
+                    <label>Ort: </label><input type="text" ng-model="user.address.city" required/><br />
 
-                    <label>Telephone: </label><input type="text" ng-model="user.company.telephone" required/><br />
-                    <label>Gender: </label><input type="radio" ng-model="user.company.gender" value="male" />male
+                    <label>Telefon: </label><input type="text" ng-model="user.company.telephone" required/><br />
+                    <label>Geschlecht: </label><input type="radio" ng-model="user.company.gender" value="male" />male
                     <input type="radio" ng-model="user.company.gender" ng-value="female" ng-checked="true"/>female<br />
                     <!--<input type="date" ng-model="user.company.birthdate" id="exampleInput" name="input" ng-model="value"
                            placeholder="yyyy-MM-dd" min="1940-01-01" max="2013-12-31" required /><br />-->
