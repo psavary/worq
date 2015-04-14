@@ -63,10 +63,10 @@ app.controller('JobprofilesCtrl',
             $http.post('/api.php/postJobprofile/', user).
                 success(function(data, status, headers, config) {
                     var alert = $alert({
-                        "title": "Täschbäng!",
-                        "content": "lslsl",
+                        "title": "Speichern erfolgreich!",
+                        "content": "Ihr Jobprofil wurde gspeichert",
                         "type": "success",
-                        "duration":"15"
+                        "duration":"1000"
                     });
                     console.log(headers);
 
@@ -76,7 +76,7 @@ app.controller('JobprofilesCtrl',
                     // or server returns response with an error status.
 
                     var alert = $alert({
-                        "title": "Damn it!!! Shit's fucked up!",
+                        "title": "Fehler:",
                         "content": data,
                         "type": "danger",
                         "duration":"30"

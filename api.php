@@ -46,7 +46,7 @@ $app->post('/postLogin/', function ()
         $body = $request->getBody();
         $post = (array)json_decode($body);
 
-        $select = "Select * from students where email = :email and password = :password";
+        $select = "Select * from user where email = :email and password = :password";
         $qresult = db::query($select, $post, false, false);
 
 
@@ -98,26 +98,38 @@ $app->post('/postImage/:email/:file/:type', function ($email, $image, $type)
 });
 
 
-//check if entered Emailaddress is unique in DB
+//check if entered Emailaddress is unique in DB type 0 is student
 $app->get('/getStudentEmailUnique/:email', function ($email)
 {
-    $select = "Select email from students where email = '$email'";
-    $data = db::query($select,null, false, false);
+    echo checkEmailUnique($email, 0);
+});
 
+
+//check if entered Emailaddress is unique in DB, type 1 is company
+$app->get('/getCompanyEmailUnique/:email', function ($email)
+{
+    echo checkEmailUnique($email, 1);
+});
+
+
+function checkEmailUnique ($email, $userType = 0)
+{
+    $select = "Select email from user where email = '$email' and type = $userType";
+    $data = db::query($select,null, false, false);
     if (count($data) == 0)
     {
         $trueresponse = array("response" => true);
-        echo json_encode($trueresponse);
+        return json_encode($trueresponse);
     }
     else
     {
         $falseresponse = array("response" => false);
-        echo json_encode($falseresponse);
+        return json_encode($falseresponse);
     }
-});
+}
 
 
-$app->get('/hello/', function ()
+$app->get('/hello/', function () //todo refactor this api function name
 {
     try
     {
@@ -130,7 +142,6 @@ $app->get('/hello/', function ()
         $count = 0;
         foreach ($data as $entry)
         {
-
             $data[$count]['image'] = base64_encode($entry['image']);
             $count++;
         }
@@ -153,12 +164,12 @@ $app->get('/hello/', function ()
 
 $app->get('/regions/', function ()
 {
-    echo
-    '[
-      {"id": "1", "name": "Ostschweiz"},
-      {"id": "2", "name": "Zentralschweiz"},
-      {"id": "3", "name": "Westschweiz"}
-    ]';
+    $select = "Select * from region";
+
+    $data = db::query($select,null,true, false);
+
+    echo ($data);
+
 });
 
 
@@ -330,7 +341,7 @@ $app->get('/confirmRegistration/:hash', function ($hash)
         {
             $array = array('studentId' => (int)$data[0]['studentId']);
 
-            $update = "Update students set isConfirmed = 1, isActive = 1 where Id = :studentId";
+            $update = "Update user set isConfirmed = 1, isActive = 1 where Id = :studentId";
             $data = db::query($update,$array,false, false);
 
         }
@@ -354,13 +365,6 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
                 VALUES (:studentId, :university, :study, :minor)
         ";
 
-
-        /*
-         * refactored!
-         * $sql = "
-        update students set university=$university, study=$study, minor=$minor
-        WHERE id = $studentId
-        ";*/
         $response = db::query($sql, $array, false, false);
     }
     catch (Exception $e)
@@ -374,7 +378,7 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
 function addStudent($student)
 {
     $sql = "
-    insert into students (firstname, lastname, gender,  email, password, telephone)
+    insert into user (firstname, lastname, gender,  email, password, telephone)
     VALUES (:firstname, :lastname, :gender, :email, :password, :telephone)
     ";
 
@@ -392,12 +396,12 @@ function addStudent($student)
 }
 
 
-function addAddress($studentId, $address)
+function addAddress($userId, $address)
 {   $address = (array)$address;
-    $address['studentId'] = $studentId;
+    $address['userId'] = $userId;
     $sql = "
     insert into address (userId, street, streetno, zip, city)
-    VALUES (:studentId, :street, :streetno, :zip, :city)";
+    VALUES (:userId, :street, :streetno, :zip, :city)";
     try
     {
         $response = db::query($sql, $address, false, false);
@@ -413,7 +417,7 @@ function addAddress($studentId, $address)
 function getStudentIdbyEmail($email)
 {
     $sql = "
-    select id from students where email='$email' and type = 0"; //@psa todo does this really work???
+    select id from user where email='$email' and type = 0"; //@psa todo does this really work???
     try
     {
         $response = db::query($sql, null, false, false);
@@ -428,26 +432,39 @@ function getStudentIdbyEmail($email)
 
 
 $app->post('/postJobprofile/', function () {
-
-    $app = \Slim\Slim::getInstance();
-    //$app = new \Slim\Slim();
-    $request = $app->request();
-    $body = $request->getBody();
-    $post = (array)json_decode($body);
-    //$post = json_decode(json_encode($post));
-    $availability = (array)$post['availability'];
-    addAvailability($availability);
-
-
-    unset($post['availability']);
-
-    //@psa todo check session and insert userId into studentJobprofile.....
-
-    $sql = "
-    insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
-    VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
     try
     {
+        $app = \Slim\Slim::getInstance();
+        $session = new Session;
+
+        //$app = new \Slim\Slim();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
+        //$post = json_decode(json_encode($post));
+        $availability = (array)$post['availability'];
+
+
+        //@psa todo check session and insert userId into studentJobprofile.....
+        $userData = $session->checkSession();
+
+        if (!$userData)
+        {
+            throw new Exception ('Bitte loggen Sie sich ein um Ihr Jobprofil speichern zu können!');
+        }
+            echo "hallo?";
+        var_dump($userData);
+        die();
+
+        addAvailability($availability);
+
+        unset($post['availability']);
+
+
+        $sql = "
+        insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
+        VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
+
         $response = db::query($sql, $post, false, true); //@psa TODO somethings wrong here!!!!! continue work here!!!
     }
     catch (Exception $e)
@@ -461,6 +478,7 @@ $app->post('/postJobprofile/', function () {
 
 function addAvailability ($availability)
 {
+    //@psa todo save that stuff
     foreach ($availability as $day => $daytime)
     {
         var_dump($day);

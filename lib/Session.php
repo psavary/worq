@@ -45,7 +45,7 @@ class Session {
             $userId = $result[0]['userId'];
 
 
-            $select = "select students.firstname, students.lastname from session left join students on students.id = session.userId where session.userId = " . $userId . " and  session.sessionId = '" . session_id() . "' and session.sessionExpire > '" . $time . "'";
+            $select = "select user.id, user.firstname, user.lastname from session left join user on user.id = session.userId where session.userId = " . $userId . " and  session.sessionId = '" . session_id() . "' and session.sessionExpire > '" . $time . "'";
             $result = db::query($select, null, false, false);
             //die(var_dump($result));
             $userData = $result[0];

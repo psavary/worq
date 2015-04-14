@@ -21,79 +21,21 @@ app.config(['flowFactoryProvider', function (flowFactoryProvider) {
 }]);
 
 
-app.controller('RegisterCtrl',
-    function($scope, $http, $modal, $alert, $location, regions, students, industries, universities, languages, languageDiploma)
+app.controller('RegistercompanyCtrl',
+    function($scope, $http, $modal, $alert, $location)
     {
         //initialize models so a value can be set in controller without error
         $scope.user = {};
-        $scope.user.student = {} ;
-        $scope.user.student.gender = {};
-        $scope.user.student.gender = 'female';
-        $scope.languageDiploma = {}; //this has to be initialized to make the scope an array
+        $scope.user.company = {} ;
+        $scope.user.company.gender = {};
+        $scope.user.company.gender = 'female';
 
-        $scope.changeLang = function(langNo,id) {
-
-            $scope.currentLangNo = langNo;
-
-            languageDiploma.languageDiploma(id).then
-            (
-                function(payload)
-                {
-                    $scope.languageDiploma[$scope.currentLangNo]= payload.data; //now, we fill the array.
-                    //console.dir($scope.languageDiploma);
-                }
-            )
-        };
-
-
-        $http.get('api.php/study/').then
-        (
-            function(studyResponse)
-            {
-                $scope.studys = studyResponse.data;
-            }
-        );
-
-
-        universities.getUniversities().then
-        (
-            function(payload)
-            {
-                $scope.universities = payload.data;
-            }
-        );
-
-        languages.getLanguages().then
-        (
-            function(payload)
-            {
-                $scope.languages = payload.data;
-            }
-        );
-
-        //get Regions
-        regions.getRegions().then
-        (
-            function(payload)
-            {
-                $scope.regions = payload.data;
-            }
-        );
-
-        //get industries
-        industries.getIndustries().then
-        (
-            function(payload)
-            {
-                $scope.industries = payload.data;
-            }
-        );
 
         $scope.checkUnique = function(user)
         {
             $scope.isNotUniqueEmail = false;
-            var email = $scope.user.student.email;
-            $http.get('api.php/getStudentEmailUnique/'+email).then
+            var email = $scope.user.company.email;
+            $http.get('api.php/getCompanyEmailUnique/'+email).then
             (
                 function(responeData)
                 {
@@ -111,12 +53,12 @@ app.controller('RegisterCtrl',
 
         $scope.update = function(user)
         {
-            $http.post('/api.php/postStudent/', user).
+            $http.post('/api.php/postCompany/', user).
                 success(function(data, status, headers, config) {
 
                     //post image
                     $scope.image = $scope.$flow.files[0].file;
-                    $http.post('/api.php/postImage/'+$scope.user.student.email+'/'+$scope.image.type, $scope.image);
+                    $http.post('/api.php/postImage/'+$scope.user.company.email+'/'+$scope.image.type, $scope.image);
 
                    /*
                     $alert({
