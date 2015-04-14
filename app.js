@@ -10,9 +10,24 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
         .when('/confirmation',{templateUrl: 'confirmation.html'})
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
-        .when('/jobprofile', { templateUrl: 'jobprofile.html' })
+        .when('/registercompany', { templateUrl: 'registercompany.html' })
+
+            .when('/jobprofile', { templateUrl: 'jobprofile.html' })
         .when('/about', { template: '�ber unsere Pizzeria' })
         .otherwise({ redirectTo: '/register'});
+    });
+
+    app.config(function($modalProvider) {
+        angular.extend($modalProvider.defaults, {
+            html: true
+        });
+    });
+
+    app.config(function($asideProvider) {
+        angular.extend($asideProvider.defaults, {
+            container: 'body',
+            html: true
+        });
     });
 
 
@@ -20,17 +35,14 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
     app.service('students', ['$http',function($http)
     {
 
-        this.myservice =
+        this.getStudentList =
         function()
         {
 
-            //var fuck = 'bullshit';
 
             return $http.get('api.php/hello/');
-            // console.log(response);
-            //return response   ;
         };
-        this.othersevice =
+        this.getStudentDetails =
             function()
             {
 

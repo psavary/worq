@@ -5,11 +5,7 @@
  * Created by philou on 11.11.14.
  */
 
-app.config(function($modalProvider) {
-    angular.extend($modalProvider.defaults, {
-        html: true
-    });
-});
+
 
 app.controller('NavigationCtrl',
     function($scope, $modal, $http, $alert) {
@@ -57,6 +53,7 @@ app.controller('NavigationCtrl',
                                 title: 'Login  Successfull',
                                 content: '<span class="label label-success">Login  Successfull</span>'
                             };
+                            $scope.isAuthorized= true;
                             $scope.loginModalObject.$hide();
                         }
                     });

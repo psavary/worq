@@ -1,6 +1,8 @@
 /**
  * Created by philou on 11.11.14.
  */
+//this controller is deprecated i think
+/*
 app.controller('LoginCtrl',
     function($scope, $modal, $http, $alert)
     {
@@ -52,3 +54,4 @@ app.controller('LoginCtrl',
         };
     }
 );
+*/
