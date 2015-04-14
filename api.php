@@ -169,6 +169,7 @@ $app->get('/regions/', function ()
     $data = db::query($select,null,true, false);
 
     echo ($data);
+
 });
 
 
