@@ -46,37 +46,40 @@ app.controller('RegistercompanyCtrl',
                 }
             );
         }
-        //console.log($scope.isNotUniqueEmail);
-        //console.log(registerForm.$invalid);
 
-
-
-        $scope.update = function(user)
+        $scope.save = function(user)
         {
             $http.post('/api.php/postCompany/', user).
-                success(function(data, status, headers, config) {
-
+                success(function(data, status, headers, config)
+                {
                     //post image
                     $scope.image = $scope.$flow.files[0].file;
-                    $http.post('/api.php/postImage/'+$scope.user.company.email+'/'+$scope.image.type, $scope.image);
 
-                   /*
-                    $alert({
-                        "title": "Holy guacamole!",
-                        "content": "Student Saved.",
-                        "type": "success",
-                        "duration": "5"
-                    });
-                    */
-                    //$location.path('/confirmation');
+                    $http.post('/api.php/postImage/'+$scope.user.company.email+'/1/'+$scope.image.type, $scope.image). //usertype added
+                        success(function(data, status, headers, config)
+                        {
+                            //redirect in case of success
+                            $location.url('confirmation');
+                        }).
+                        error(function(data, status, headers, config)
+                        {
+                            $alert({
+                                "title": "Bild konnte nicht hochgeladen werden:",
+                                "content": data,
+                                "type": "danger",
+                                "duration":"20"
+                            });
+                        });
+
+
                 }).
                 error(function(data, status, headers, config)
                 {
                     $alert({
-                        "title": "Holy guacamole!",
-                        "content": "Something went wrong",
+                        "title": "Fehler:",
+                        "content": data,
                         "type": "danger",
-                        "duration":"5"
+                        "duration":"20"
                     });
                 });
             };
@@ -89,13 +92,10 @@ app.controller('RegistercompanyCtrl',
             //post image
             $http.post('/api.php/postImage/', $scope.image);
             */
-            $http.get('api.php/redirect/').then
-            (
-                function(responeData)
-                {
-                 console.log(responeData.data())
-                }
-            );;
+
+            $location.url('confirmation');
+//            $window.location();
+
 
         };
     }

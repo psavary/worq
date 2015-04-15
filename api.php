@@ -82,19 +82,26 @@ $app->post('/postLogin/', function ()
 });
 
 
-$app->post('/postImage/:email/:file/:type', function ($email, $image, $type)
+$app->post('/postImage/:email/:userType/:file/:type', function ($email, $userType, $image, $type)
 {
-    //@psa todo: make sure, the image only gets uploaded if no image exists already (security!)
-    $session = new Session;
-    $app = \Slim\Slim::getInstance();
-    $request = $app->request();
-    $body = $request->getBody();
-    $post = (array)json_decode($body);
-    $imageType = $image.'/'.$type;
-    $array = array('imageType' => $imageType, 'imageData' => $body, 'email' => $email);
-    //$sql = "insert into students (imageType, imageData) VALUES (:imageType, :imageData) where emai = :email";
-    $sql = "update students set imageType = :imageType, imageData = :imageData where email = :email";
-    $data = db::query($sql,$array, false, false);
+    try
+    {
+        //@psa todo: make sure, the image only gets uploaded if no image exists already (security!)
+        $session = new Session;
+        $app = \Slim\Slim::getInstance();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
+        $imageType = $image . '/' . $type;
+        $array = array('imageType' => $imageType, 'imageData' => $body, 'email' => $email, 'userType' => $userType);
+        $sql = "update user set imageType = :imageType, imageData = :imageData where email = :email and type = :userType";
+        $data = db::query($sql, $array, false, false);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e);
+
+    }
 });
 
 
@@ -156,9 +163,6 @@ $app->get('/hello/', function () //todo refactor this api function name
 
         $app->halt(400, $e->getMessage());
     }
-
-
-
 });
 
 
@@ -254,7 +258,6 @@ $app->get('/industries/', function ()
 $app->post('/postStudent/', function () {
 
     $app = \Slim\Slim::getInstance();
-    //$app = new \Slim\Slim();
     $request = $app->request();
     $body = $request->getBody();
     $post = json_decode($body);
@@ -271,21 +274,37 @@ $app->post('/postStudent/', function () {
 
         sendConfirmationMail($post->student->email, $studentId);
 
-        $app->redirect('/#/confirmation');
-
-
+       // $app->redirect('/#/confirmation');
     }
     catch (Exception $e)
     {
         $app->halt(400, $e->getMessage());
     }
-
-    //var_dump($post->student);
-
-    //$result = array("status"=>"success","response"=>$response);
-
 });
 
+$app->post('/postCompany/', function () {
+
+    $app = \Slim\Slim::getInstance();
+    //$app = new \Slim\Slim();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = json_decode($body);
+
+    try
+    {
+        addCompany($post->company);
+
+        $userId = getCompanyIdByEmail($post->company->email);
+
+        addAddress($userId, $post->address);
+
+        sendConfirmationMail($post->company->email, $userId);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+});
 
 
 /*
@@ -296,7 +315,7 @@ function sendConfirmationMail($email, $studentId)
     $hash = md5($email.$studentId);
 
     $array = array('email' => $email, 'studentId' => $studentId, 'hash' => $hash);
-    var_dump($array);
+    //var_dump($array);
     $sql = "
     insert into studentConfirmation (email, studentId, hashValue)
     VALUES (:email, :studentId, :hash)
@@ -313,16 +332,11 @@ function sendConfirmationMail($email, $studentId)
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= 'From: <webmaster@worq.com>' . "\r\n";
         mail('philou.savary@gmail.com', 'Bitte Registrierung bei Worq bestätigen', $text, $headers);
-
-
-
-
     }
     catch (Exception $e)
     {
         throw new Exception ($e);
     }
-
 }
 
 /*
@@ -378,9 +392,9 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
 function addStudent($student)
 {
     $sql = "
-    insert into user (firstname, lastname, gender,  email, password, telephone)
-    VALUES (:firstname, :lastname, :gender, :email, :password, :telephone)
-    ";
+    insert into user (firstname, lastname, gender,  email, password, telephone, type)
+    VALUES (:firstname, :lastname, :gender, :email, :password, :telephone, :type)
+    "; //todo add birthdate
 
     $studentArray = (array) $student;
     $studentArray['type'] = 0;
@@ -394,6 +408,28 @@ function addStudent($student)
         throw new Exception ($e);
     }
 }
+
+function addCompany($company)
+{
+    $sql = "
+    insert into user (company, firstname, lastname, gender,  email, password, telephone, type)
+    VALUES (:company, :firstname, :lastname, :gender, :email, :password, :telephone, :type)
+    ";
+
+    $companyArray = (array) $company;
+    $companyArray['type'] = 1;
+
+    try
+    {
+        $response = db::query($sql, $companyArray, false, false);
+    }
+    catch (Exception $e)
+    {
+        throw new Exception ($e);
+    }
+}
+
+
 
 
 function addAddress($userId, $address)
@@ -416,18 +452,32 @@ function addAddress($userId, $address)
 
 function getStudentIdbyEmail($email)
 {
+    return getUserIdByEmailAndType($email, 0);
+}
+
+
+function getCompanyIdbyEmail($email)
+{
+    return getUserIdByEmailAndType($email, 1);
+}
+
+
+function getUserIdByEmailAndType ($email, $type)
+{
     $sql = "
-    select id from user where email='$email' and type = 0"; //@psa todo does this really work???
+    select id from user where email='$email' and type = $type";
     try
     {
         $response = db::query($sql, null, false, false);
-       // var_dump(($response[0]['id'])); //@psa todo make sure only one email is assigned. Maybe throw error or something
+        // var_dump(($response[0]['id'])); //@psa todo make sure only one email is assigned. Maybe throw error or something
         return $response[0]['id'];
     }
     catch (Exception $e)
     {
         throw new Exception ($e);
     }
+
+
 }
 
 
@@ -452,9 +502,9 @@ $app->post('/postJobprofile/', function () {
         {
             throw new Exception ('Bitte loggen Sie sich ein um Ihr Jobprofil speichern zu können!');
         }
-            echo "hallo?";
-        var_dump($userData);
-        die();
+            echo "hallo?";//todo remove
+        var_dump($userData); //todo remove
+        die(); //todo remove
 
         addAvailability($availability);
 

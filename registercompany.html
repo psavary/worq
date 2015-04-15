@@ -61,71 +61,6 @@
         </div>
     </div>
 
-            <div class="centercol">
-                <div id="box">
-                    <div id="ueberschrift">
-                        <span class="text_header">Profil anlegen</span>
-                    </div>
-                    <div class="boxcontent">
-                            <!-- Angular Select -->
-                        <label>University: </label>
-                        <select name="university" data-ng-model="user.university" ng-options="university.name for university in universities" required><option value="">-- please choose --</option></select><br />
-                        <span ng-show="registerForm.university.$error.required">Select uni</span>
-                        <label>Study: </label>
-                        <select data-ng-model="user.study" ng-options="study.name for study in studys" required><option value="">-- please choose --</option></select><br />
-                            The value selected is {{user.study.name}}.<br />
-                        <label>Minor field of study: </label>
-                        <select data-ng-model="user.minor" ng-options="study.name for study in studys" ><option value="">-- please choose --</option></select><br />
-
-                        <fieldset id="languages" class="threeinarow">
-                            <label>Language: </label>
-                            <select ng-change="changeLang(1,user.language1.language.id)" data-ng-model="user.language1.language" ng-options="language.name for language in languages" required><option value="">-- please choose --</option></select><br />
-                            <label>Language Diploma: </label>
-                            <select  data-ng-model="user.language1.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[1]" required><option value="">-- please choose --</option></select><br />
-                            <label>Language Oral1: </label>
-                            <select data-ng-model="user.language1.languageOral" required>
-                                <option value="">-- please choose --</option>
-                                <option value="1">grundlagen</option>
-                                <option value="2">gut</option>
-                                <option value="3">sehr gut</option>
-                                <option value="4">fliessend</option>
-                                <option value="5">muttersprache</option>
-                            </select>
-                        </fieldset>
-
-                        <fieldset id="languages" class="threeinarow">
-                            <label>Language2: </label>
-                            <select ng-change="changeLang(2,user.language2.language.id)" data-ng-model="user.language2.language" ng-options="language.name for language in languages" ><option value="">-- please choose --</option></select><br />
-                            <label>Language Diploma2: </label>
-                            <select  data-ng-model="user.language2.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[2]" ><option value="">-- please choose --</option></select><br />
-                            <label>Language Oral2: </label>
-                            <select data-ng-model="user.language2.languageOral">
-                                <option value="">-- please choose --</option>
-                                <option value="1">grundlagen</option>
-                                <option value="2">gut</option>
-                                <option value="3">sehr gut</option>
-                                <option value="4">fliessend</option>
-                                <option value="5">muttersprache</option>
-                            </select>
-                        </fieldset>
-                        <fieldset id="languages" class="threeinarow">
-                        <label>Language3: </label>
-                        <select ng-change="changeLang(3, user.language3.language.id)" data-ng-model="user.language3.language" ng-options="language.name for language in languages" ><option value="">-- please choose --</option></select><br />
-                        <label>Language Diploma3: </label>
-                        <select  data-ng-model="user.language3.languageDiploma" ng-options="langDipl.name for langDipl in languageDiploma[3]" ><option value="">-- please choose --</option></select><br />
-                        <label>Language Oral3: </label>
-                        <select data-ng-model="user.language3.languageOral">
-                            <option value="">-- please choose --</option>
-                            <option value="1">grundlagen</option>
-                            <option value="2">gut</option>
-                            <option value="3">sehr gut</option>
-                            <option value="4">fliessend</option>
-                            <option value="5">muttersprache</option>
-                        </select>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
 
             <div class="rightcolsmall">
                 <div id="box">
@@ -140,7 +75,7 @@
                         <br />
                         Damit dich Arbeitgeber finden, brauchst Du nur noch ein Jobprofil zu erfassen.
                         <button class="button" ng-click="reset()">RESET</button>
-                        <button ng-disabled="registerForm.$invalid || isNotUniqueEmail" ng-click="update(user)" class="button">Submit</button>
+                        <button ng-disabled="registerForm.$invalid || isNotUniqueEmail" ng-click="save(user)" class="button">Submit</button>
                         <br />
                         <br />
                         <br />

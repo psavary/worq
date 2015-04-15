@@ -116,25 +116,31 @@ app.controller('RegisterCtrl',
 
                     //post image
                     $scope.image = $scope.$flow.files[0].file;
-                    $http.post('/api.php/postImage/'+$scope.user.student.email+'/'+$scope.image.type, $scope.image);
+                    $http.post('/api.php/postImage/'+$scope.user.student.email+'/0/'+$scope.image.type, $scope.image). //usertype (0) added
+                        success(function(data, status, headers, config)
+                        {
+                            //redirect in case of success
+                            $location.url('confirmation');
+                        }).
+                        error(function(data, status, headers, config)
+                        {
+                            $alert({
+                                "title": "Bild konnte nicht hochgeladen werden:",
+                                "content": data,
+                                "type": "danger",
+                                "duration":"20"
+                            });
+                        });
 
-                   /*
-                    $alert({
-                        "title": "Holy guacamole!",
-                        "content": "Student Saved.",
-                        "type": "success",
-                        "duration": "5"
-                    });
-                    */
                     //$location.path('/confirmation');
                 }).
                 error(function(data, status, headers, config)
                 {
                     $alert({
-                        "title": "Holy guacamole!",
-                        "content": "Something went wrong",
+                        "title": "Fehler:",
+                        "content": data,
                         "type": "danger",
-                        "duration":"5"
+                        "duration":"20"
                     });
                 });
             };
