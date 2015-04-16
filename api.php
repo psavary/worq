@@ -577,20 +577,21 @@ $app->post('/postJobprofile/', function () {
         {
             throw new Exception ('Bitte loggen Sie sich ein um Ihr Jobprofil speichern zu können!');
         }
-            echo "hallo?";//todo remove
-        var_dump($userData); //todo remove
-        die(); //todo remove
-
-        addAvailability($availability);
+        $userId = $userData['id'];
+//die(var_dump($userData));
+ //todo continue here
+        addAvailability($availability,$userId);
 
         unset($post['availability']);
 
-
+        $post['studentId'] = $userId;
         $sql = "
-        insert into studentJobprofile (employmentType, workloadFrom, workloadTo, commission, mobility, industry, promotion, region)
-        VALUES (:employmentType, :workloadFrom, :workloadTo, :commission, :mobility, :industry, :promotion, :region)";
+        insert into studentJobprofile (studentId, employmentType, workloadFrom, workloadTo, availableFrom, availableTo, commission, mobility, industry, promotion, region)
+        VALUES (:studentId, :employmentType, :workloadFrom, :workloadTo, :from, :to, :commission, :mobility, :industry, :promotion, :region)";
 
-        $response = db::query($sql, $post, false, true); //@psa TODO somethings wrong here!!!!! continue work here!!!
+        $response = db::query($sql, $post, false, true);
+        die(var_dump($response));
+
     }
     catch (Exception $e)
     {
@@ -601,13 +602,29 @@ $app->post('/postJobprofile/', function () {
 });
 
 
-function addAvailability ($availability)
+/**
+ * @param $availability
+ * @param $userId
+ * @throws Exception
+ */
+function addAvailability ($availability, $userId)
 {
     //@psa todo save that stuff
-    foreach ($availability as $day => $daytime)
+    foreach ($availability as $day => $row)
     {
-        var_dump($day);
-        var_dump((array)$daytime);
+        $sql = "insert into studentAvailability (studentId, day) values ($userId, '$day')";
+        $response = db::query($sql, null, false, true);
+
+        foreach ($row as $daytime => $isTrue)
+        {
+            // $sqlInsert['day']
+            if($isTrue)
+            {
+                $sqlUpdate = "update studentAvailability set $daytime = true where studentId = $userId and day = '$day' ";
+                $response = db::query($sqlUpdate, null, false, true);
+                var_dump($sqlUpdate);
+            }
+        }
     }
 
 }
@@ -617,6 +634,7 @@ function addAvailability ($availability)
  */
 function validate($sqlResult, $errorMessage = null)
 {
+
     $app->halt(400, "do tell the user why it is not working");
 }
 

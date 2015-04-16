@@ -8,6 +8,7 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
         $routeProvider
         .when('/', { templateUrl: 'filter.html' })
         .when('/confirmation',{templateUrl: 'confirmation.html'})
+        .when('/jobprofileSuccess',{templateUrl: 'jobprofileSuccess.html'})
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
         .when('/registercompany', { templateUrl: 'registercompany.html' })

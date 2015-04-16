@@ -4,7 +4,7 @@
  */
 
 app.controller('JobprofilesCtrl',
-    function($scope, $http, $modal, $alert, regions, job, industries)
+    function($scope, $http, $modal, $alert, $location, regions, job, industries)
     {
         //get Regions
         regions.getRegions().then
@@ -66,9 +66,9 @@ app.controller('JobprofilesCtrl',
                         "title": "Speichern erfolgreich!",
                         "content": "Ihr Jobprofil wurde gspeichert",
                         "type": "success",
-                        "duration":"1000"
+                        "duration":"20"
                     });
-                    console.log(headers);
+                    $location.path('jobprofileSuccess');
 
                 }).
                 error(function(data, status, headers, config) {
