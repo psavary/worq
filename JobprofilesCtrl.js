@@ -1,6 +1,6 @@
 /**
  * Created by philou on 02.11.14.n  testskdjfsdkjfsdjfj
- * hhjjhbhjhjjhjjbmmmbmbm
+ *
  */
 
 app.controller('JobprofilesCtrl',

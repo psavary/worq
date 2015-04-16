@@ -39,12 +39,19 @@ $app->get('/getSession/:sessionId', function () {
  */
 $app->post('/postLogin/', function ()
 {
-    try {
+    $app = \Slim\Slim::getInstance();
+    $request = $app->request();
+    $body = $request->getBody();
+    $post = (array)json_decode($body);
+
+    return login($post);
+});
+
+function login ($post)
+{
+    try
+    {
         $session = new Session;
-        $app = \Slim\Slim::getInstance();
-        $request = $app->request();
-        $body = $request->getBody();
-        $post = (array)json_decode($body);
 
         $select = "Select * from user where email = :email and password = :password";
         $qresult = db::query($select, $post, false, false);
@@ -72,14 +79,14 @@ $app->post('/postLogin/', function ()
             $result = array("status" => "error", "response" => "Login Failed");
         }
 
-        echo(json_encode($result));
+        return json_encode($result);
     }
     catch (Exception $e)
     {
         $app->halt(400, $e);
 
     }
-});
+}
 
 
 $app->post('/postImage/:email/:userType/:file/:type', function ($email, $userType, $image, $type)
@@ -140,8 +147,8 @@ $app->get('/hello/', function () //todo refactor this api function name
 {
     try
     {
-
-        $select = "Select students.id, students.firstname, students.lastname, study.name as study, region.region as region, students.imageData as image from students left join study on students.study=study.id left join region on students.region = region.id";
+        //todo continue here with this sql
+        $select = "Select user.id, user.firstname, user.lastname, study.name as study, region.region as region, user.imageData as image from user left join studentStudy on user.id=studentStudy.studentId left join study on studentStudy.study=study.id left join region on user.region = region.id ";
 
         $data = db::query($select,null,false);
 
@@ -272,6 +279,9 @@ $app->post('/postStudent/', function () {
 
         addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
 
+        //todo add languages
+        addLanguages($studentId, $post->language);
+
         sendConfirmationMail($post->student->email, $studentId);
 
        // $app->redirect('/#/confirmation');
@@ -358,6 +368,29 @@ $app->get('/confirmRegistration/:hash', function ($hash)
             $update = "Update user set isConfirmed = 1, isActive = 1 where Id = :studentId";
             $data = db::query($update,$array,false, false);
 
+            $selectUser = "Select email, password from user where id = :studentId";
+            $userCredentials = db::query($selectUser,$array,false, false);
+
+            $userCredentials = $userCredentials[0];
+
+
+            login($userCredentials);
+
+            $selectUser = "Select type from user where id = :studentId";
+            $userType = db::query($selectUser,$array,false, false);
+
+            $userType = (int) $userType[0]['type'];
+
+            $app = \Slim\Slim::getInstance();
+
+            if ($userType == 1)
+            {
+                $app->redirect('/#/');
+            }
+            else
+            {
+                $app->redirect('/#/jobprofile');
+            }
         }
     }
     catch (Exception $e)
@@ -372,7 +405,7 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
 {
     try
     {
-        $array = array (studentId => $studentId, university => $university, study => $study, minor => $minor);
+        $array = array ('studentId' => $studentId, 'university' => $university, 'study' => $study, 'minor' => $minor);
 
         $sql = "
                 insert into studentStudy (studentId, university, study,  minor)
@@ -386,6 +419,48 @@ function addUniversityAndStudy ($studentId, $university, $study, $minor)
         throw new Exception ($e);
     }
 
+}
+
+function addLanguages($studentId, $languagesArray)
+{
+    try{
+
+        foreach($languagesArray as $row)
+        {
+            //not really pretty.....
+            if(is_null($row->language) || is_null($row->languageDiploma) || $row->languageOral->id == "")
+            {
+                continue;
+            }
+
+            $idArray = array();
+
+            $idArray['studentId'] = $studentId;
+            /*
+            $idArray['language'] = $row['language']['id'];
+            $idArray['languageDiploma'] = $row['languageDiploma']['id'];
+            $idArray['languageOral'] = $row['languageOral']['id'];
+            */
+
+            $idArray['language'] = (int)$row->language->id;
+            $idArray['languageDiploma'] = (int)$row->languageDiploma->id;
+            $idArray['languageOral'] = (int)$row->languageOral->id;
+            var_dump($idArray);
+
+            $sql =
+            "
+                insert into studentLanguages (studentId, languageId, languageDiplomaId,  languageOralId)
+                VALUES (:studentId, :language, :languageDiploma, :languageOral)
+            ";
+
+            $response = db::query($sql, $idArray, false, false);
+        }
+    }
+    catch (Exception $e)
+    {
+        throw new Exception ($e);
+
+    }
 }
 
 

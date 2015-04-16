@@ -120,7 +120,7 @@ app.controller('RegisterCtrl',
                         success(function(data, status, headers, config)
                         {
                             //redirect in case of success
-                            $location.url('confirmation');
+                           // $location.url('confirmation'); //todo enable
                         }).
                         error(function(data, status, headers, config)
                         {
@@ -140,7 +140,7 @@ app.controller('RegisterCtrl',
                         "title": "Fehler:",
                         "content": data,
                         "type": "danger",
-                        "duration":"20"
+                        "duration":"30"
                     });
                 });
             };
