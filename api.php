@@ -148,8 +148,8 @@ $app->get('/hello/', function () //todo refactor this api function name
     try
     {
         //todo continue here with this sql
-        $select = "Select user.id, user.firstname, user.lastname, study.name as study, region.region as region, user.imageData as image from user left join studentStudy on user.id=studentStudy.studentId left join study on studentStudy.study=study.id left join region on user.region = region.id ";
-
+        $select = "Select user.id, user.firstname, user.lastname, dataStudy.name as study, dataRegion.name as region , user.imageData as image from user left join studentStudy on user.id=studentStudy.studentId left join dataStudy on studentStudy.study=dataStudy.id left join studentJobprofile on user.id = studentJobprofile.studentId left join dataRegion on studentJobprofile.region = dataRegion.id ";
+        //die(var_dump($select));
         $data = db::query($select,null,false);
 
         //psa todo experimental code to refactor at some point due to performance concerns
@@ -175,7 +175,7 @@ $app->get('/hello/', function () //todo refactor this api function name
 
 $app->get('/regions/', function ()
 {
-    $select = "Select * from region";
+    $select = "Select * from dataRegion";
 
     $data = db::query($select,null,true, false);
 
@@ -186,7 +186,7 @@ $app->get('/regions/', function ()
 
 $app->get('/study/', function ()
 {
-    $select = "Select * from study";
+    $select = "Select * from dataStudy";
 
     $data = db::query($select,null,true, false);
 
@@ -196,7 +196,7 @@ $app->get('/study/', function ()
 
 $app->get('/university/', function ()
 {
-    $select = "Select * from universities";
+    $select = "Select * from dataUniversities";
 
     $data = db::query($select,null,true, false);
 
@@ -206,7 +206,7 @@ $app->get('/university/', function ()
 
 $app->get('/languageDiploma/:id', function ($id)
 {
-    $select = "Select * from languageDiploma where languageId=".$id;
+    $select = "Select * from dataLanguageDiploma where languageId=".$id;
 
     $data = db::query($select,null,true, false);
 
@@ -216,7 +216,7 @@ $app->get('/languageDiploma/:id', function ($id)
 
 $app->get('/employmenttypes/', function ()
 {
-    $select = "Select * from employmenttypes";
+    $select = "Select * from dataEmploymenttypes";
 
     $data = db::query($select,null,true, false);
 
@@ -226,7 +226,7 @@ $app->get('/employmenttypes/', function ()
 
 $app->get('/workloads/', function ()
 {
-    $select = "Select * from workloads";
+    $select = "Select * from dataWorkloads";
 
     $data = db::query($select,null,true, false);
 
@@ -235,7 +235,7 @@ $app->get('/workloads/', function ()
 
 $app->get('/mobility/', function ()
 {
-    $select = "Select * from mobility";
+    $select = "Select * from dataMobility";
 
     $data = db::query($select,null,true, false);
 
@@ -244,7 +244,7 @@ $app->get('/mobility/', function ()
 
 $app->get('/languages/', function ()
 {
-    $select = "Select * from languages";
+    $select = "Select * from dataLanguages";
 
     $data = db::query($select,null,true, false);
 
@@ -254,7 +254,7 @@ $app->get('/languages/', function ()
 $app->get('/industries/', function ()
 {
 
-    $select = "Select * from industry";
+    $select = "Select * from dataIndustry";
 
     $data = db::query($select,null,true, false);
 
@@ -590,7 +590,7 @@ $app->post('/postJobprofile/', function () {
         VALUES (:studentId, :employmentType, :workloadFrom, :workloadTo, :from, :to, :commission, :mobility, :industry, :promotion, :region)";
 
         $response = db::query($sql, $post, false, true);
-        die(var_dump($response));
+       // die(var_dump($response));
 
     }
     catch (Exception $e)
@@ -600,6 +600,46 @@ $app->post('/postJobprofile/', function () {
     echo json_encode($response);
 
 });
+
+
+
+$app->post('/postMessageTemplate/', function () {
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+
+        //$app = new \Slim\Slim();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
+        //$post = json_decode(json_encode($post));
+        $message = new Message;
+        if (array_key_exists('id', $post))
+        {
+            $messageId = $post['id'];
+
+            $messageId = $message->save($post, $messageId);
+        }
+        else
+        {
+            $messageId = $message->save($post);
+
+        }
+
+
+        echo trim($messageId);
+
+
+
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+
+});
+
+
 
 
 /**

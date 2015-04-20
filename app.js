@@ -6,12 +6,14 @@ var app = angular.module('tutorialApp', ['ngAnimate','ngSanitize' ,'ngRoute','ui
 
     app.config(function($routeProvider) {
         $routeProvider
-        .when('/', { templateUrl: 'filter.html' })
+        .when('/', { templateUrl: 'registercompany.html' })
         .when('/confirmation',{templateUrl: 'confirmation.html'})
         .when('/jobprofileSuccess',{templateUrl: 'jobprofileSuccess.html'})
         .when('/filter', { templateUrl: 'filter.html' })
         .when('/register', { templateUrl: 'register.html' })
-        .when('/registercompany', { templateUrl: 'registercompany.html' })
+            .when('/message', { templateUrl: 'message.html' })
+
+            .when('/registercompany', { templateUrl: 'registercompany.html' })
 
             .when('/jobprofile', { templateUrl: 'jobprofile.html' })
         .when('/about', { template: '�ber unsere Pizzeria' })

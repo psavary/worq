@@ -34,7 +34,7 @@ class db
         return $database;
     }
 
-    public static function query($sql, Array $dataArray = null, $asJson = false, $needsValidSession = true)
+    public static function query($sql, Array $dataArray = null, $asJson = false, $needsValidSession = true, $returnLastInsertedId = false)
     {
         try
         {
@@ -60,9 +60,16 @@ class db
                 $statement=$db->prepare($sql);
 
                 $statement->execute($dataArray);
-               //var_dump($statement->debugDumpParams());
+
+                if ($returnLastInsertedId)
+                {
+                    return $db->lastInsertId();
+                }
 
                 $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+
+                //todo add errorhandling and maybe transactions
+                //return $statement->errorInfo();
 
                 if($asJson)
                 {
@@ -73,7 +80,7 @@ class db
             }
             else
             {
-                throw new Exception('Session expired, please log in again');
+                throw new Exception('Sitzung abgelaufen. Bitte loggen Sie sich ein um die Daten speichern zu können');
             }
 
         }

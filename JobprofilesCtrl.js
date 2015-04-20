@@ -82,8 +82,6 @@ app.controller('JobprofilesCtrl',
                         "duration":"30"
                     });
                 });
-           // console.dir(user);
-            console.log('i did it!');
 
         };
 
