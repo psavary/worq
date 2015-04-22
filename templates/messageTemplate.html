@@ -1,0 +1,100 @@
+<div class="animate-repeat">
+        <label>Job Titel</label>
+        <input type="text" data-ng-model="message.message.header"></input>
+        <label>Nachricht</label>
+        <textarea data-ng-model="message.message.message"></textarea>
+        <label>Region</label>
+        <select name="region" data-ng-model="message.jobprofile.region" ng-options="region.id as region.name for region in regions" >
+            <option value="">-- Bitte wählen --</option>
+        </select><br/>
+
+        <label>Pensum von</label>
+        <select name="workloadFrom" data-ng-model="message.jobprofile.workloadFrom"
+                ng-options="workload.id as workload.name for workload in workloads" >
+            <option value="">-- Bitte wählen --</option>
+        </select>
+        <label>Pensum bis</label>
+        <select name="workloadTo" data-ng-model="message.jobprofile.workloadTo"
+                ng-options="workload.id as workload.name for workload in workloads" >
+            <option value="">-- Bitte wählen --</option>
+        </select>
+
+
+        <p class="input-group">
+            <input placeholder="verfügbar ab" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="message.jobprofile.availableFrom" is-open="opened" min-date="minDate"  datepicker-options="dateOptions"  ng-="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+            <input placeholder="verfügbar bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="message.jobprofile.availableTo" is-open="opened2" min-date="minDate"  datepicker-options="dateOptions"  ng-="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+        </p>
+
+
+
+
+
+        <fieldset class="availability rightsubbox">
+            <label>wochentag</label>
+            <span>mo</span>
+            <span>di</span>
+            <span>mi</span>
+            <span>do</span>
+            <span>fr</span>
+            <span>sa</span>
+            <span>so</span>
+            <br />
+            <label>morgen</label>
+            <input ng-model="message.availability.mon.morning" type="checkbox"></input>
+            <input ng-model="message.availability.tue.morning" type="checkbox"></input>
+            <input ng-model="message.availability.wed.morning" type="checkbox"></input>
+            <input ng-model="message.availability.thu.morning" type="checkbox"></input>
+            <input ng-model="message.availability.fri.morning" type="checkbox"></input>
+            <input ng-model="message.availability.sat.morning" type="checkbox"></input>
+            <input ng-model="message.availability.sun.morning" type="checkbox"></input>
+            <br />
+            <label>nachmittag</label>
+            <input ng-model="message.availability.mon.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.tue.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.wed.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.thu.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.fri.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.sat.afternoon" type="checkbox"></input>
+            <input ng-model="message.availability.sun.afternoon" type="checkbox"></input>
+            <br />
+            <label>abend</label>
+            <input ng-model="message.availability.mon.evening" type="checkbox"></input>
+            <input ng-model="message.availability.tue.evening" type="checkbox"></input>
+            <input ng-model="message.availability.wed.evening" type="checkbox"></input>
+            <input ng-model="message.availability.thu.evening" type="checkbox"></input>
+            <input ng-model="message.availability.fri.evening" type="checkbox"></input>
+            <input ng-model="message.availability.sat.evening" type="checkbox"></input>
+            <input ng-model="message.availability.sun.evening" type="checkbox"></input>
+            <br />
+            <label>nacht</label>
+            <input ng-model="message.availability.mon.night" type="checkbox"></input>
+            <input ng-model="message.availability.tue.night" type="checkbox"></input>
+            <input ng-model="message.availability.wed.night" type="checkbox"></input>
+            <input ng-model="message.availability.thu.night" type="checkbox"></input>
+            <input ng-model="message.availability.fri.night" type="checkbox"></input>
+            <input ng-model="message.availability.sat.night" type="checkbox"></input>
+            <input ng-model="message.availability.sun.night" type="checkbox"></input>
+            <br />
+            <label>Commission: </label><input type="radio" ng-model="message.jobprofile.commission" value="1" />yes
+            <input type="radio" ng-model="message.jobprofile.commission" value="0" />no<br />
+        </fieldset>
+        <p class="input-group">
+
+            <input placeholder="Antwort zwingend bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="message.jobprofile.replyDate" is-open="opened3" min-date="minDate"  datepicker-options="dateOptions"  ng-="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button  type="button" class="btn btn-default" ng-click="open3($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+        </p>
+
+        <button ng-click="update(message)" class="button">Speichern</button>
+        <br />
+        <br />
+        <br />
+        <br />
+</div>

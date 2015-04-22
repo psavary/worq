@@ -1,0 +1,10 @@
+<div class="boxcontent">
+    <table style="width:100%" ng-click="resetShown(); get(item.id); item.isShown = true">
+        <tr>
+            <td style="width:10%">{{item.isShown}}</td>
+            <td style="width:45%">{{item.header}}</td>
+            <td style="width:45%">{{item.message}}</td>
+        </tr>
+    </table>
+    <span message-template class="animate-repeat" ng-show="item.isShown"></span>
+</div>

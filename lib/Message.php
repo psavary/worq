@@ -14,11 +14,11 @@ class Message {
 
     }
 
+
     public function save($post, $messageId = null)
     {
         $session = new Session;
 
-        //@psa todo check session and insert userId into studentJobprofile.....
         $userData = $session->checkSession();
 
         if (!$userData)
@@ -35,7 +35,6 @@ class Message {
 
             unset($post['message']);
         }
-        //die(var_dump($message));
         $messageId = self::saveMessage($message, $userId, $messageId);
 
         if (!is_null($messageId))
@@ -64,20 +63,108 @@ class Message {
         }
     }
 
+
+    public function get ($messageId)
+    {
+        if (!$messageId)
+        {
+            throw new Exception ('Aktion kann nicht ausgeführt werden');
+        }
+
+        //todo check if the user is allowed to see this message
+        $returnArray = array();
+        $returnArray['message'] = self::getMessage($messageId);
+        $returnArray['jobprofile'] = self::getJobprofile($messageId);
+        $returnArray['availability'] = self::getAvailability($messageId);
+
+        return $returnArray;
+    }
+
+    public function getDraftList()
+    {
+        $session = new Session;
+
+        $userData = $session->checkSession();
+
+        if (!$userData)
+        {
+            throw new Exception ('Bitte loggen Sie sich ein um Ihre Nachricht speichern zu können!');
+        }
+
+        $userId = $userData['id'];
+
+        $sql = "select * from message where companyId = $userId"; //todo remove
+
+        $response = db::query($sql, null, false, false);
+
+        return $response;
+
+    }
+
+    private function getMessage ($messageId = null, $userId = null)
+    {
+        // $sql = "select header, message from message where id = $messageId and companyId = $userId";
+        $sql = "select header, message from message where id = $messageId"; //todo remove
+
+        $response = db::query($sql, null, false, true);
+
+        // die(var_dump($sql));
+        if(!$response)
+        {
+            throw new Exception ('Sie sind nicht berechtigt diese Aktion auszuführen.');
+        }
+        else
+        {
+            return  $response[0];
+        }
+    }
+
+
+    private function getJobprofile ($messageId)
+    {
+        $sql = "select employmentType, workloadFrom, workloadTo, availableFrom, availableTo, commission, replyDate, region from messageJobprofile where messageId = $messageId";
+        $response = db::query($sql, null, false, true);
+        return $response[0];
+
+
+
+    }
+
+
+    private function getAvailability ($messageId)
+    {
+        $sql = "select day, morning, afternoon, evening, night from messageAvailability where messageId = $messageId";
+        $response = db::query($sql, null, false, true);
+
+            $availabilities = array();
+
+        foreach ($response as $arrayKey => $row)
+        {
+            $day = $row['day'];
+            unset($row['day']);
+
+            foreach ($row as $daytime => $isTrue)
+            {
+                $availabilities[$day][$daytime] = (bool)$isTrue;
+            }
+        }
+        return $availabilities;
+    }
+
+
     private function saveMessage ($message = null, $userId, $messageId = null)
     {
 
         if (is_null($messageId))
         {
             $insertMessage =  $sql = "
-                insert into message (companyId)
-                VALUES ($userId)";
+                insert into message (companyId, status)
+                VALUES ($userId, 0)";
             $messageId = db::query($insertMessage, null, false, true, true);
 
         }
         else
         {
-          // die('*'.$messageId.'*');
             $sql = "select id from message where id = $messageId and companyId = $userId";
             $response = db::query($sql, null, false);
 
@@ -87,10 +174,8 @@ class Message {
             }
             else
             {
-               // die(var_dump($response));
                 $messageId =  $response[0]['id'];
             }
-
         }
         if (!is_null($message))
         {
@@ -101,9 +186,6 @@ class Message {
                 {
                     $sqlUpdate = "update message set $key = '$value' where id = $messageId  and companyId = $userId";
                     $response = db::query($sqlUpdate, null, false, true);
-                   // var_dump($sqlUpdate);
-
-
                 }
             }
         }
@@ -122,8 +204,6 @@ class Message {
             db::query($sql, null, false, true);
         }
 
-
-        //@psa todo save that stuff
         foreach ($jobprofile as $key => $value)
         {
 
@@ -131,9 +211,7 @@ class Message {
             {
                 $sqlUpdate = "update messageJobprofile set $key = '$value' where messageId = $messageId ";
                 $response = db::query($sqlUpdate, null, false, true);
-
             }
-
         }
     }
 
@@ -169,6 +247,5 @@ class Message {
             }
         }
     }
-
 }
 ?>

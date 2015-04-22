@@ -148,17 +148,19 @@ $app->get('/hello/', function () //todo refactor this api function name
     try
     {
         //todo continue here with this sql
-        $select = "Select user.id, user.firstname, user.lastname, dataStudy.name as study, dataRegion.name as region , user.imageData as image from user left join studentStudy on user.id=studentStudy.studentId left join dataStudy on studentStudy.study=dataStudy.id left join studentJobprofile on user.id = studentJobprofile.studentId left join dataRegion on studentJobprofile.region = dataRegion.id ";
+        $select = "Select user.id, user.firstname, user.lastname, dataStudy.name as study, dataRegion.name as region  from user left join studentStudy on user.id=studentStudy.studentId left join dataStudy on studentStudy.study=dataStudy.id left join studentJobprofile on user.id = studentJobprofile.studentId left join dataRegion on studentJobprofile.region = dataRegion.id ";
         //die(var_dump($select));
         $data = db::query($select,null,false);
 
         //psa todo experimental code to refactor at some point due to performance concerns
         $count = 0;
+        /*
         foreach ($data as $entry)
         {
             $data[$count]['image'] = base64_encode($entry['image']);
             $count++;
         }
+        */
         $data = json_encode($data);
 
         echo $data;
@@ -625,12 +627,7 @@ $app->post('/postMessageTemplate/', function () {
             $messageId = $message->save($post);
 
         }
-
-
         echo trim($messageId);
-
-
-
     }
     catch (Exception $e)
     {
@@ -639,8 +636,36 @@ $app->post('/postMessageTemplate/', function () {
 
 });
 
+$app->get('/getDraftList/', function()
+{
+   try
+   {
+       $app = \Slim\Slim::getInstance();
+       $message = new Message;
+       $response = $message->getDraftList();
+       echo json_encode($response);
+   }
+   catch (Exception $e)
+   {
+       $app->halt(400, $e->getMessage());
 
+   }
+});
 
+$app->get('/getMessage/:messageId', function ($messageId)
+{
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+        $message = new Message;
+        $response = $message->get($messageId);
+        echo json_encode($response);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+});
 
 /**
  * @param $availability
