@@ -1,24 +1,27 @@
 
 <div role="dialog" tabindex="-1" class="modal ng-scope top am-fade-and-scale" style="display: block;">
 
-    <iframe src="dummypage.html" name="dummy" style="display:none; width:0px; height: 0px;" ></iframe>
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="filter-modal-dialog">
+        <div class="filter-modal-content">
             <div   class="modal-header">
                 <button ng-click="$hide()" action="post" class="close" type="button">×</button>
                 <h4 ng-bind-html="title" class="modal-title ng-binding">nope</h4></div>
-            <div class="modal-body">
-                <table class="table">
-                <tr>
-                    <!-- Dont store silly image as blob in DB!-->
-                    <td>{{student.firstname}}</td>
-                    <td>{{student.lastname}}</td>
-                    <td>{{student.study}}</td>
-                    <td>{{student.region}}</td>
-                </tr>
+            <div class="modal-body" style="color:#f5f5f5">
+
+                <table style="color:#f5f5f5">
+                    <td style="width:60%;">
+                        Vorname: {{student.firstname}}<br/>
+                        Name: {{student.lastname}}<br/>
+
+                        Über mich: {{user.promotion}}<br/>
+                        Studium: {{student.study}}<br/>
+                    </td>
+                    <td style="width:40%;"><span filter-jobprofile /></td>
                 </table>
 
             </div> <!--this content has to be moved from controller to here-->
+            <button ng-click="saveContact()"  class="animateme btn btn-primary" type="button">Merken</button>
+
 
             <button ng-click="showContactForm()" ng-show="showContactButton" class="animateme btn btn-primary" type="button">Kontaktieren</button>
 

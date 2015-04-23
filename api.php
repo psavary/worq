@@ -154,7 +154,7 @@ $app->get('/hello/', function () //todo refactor this api function name
 
         //psa todo experimental code to refactor at some point due to performance concerns
         $count = 0;
-        /*
+        /* removed image
         foreach ($data as $entry)
         {
             $data[$count]['image'] = base64_encode($entry['image']);
@@ -279,7 +279,7 @@ $app->post('/postStudent/', function () {
 
         addAddress($studentId, $post->address);
 
-        addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id);
+        addUniversityAndStudy($studentId, $post->university->id, $post->study->id, $post->minor->id, $post->semester);
 
         //todo add languages
         addLanguages($studentId, $post->language);
@@ -403,15 +403,15 @@ $app->get('/confirmRegistration/:hash', function ($hash)
 
 
 //@psa refactor this into separate class
-function addUniversityAndStudy ($studentId, $university, $study, $minor)
+function addUniversityAndStudy ($studentId, $university, $study, $minor, $semester)
 {
     try
     {
-        $array = array ('studentId' => $studentId, 'university' => $university, 'study' => $study, 'minor' => $minor);
+        $array = array ('studentId' => $studentId, 'university' => $university, 'study' => $study, 'minor' => $minor, 'semester' => $semester);
 
         $sql = "
-                insert into studentStudy (studentId, university, study,  minor)
-                VALUES (:studentId, :university, :study, :minor)
+                insert into studentStudy (studentId, university, study,  minor, semester)
+                VALUES (:studentId, :university, :study, :minor, :semester)
         ";
 
         $response = db::query($sql, $array, false, false);
@@ -589,7 +589,7 @@ $app->post('/postJobprofile/', function () {
         $post['studentId'] = $userId;
         $sql = "
         insert into studentJobprofile (studentId, employmentType, workloadFrom, workloadTo, availableFrom, availableTo, commission, mobility, industry, promotion, region)
-        VALUES (:studentId, :employmentType, :workloadFrom, :workloadTo, :from, :to, :commission, :mobility, :industry, :promotion, :region)";
+        VALUES (:studentId, :employmentType, :workloadFrom, :workloadTo, :availableFrom, :availableTo, :commission, :mobility, :industry, :promotion, :region)";
 
         $response = db::query($sql, $post, false, true);
        // die(var_dump($response));
@@ -634,6 +634,22 @@ $app->post('/postMessageTemplate/', function () {
         $app->halt(400, $e->getMessage());
     }
 
+});
+
+$app->get('/getStudentJobprofile/:studentId', function($studentId)
+{
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+        $message = new Student;
+        $response = $message->getJobprofile($studentId);
+        echo json_encode($response);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+
+    }
 });
 
 $app->get('/getDraftList/', function()

@@ -75,7 +75,18 @@
                             The value selected is {{user.study.name}}.<br />
                         <label>Minor field of study: </label>
                         <select data-ng-model="user.minor" ng-options="study.name for study in studys" ><option value="">-- please choose --</option></select><br />
-
+                        <label>Semester:</label>
+                        <select data-ng-model="user.semester" required>
+                            <option value="">-- please choose --</option>
+                            <option value="1">1. Semester</option>
+                            <option value="2">2. Semester</option>
+                            <option value="3">3. Semester</option>
+                            <option value="4">4. Semester</option>
+                            <option value="5">5. Semester</option>
+                            <option value="5">6. Semester</option>
+                            <option value="5">7. Semester</option>
+                            <option value="5">8. Semester</option>
+                        </select>
                         <fieldset id="languages" class="threeinarow">
                             <label>Language: </label>
                             <select ng-change="changeLang(1,user.language.language1.language.id)" data-ng-model="user.language.language1.language" ng-options="language.name for language in languages" required><option value="">-- please choose --</option></select><br />

@@ -16,11 +16,11 @@
 
                     <ul class="nav navbar-nav ">
                         <li ng-show="isAuthorized">Willkommen {{userdata.firstname}} {{userdata.lastname}}</li>
-                        <li><a ng-show="isAuthorized" ref="#" id="lognav">mein Nachrichten</a></li>
-                        <li><a ng-show="isAuthorized" ref="#" id="lognav">mein Konto</a></li>
+                        <li><a ng-show="isAuthorized" href="/#/filter" id="lognav">Studenten Suche</a></li>
+
+                        <li><a ng-show="isAuthorized" href="/#/message" id="lognav">mein Nachrichten</a></li>
                         <li class="dropdown open">
-                            <a class="dropdown-toggle" aria-expanded="true" role="button" data-toggle="dropdown"
-                               >
+                            <a class="dropdown-toggle" aria-expanded="true" role="button" data-toggle="dropdown">
                                 mein Konto
                                 <span class="caret"></span>
                             </a>

@@ -1,0 +1,111 @@
+<div>
+
+
+
+<div class="filter-jobprofile">
+        <label>Region</label>
+        <select name="region" data-ng-model="user.region" ng-options="region.id as region.name for region in regions" >
+            <option value="">-- Bitte wählen --</option>
+        </select><br/>
+        <label>Anstellungsart</label>
+        <select name="employmentType" data-ng-model="user.employmentType"
+                ng-options="employmenttype.id as employmenttype.name for employmenttype in employmenttypes" >
+            <option value="">-- Bitte wählen --</option>
+        </select><br/>
+        <label>Pensum von</label>
+        <select name="workloadFrom" data-ng-model="user.workloadFrom"
+                ng-options="workload.id as workload.name for workload in workloads" >
+            <option value="">-- Bitte wählen --</option>
+        </select><br/>
+        <label>Pensum bis</label>
+        <select name="workloadTo" data-ng-model="user.workloadTo"
+                ng-options="workload.id as workload.name for workload in workloads" >
+            <option value="">-- Bitte wählen --</option>
+        </select>
+
+
+        <p class="input-group">
+            <input placeholder="verfügbar ab" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.availableFrom" is-open="opened" min-date="minDate"  datepicker-options="dateOptions"  ng-="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+            <input placeholder="verfügbar bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.availableTo" is-open="opened2" min-date="minDate"  datepicker-options="dateOptions"  ng-="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+        </p>
+
+
+
+
+
+        <fieldset class="availability rightsubbox">
+            <label>wochentag</label>
+            <span>mo</span>
+            <span>di</span>
+            <span>mi</span>
+            <span>do</span>
+            <span>fr</span>
+            <span>sa</span>
+            <span>so</span>
+            <br />
+            <label>morgen</label>
+            <input ng-model="user.availability.mon.morning" type="checkbox"></input>
+            <input ng-model="user.availability.tue.morning" type="checkbox"></input>
+            <input ng-model="user.availability.wed.morning" type="checkbox"></input>
+            <input ng-model="user.availability.thu.morning" type="checkbox"></input>
+            <input ng-model="user.availability.fri.morning" type="checkbox"></input>
+            <input ng-model="user.availability.sat.morning" type="checkbox"></input>
+            <input ng-model="user.availability.sun.morning" type="checkbox"></input>
+            <br />
+            <label>nachmittag</label>
+            <input ng-model="user.availability.mon.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.tue.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.wed.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.thu.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.fri.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.sat.afternoon" type="checkbox"></input>
+            <input ng-model="user.availability.sun.afternoon" type="checkbox"></input>
+            <br />
+            <label>abend</label>
+            <input ng-model="user.availability.mon.evening" type="checkbox"></input>
+            <input ng-model="user.availability.tue.evening" type="checkbox"></input>
+            <input ng-model="user.availability.wed.evening" type="checkbox"></input>
+            <input ng-model="user.availability.thu.evening" type="checkbox"></input>
+            <input ng-model="user.availability.fri.evening" type="checkbox"></input>
+            <input ng-model="user.availability.sat.evening" type="checkbox"></input>
+            <input ng-model="user.availability.sun.evening" type="checkbox"></input>
+            <br />
+            <label>nacht</label>
+            <input ng-model="user.availability.mon.night" type="checkbox"></input>
+            <input ng-model="user.availability.tue.night" type="checkbox"></input>
+            <input ng-model="user.availability.wed.night" type="checkbox"></input>
+            <input ng-model="user.availability.thu.night" type="checkbox"></input>
+            <input ng-model="user.availability.fri.night" type="checkbox"></input>
+            <input ng-model="user.availability.sat.night" type="checkbox"></input>
+            <input ng-model="user.availability.sun.night" type="checkbox"></input>
+            <br />
+            <label>Auf Profvision: </label><input type="radio" ng-model="user.commission" value="1" />yes
+            <input type="radio" ng-model="user.commission" value="0" />no<br />
+        </fieldset>
+        <label>Mobilität</label>
+
+        <select name="mobility" data-ng-model="user.mobility"
+                ng-options="transport.id as transport.name for transport in mobility" >
+            <option value="">-- Bitte wählen --</option>
+        </select>
+        <br />
+        <br />
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>

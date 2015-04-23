@@ -78,6 +78,16 @@ app.controller('FilterCtrl',
         {
             $scope.studentDetailmodal = {title: 'Studentendetails'};
 
+            $http.get('api.php/getStudentJobprofile/'+student.id).then
+            (
+                function(studyResponse)
+                {
+                    $scope.user = studyResponse.data;
+                }
+            );
+          //  $('#filter-jobprofile').find('input, textarea, button, select').attr('disabled','disabled'); //todo load jquery to do that
+
+
             $scope.contactFormVisible = false;
             $scope.showContactButton = true;
 
@@ -93,6 +103,10 @@ app.controller('FilterCtrl',
 
         };
 
+        $scope.saveContact = function ()
+        {
+            $http.post(''
+        }
 
 
 
@@ -100,3 +114,11 @@ app.controller('FilterCtrl',
 
     }
 );
+
+app.directive('filterJobprofile', function() {
+    return {
+        restrict: 'A',
+        replace: 'true',
+        templateUrl: 'templates/filterJobprofile.html'
+    };
+});

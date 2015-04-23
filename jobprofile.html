@@ -29,11 +29,11 @@
 
 
                             <p class="input-group">
-                                <input placeholder="verfügbar ab" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.from" is-open="opened" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
+                                <input placeholder="verfügbar ab" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.availableFrom" is-open="opened" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button  type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                   </span>
-                                <input placeholder="verfügbar bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.to" is-open="opened2" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
+                                <input placeholder="verfügbar bis" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.availableTo" is-open="opened2" min-date="minDate"  datepicker-options="dateOptions"  ng-required="true" close-text="Close" />
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                   </span>

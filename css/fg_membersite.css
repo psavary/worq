@@ -5,12 +5,12 @@ Registration/Login Form by html-form-guide.com
 You can customize all the aspects of the form in this style sheet
 */
 /*#background {
-    width: 100%; 
-    height: 100%; 
-    position: fixed; 
-    left: 0px; 
-    top: 0px; 
-    z-index: -1; /* Ensure div tag stays behind content; -999 might work, too. 
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: -1; /* Ensure div tag stays behind content; -999 might work, too.
 }
 
 .stretch {
@@ -323,3 +323,37 @@ You can customize all the aspects of the form in this style sheet
 .threeinarow select{
     width: 138px;
 }
+
+
+
+.filter-modal-dialog {
+    margin: 10px;
+
+    width: auto;
+    max-width: 80%;
+    min-width: 320px;
+    margin: 30px auto;
+    color: #f5f5f5;
+
+}
+
+.filter-jobprofile {
+    background-color: ;
+    color: #f5f5f5;
+
+    /*float: right;*/
+}
+
+
+
+.filter-modal-content {
+    color: #f5f5f5;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+    background-color: rgba(45, 166, 247, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    outline: 0 none;
+    position: relative;
+}
+
