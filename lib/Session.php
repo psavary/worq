@@ -20,6 +20,8 @@ class Session {
 
     public function createSession($userId)
     {
+        session_destroy();
+        session_start();
         //$session->createSession();
         $expiretime = (date('Y-m-d G:i:s', time()+1200));
         $insert = "insert into session (sessionId, userId, sessionExpire) VALUES ('" . session_id() . "'," . $userId . ",'" . $expiretime . "')";

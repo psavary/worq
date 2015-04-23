@@ -14,8 +14,39 @@ class Message {
 
     }
 
+    public function sendMessage ($message)
+    {
+       // die(var_dump($message));
+        $messageId = $message['id'];
+        $receiverId = $message['receiverId'];
+        $userId = self::getUserId();
+        $sql = "insert into messageSent (messageId, receiverId)
+                VALUES ($messageId, $receiverId)";
+        $response = db::query($sql, null, false, true);
 
-    public function save($post, $messageId = null)
+    }
+
+    public function saveContact ($contactId)
+    {
+        $userId = self::getUserId();
+        $sql = "insert into userContacts (userId, contactId)
+                VALUES ($userId, $contactId)";
+        //die($sql);
+
+        $response = db::query($sql, null, false, true);
+
+    }
+
+    public function getUserContacts()
+    {
+        $userId = self::getUserId();
+        $sql = "select  user.id as id, user.firstname as firstname, user.lastname as lastname from userContacts left  join user on userContacts.contactId = user.Id where userContacts.userId = $userId";
+        $response = db::query($sql, null, false, true);
+        return $response;
+
+    }
+
+    private function getUserId ()
     {
         $session = new Session;
 
@@ -26,7 +57,16 @@ class Message {
             throw new Exception ('Bitte loggen Sie sich ein um Ihre Nachricht speichern zu können!');
         }
 
-        $userId = $userData['id'];
+        return $userData['id'];
+
+    }
+
+    public function save($post, $messageId = null)
+    {
+
+
+        $userId = self::getUserId();
+
         $message = null;
 
         If (array_key_exists('message',$post)){
@@ -82,18 +122,26 @@ class Message {
 
     public function getDraftList()
     {
-        $session = new Session;
 
-        $userData = $session->checkSession();
 
-        if (!$userData)
-        {
-            throw new Exception ('Bitte loggen Sie sich ein um Ihre Nachricht speichern zu können!');
-        }
-
-        $userId = $userData['id'];
+        $userId = self::getUserId();
 
         $sql = "select * from message where companyId = $userId"; //todo remove
+
+        $response = db::query($sql, null, false, false);
+
+        return $response;
+
+    }
+
+
+    public function getOpenList()
+    {
+
+
+        $userId = self::getUserId();
+
+        $sql = "select * from messageSent left join message on message.id =  messageSent.messageId   where message.companyId = $userId and messageSent.status <= 1"; //todo remove
 
         $response = db::query($sql, null, false, false);
 
@@ -222,7 +270,7 @@ class Message {
         foreach ($availability as $day => $row)
         {
             $sql = "select id from messageAvailability where messageId = $messageId and day = '$day'";
-            $response = db::query($sql, null, false);
+            $response = db::query($sql, null, false, true);
 
             if (!$response)
             {

@@ -103,10 +103,21 @@ app.controller('FilterCtrl',
 
         };
 
-        $scope.saveContact = function ()
+
+
+        $scope.saveContact = function (studentId)
         {
-            $http.post(''
-        }
+            $http.post('/api.php/postContact/', studentId).
+                success(function(data, status, headers, config) {
+
+                    var alert = $alert({
+                        "title": "Speichern erfolgreich!",
+                        "content": "Dieser Kontakt wurde gespeichert. Sie finden Ihren Kontakt nun in Ihren Entwürfen",
+                        "type": "success",
+                        "duration": "20"
+                    });
+                });
+        };
 
 
 

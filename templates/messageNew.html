@@ -98,7 +98,7 @@
                                   </span>
             </p>
 
-            <button ng-click="update(message)" class="button">Speichern</button>
+            <button ng-click="save(message)" class="button">Speichern</button>
             <br />
             <br />
             <br />
@@ -117,9 +117,13 @@
         </div>
         <div class="boxcontent">
             <br />
+            <select name="userContacts"  data-ng-model="userContactSelected"
+                    ng-options="userContact.id as userContact.lastname for userContact in userContacts" required>
+                <option value="">-- Bitte wählen --</option>
+            </select>
 
-            <button class="button" ng-click="get()">getData</button>
-            <button ng-disabled="jobprofileForm.$invalid" ng-click="update(message)" class="button">Senden</button>
+            <button class="button" ng-click="getUserContacts()">getContacts</button>
+            <button ng-disabled="" ng-click="send(message)" class="button">Senden</button>
 
             <br />
             <br />
@@ -128,4 +132,5 @@
             <br />
         </div>
     </div>
+    <pre>contact = {{userContactSelected | json}}</pre>
 </div>

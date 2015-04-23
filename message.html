@@ -8,7 +8,7 @@
             </div>
             <div class="boxcontent">
                 <span ng-click="new()"><h3>Neu</h3></span>
-                <span><h3>Offen</h3></span>
+                <span ng-click="clickOpenMessages()"><h3>Offen ({{openMessages.length}})</h3></span>
                 <span><h3>Abgeschlossen</h3></span>
                 <span ng-click="draft()"><h3>Entwürfe ({{drafts.length}})</h3></span>
 
@@ -20,6 +20,8 @@
 
 
     <span message-new ng-show="showNewMessage"/>
+
+     <span message-open ng-show="showOpenMessages"/>
 
 
     <div style="width:100%; float:left;">

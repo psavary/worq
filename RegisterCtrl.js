@@ -120,7 +120,7 @@ app.controller('RegisterCtrl',
                         success(function(data, status, headers, config)
                         {
                             //redirect in case of success
-                           // $location.url('confirmation'); //todo enable
+                           $location.url('confirmation'); //todo enable
                         }).
                         error(function(data, status, headers, config)
                         {
@@ -132,7 +132,7 @@ app.controller('RegisterCtrl',
                             });
                         });
 
-                    //$location.path('/confirmation');
+                    $location.path('/confirmation');
                 }).
                 error(function(data, status, headers, config)
                 {

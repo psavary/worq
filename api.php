@@ -102,7 +102,9 @@ $app->post('/postImage/:email/:userType/:file/:type', function ($email, $userTyp
         $imageType = $image . '/' . $type;
         $array = array('imageType' => $imageType, 'imageData' => $body, 'email' => $email, 'userType' => $userType);
         $sql = "update user set imageType = :imageType, imageData = :imageData where email = :email and type = :userType";
+
         $data = db::query($sql, $array, false, false);
+        var_dump($data);
     }
     catch (Exception $e)
     {
@@ -283,10 +285,8 @@ $app->post('/postStudent/', function () {
 
         //todo add languages
         addLanguages($studentId, $post->language);
-
         sendConfirmationMail($post->student->email, $studentId);
 
-       // $app->redirect('/#/confirmation');
     }
     catch (Exception $e)
     {
@@ -447,7 +447,7 @@ function addLanguages($studentId, $languagesArray)
             $idArray['language'] = (int)$row->language->id;
             $idArray['languageDiploma'] = (int)$row->languageDiploma->id;
             $idArray['languageOral'] = (int)$row->languageOral->id;
-            var_dump($idArray);
+            //var_dump($idArray);
 
             $sql =
             "
@@ -604,6 +604,24 @@ $app->post('/postJobprofile/', function () {
 });
 
 
+$app->post('/postContact/', function () {
+    try {
+        $app = \Slim\Slim::getInstance();
+
+        //$app = new \Slim\Slim();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = json_decode($body);
+        //$post = json_decode(json_encode($post));
+        $message = new Message;
+        $message->saveContact($post);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+});
+
 
 $app->post('/postMessageTemplate/', function () {
     try
@@ -628,6 +646,29 @@ $app->post('/postMessageTemplate/', function () {
 
         }
         echo trim($messageId);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+
+});
+
+
+$app->post('/sendMessage/', function () {
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+
+        //$app = new \Slim\Slim();
+        $request = $app->request();
+        $body = $request->getBody();
+        $post = (array)json_decode($body);
+        //$post = json_decode(json_encode($post));
+        $message = new Message;
+
+        $message->sendMessage($post);
+        //echo trim($messageId);
     }
     catch (Exception $e)
     {
@@ -668,6 +709,23 @@ $app->get('/getDraftList/', function()
    }
 });
 
+
+$app->get('/getOpenList/', function()
+{
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+        $message = new Message;
+        $response = $message->getOpenList();
+        echo json_encode($response);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+
+    }
+});
+
 $app->get('/getMessage/:messageId', function ($messageId)
 {
     try
@@ -675,6 +733,21 @@ $app->get('/getMessage/:messageId', function ($messageId)
         $app = \Slim\Slim::getInstance();
         $message = new Message;
         $response = $message->get($messageId);
+        echo json_encode($response);
+    }
+    catch (Exception $e)
+    {
+        $app->halt(400, $e->getMessage());
+    }
+});
+
+$app->get('/getUserContacts/', function ()
+{
+    try
+    {
+        $app = \Slim\Slim::getInstance();
+        $message = new Message;
+        $response = $message->getUserContacts();
         echo json_encode($response);
     }
     catch (Exception $e)
